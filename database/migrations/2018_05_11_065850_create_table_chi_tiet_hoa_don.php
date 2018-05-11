@@ -16,12 +16,17 @@ class CreateTableChiTietHoaDon extends Migration
         Schema::create('chitiethoadon', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->unsignedInteger('hoadon_id');
             $table->unsignedInteger('sanpham_id');
             $table->unsignedInteger('loaikhuyenmai_id')->nullable();
             $table->unsignedInteger('soluong'); //số lượng sản phẩm
             $table->float('gia')->comment('Gía tại thời điểm bán của sản phẩm');
             $table->timestamps();
 
+            $table->foreign('hoadon_id')
+                ->references('id')
+                ->on('hoadon')
+                ->onUpdate('cascade');
             $table->foreign('sanpham_id')
                 ->references('id')
                 ->on('sanpham')

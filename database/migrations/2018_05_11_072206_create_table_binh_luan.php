@@ -16,18 +16,18 @@ class CreateTableBinhLuan extends Migration
         Schema::create('binhluan', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('danhgia_id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('sanpham_id');
             $table->string('noidung', 1500);
             $table->timestamps();
 
-            $table->foreign('danhgia_id')
-                ->references('id')
-                ->on('danhgia')
-                ->onUpdate('cascade');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onUpdate('cascade');
+            $table->foreign('sanpham_id')
+                ->references('id')
+                ->on('sanpham')
                 ->onUpdate('cascade');
         });
     }
