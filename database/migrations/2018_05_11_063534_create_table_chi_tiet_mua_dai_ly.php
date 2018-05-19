@@ -29,6 +29,6 @@ class CreateTableChiTietMuaDaiLy extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chitietdaily');
+        Schema::dropIfExists('chitietmuadaily');
     }
 }

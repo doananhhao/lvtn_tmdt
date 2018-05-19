@@ -26,4 +26,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    function LoaiUser(){
+        return $this->belongsTo('App\Models\LoaiUser', 'loaiuser_id', 'id');
+    }
+
+    function ThanhVien(){
+        return $this->hasOne('App\Models\ThanhVien');
+    }
+
+    function BinhLuan(){
+        return $this->hasMany('App\Models\BinhLuan');
+    }
+
+    function HoaDon(){
+        return $this->hasMany('App\Models\HoaDon');
+    }
 }

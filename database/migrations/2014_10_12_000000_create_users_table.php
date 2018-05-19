@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('sdt', 12)->unique();
+            $table->string('sdt', 14)->unique();
             $table->boolean('nam')->default(TRUE); //true: nam; false: nu
             $table->string('diachi');
             $table->string('avatar'); //tên avt.jpg

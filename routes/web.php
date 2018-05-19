@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('shop.home');
 });
+
+Route::get('/test', function (){
+    $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
+    $users = $loai->User()->get();
+    echo "<pre>";
+    foreach ($users as $user)
+        var_dump($user);
+});

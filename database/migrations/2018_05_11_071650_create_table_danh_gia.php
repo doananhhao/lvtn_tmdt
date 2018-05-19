@@ -15,13 +15,14 @@ class CreateTableDanhGia extends Migration
     {
         Schema::create('danhgia', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('id');
             $table->unsignedInteger('thanhvien_id');
             $table->unsignedInteger('sanpham_id');
             $table->string('tieude', 255);
             $table->string('noidung', 1500);
             $table->smallInteger('votes')->comment('Đánh giá số sao vd 5');
             $table->timestamps();
+
+            $table->primary(['thanhvien_id', 'sanpham_id']);
 
             $table->foreign('sanpham_id')
                 ->references('id')
