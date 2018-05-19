@@ -15,6 +15,6 @@ class ChiTietMuaDaiLy extends Model
     }
 
     function ChiTietHoaDon(){
-        return $this->belongsTo('App\Models\ChiTietHoaDon');
+        return $this->belongsTo('App\Models\ChiTietHoaDon', 'chitiethoadon_id');
     }
 }

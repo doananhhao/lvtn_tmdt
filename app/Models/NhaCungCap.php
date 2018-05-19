@@ -9,6 +9,6 @@ class NhaCungCap extends Model
     protected $table = "nhacungcap";
 
     function SanPham(){
-        return $this->hasMany('App\Models\SanPham');
+        return $this->hasMany('App\Models\SanPham', 'nhacungcap_id');
     }
 }

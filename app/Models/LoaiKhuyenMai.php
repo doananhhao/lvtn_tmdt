@@ -13,6 +13,6 @@ class LoaiKhuyenMai extends Model
     }
 
     function ChiTietKhuyenMai(){
-        return $this->belongsTo('App\Models\ChiTietKhuyenMai');
+        return $this->hasMany('App\Models\ChiTietKhuyenMai', 'loaikhuyenmai_id');
     }
 }

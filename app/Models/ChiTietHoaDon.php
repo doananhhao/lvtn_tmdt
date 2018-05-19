@@ -9,18 +9,18 @@ class ChiTietHoaDon extends Model
     protected $table = "chitiethoadon";
 
     function HoaDon(){
-        return $this->belongsTo('App\Models\HoaDon');
+        return $this->belongsTo('App\Models\HoaDon', 'hoadon_id');
     }
 
     function ChiTietMuaDaiLy(){
-        return $this->hasMany('App\Models\ChiTietMuaDaiLy');
+        return $this->hasMany('App\Models\ChiTietMuaDaiLy', 'chitiethoadon_id');
     }
 
     function SanPham(){
-        return $this->belongsTo('App\Models\SanPham');
+        return $this->belongsTo('App\Models\SanPham', 'sanpham_id');
     }
 
     function LoaiKhuyenMai(){
-        return $this->belongsTo('App\Models\LoaiKhuyenMai');
+        return $this->belongsTo('App\Models\LoaiKhuyenMai', 'loaikhuyenmai_id');
     }
 }

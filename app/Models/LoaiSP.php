@@ -9,6 +9,6 @@ class LoaiSP extends Model
     protected $table = "loaisp";
 
     function SanPham(){
-        return $this->hasMany('App\Models\SanPham');
+        return $this->hasMany('App\Models\SanPham', 'loaisp_id');
     }
 }

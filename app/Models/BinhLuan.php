@@ -13,6 +13,6 @@ class BinhLuan extends Model
     }
     
     function SanPham(){
-        return $this->belongsTo('App\Models\SanPham');
+        return $this->belongsTo('App\Models\SanPham', 'sanpham_id');
     }
 }

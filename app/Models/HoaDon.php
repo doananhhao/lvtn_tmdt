@@ -13,6 +13,6 @@ class HoaDon extends Model
     }
 
     function ChiTietHoaDon(){
-        return $this->hasMany('App\Models\ChiTietHoaDon');
+        return $this->hasMany('App\Models\ChiTietHoaDon', 'hoadon_id');
     }
 }

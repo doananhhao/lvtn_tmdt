@@ -11,10 +11,10 @@ class DanhGia extends Model
     public $incrementing = false;
 
     function ThanhVien(){
-        return $this->belongsTo('App\Models\ThanhVien');
+        return $this->belongsTo('App\Models\ThanhVien', 'thanhvien_id');
     }
     
     function SanPham(){
-        return $this->belongsTo('App\Models\SanPham');
+        return $this->belongsTo('App\Models\SanPham', 'sanpham_id');
     }
 }
