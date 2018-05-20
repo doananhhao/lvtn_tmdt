@@ -5,7 +5,7 @@
 		<div class="col-md-12">
 			<div class="wide-banner cnt-strip">
 				<div class="image">
-					<img class="img-responsive" data-echo="{{ asset('shop/images/banners/3.jpg') }}" src="{{ asset('shop/images/blank.gif') }}" alt="">
+					<img class="img-responsive" data-echo="{{ asset('shop/images/pic/HotHungHuc_Banner.jpg') }}" src="{{ asset('shop/images/blank.gif') }}" alt="">
 				</div>	
 				<div class="strip strip-text">
 					<div class="strip-inner">

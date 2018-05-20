@@ -8,7 +8,7 @@ $sellerProducts = array(
 			'is_new' => true,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productImageURL' => asset('shop/images/products/s1.jpg')
+			'productImageURL' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -18,7 +18,7 @@ $sellerProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productImageURL' => asset('shop/images/products/s1.jpg')
+			'productImageURL' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -33,7 +33,7 @@ $sellerProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productImageURL' => asset('shop/images/products/s2.jpg')
+			'productImageURL' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -42,7 +42,7 @@ $sellerProducts = array(
 			'is_new' => false,
 			'is_sale' =>true,
 			'is_hot' =>false,
-			'productImageURL' => asset('shop/images/products/s2.jpg')
+			'productImageURL' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -56,7 +56,7 @@ $sellerProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>true,
-			'productImageURL' => asset('shop/images/products/s3.jpg')
+			'productImageURL' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -66,7 +66,7 @@ $sellerProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productImageURL' => asset('shop/images/products/s3.jpg')
+			'productImageURL' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -79,7 +79,7 @@ $sellerProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>true,
-			'productImageURL' => asset('shop/images/products/s2.jpg')
+			'productImageURL' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -89,7 +89,7 @@ $sellerProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productImageURL' => asset('shop/images/products/s2.jpg')
+			'productImageURL' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -101,20 +101,28 @@ $sellerProducts = array(
 
 ?>
 <div class="sidebar-widget wow fadeInUp outer-bottom-vs">
-	<h3 class="section-title">Best seller</h3>
+	<h3 class="section-title">Sản Phẩm mua nhiều</h3>
 	<div class="sidebar-widget-body outer-top-xs">
 		<div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
-	        <?php foreach ($sellerProducts as $products):?>
-	        <div class="item">
-	        	<div class="products best-product">
-		        	<?php foreach ($products as $product):?>
-						<div class="product">
-							<?php displayProductMicro($product['product_name'],$product['is_new'],$product['is_sale'],$product['is_hot'],$product['productImageURL']) ?>
+
+			<?php $i = 1; ?>
+			@foreach($sp_mua_nhieu as $v)
+				@if($i%2 == 1)
+
+					<div class="item">
+						<div class="products best-product">
+							@for ($j = $i - 1; $j <= $i; $j++)
+							<div class="product">
+								<?php displayProductMicro($sp_mua_nhieu[$j]->tensanpham, false, false, true, asset('shop/images/pic/muanhieu_'.$sp_mua_nhieu[$j]->hinhanh)) ?>
+							</div>
+							@endfor
 						</div>
-		        	<?php endforeach; ?>
-	        	</div>
-	        </div>
-	    	<?php endforeach; ?>
+					</div>
+
+				@endif
+				<?php $i++; ?>
+			@endforeach
+			
 	    </div>
 	</div><!-- /.sidebar-widget-body -->
 </div><!-- /.sidebar-widget -->

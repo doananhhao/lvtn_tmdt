@@ -5,7 +5,7 @@
 		<div class="col-md-7">
 			<div class="wide-banner cnt-strip">
 				<div class="image">
-					<img class="img-responsive" data-echo="{{ asset('shop/images/banners/1.jpg') }}" src="{{ asset('shop/images/blank.gif') }}" alt="">
+					<img class="img-responsive" data-echo="{{ asset('shop/images/pic/rsz_hothaohuc_banner.png') }}" src="{{ asset('shop/images/blank.gif') }}" alt="">
 				</div>	
 				<div class="strip">
 					<div class="strip-inner">
@@ -19,7 +19,7 @@
 		<div class="col-md-5">
 			<div class="wide-banner cnt-strip">
 				<div class="image">
-					<img class="img-responsive" data-echo="{{ asset('shop/images/banners/2.jpg') }}" src="{{ asset('shop/images/blank.gif') }}" alt="">
+					<img class="img-responsive" data-echo="{{ asset('shop/images/pic/rsz_simsodep.png') }}" src="{{ asset('shop/images/blank.gif') }}" alt="">
 				</div>	
 				<div class="strip">
 					<div class="strip-inner">

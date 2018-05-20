@@ -8,7 +8,7 @@ $miniProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>true,
-			'productMicroImage' => asset('shop/images/products/sm1.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -17,7 +17,7 @@ $miniProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productMicroImage' => asset('shop/images/products/sm2.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -26,7 +26,7 @@ $miniProducts = array(
 			'is_new' => true,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productMicroImage' => asset('shop/images/products/sm3.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -41,7 +41,7 @@ $miniProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productMicroImage' => asset('shop/images/products/sm1.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -50,7 +50,7 @@ $miniProducts = array(
 			'is_new' => false,
 			'is_sale' =>true,
 			'is_hot' =>false,
-			'productMicroImage' => asset('shop/images/products/sm2.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -59,7 +59,7 @@ $miniProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productMicroImage' => asset('shop/images/products/sm3.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -74,7 +74,7 @@ $miniProducts = array(
 			'is_new' => true,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productMicroImage' => asset('shop/images/products/sm1.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -83,7 +83,7 @@ $miniProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>true,
-			'productMicroImage' => asset('shop/images/products/sm2.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -92,7 +92,7 @@ $miniProducts = array(
 			'is_new' => false,
 			'is_sale' =>false,
 			'is_hot' =>false,
-			'productMicroImage' => asset('shop/images/products/sm3.jpg')
+			'productMicroImage' => asset('shop/images/pic/rsz_1image6z4kd-640.png')
 
 
 			),
@@ -104,7 +104,8 @@ $miniProducts = array(
 
 ?>
 <div class="sidebar-widget outer-bottom-small wow fadeInUp">
-	<h3 class="section-title">Special Offer</h3>
+	{{-- <h3 class="section-title">Special Offer</h3> --}}
+	<h3 class="section-title">Gợi ý</h3>
 	<div class="sidebar-widget-body outer-top-xs">
 		<div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
 	        <?php foreach ($miniProducts as $products):?>

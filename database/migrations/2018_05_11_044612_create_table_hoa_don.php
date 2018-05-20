@@ -18,7 +18,7 @@ class CreateTableHoaDon extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('diachi');
-            $table->string('sdt', 12);
+            $table->string('sdt', 14);
             $table->string('mota', 1000)->nullable()->comment('lời nhắn nếu có');
             $table->timestamps();
 

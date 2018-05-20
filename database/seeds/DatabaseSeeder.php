@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
             ThanhVienSeeder::class,
             LoaiSPSeeder::class,
             NhaCungCapSeeder::class,
-            KhuyenMaiSeeder::class,
             SanPhamSeeder::class,
+            KhuyenMaiSeeder::class,
             BinhLuanSeeder::class,
-            ChiTietKhuyenMaiSeeder::class,
+            HoaDonSeeder::class,
         ]);
     }
 }

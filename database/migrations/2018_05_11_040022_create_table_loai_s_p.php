@@ -17,6 +17,7 @@ class CreateTableLoaiSP extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('tenloai')->unique();
+            $table->string('classfaicon');
             $table->timestamps();
         });
     }

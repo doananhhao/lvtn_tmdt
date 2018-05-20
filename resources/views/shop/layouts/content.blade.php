@@ -9,14 +9,17 @@
                 @include('shop.layouts.navigation.sidemenu')
 
                 @include('shop.layouts.widgets.sidebar.special-offer')
+                {{-- đề nghị, nên mua --}}
 
-                @include('shop.layouts.widgets.sidebar.product-tags')
+                
 
                 @include('shop.layouts.widgets.sidebar.special-deals')
+                {{-- Khuyến mãi --}}
 
                 @include('shop.layouts.widgets.sidebar.newsletter')
 
                 @include('shop.layouts.widgets.sidebar.hot-deals')
+                {{-- giá đặc biệt --}}
 
                 @include('shop.layouts.widgets.sidebar.sidebar-advertisement')
     
@@ -40,7 +43,7 @@
     
                 @include('shop.layouts.section.best-seller')
     
-                @include('shop.layouts.section.blog-slider')
+               
     
                 @include('shop.layouts.section.new-arrivals')
 

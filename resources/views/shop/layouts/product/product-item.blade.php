@@ -5,16 +5,16 @@ $products = array(
         'is_new' => false,
         'is_sale' =>false,
         'is_hot' =>true,
-        'productImageURL' => asset('shop/images/products/1.jpg')
+        'productImageURL' => asset('shop/images/pic/rsz_iphone-x-64gb-h1-400x460-400x460.png')
 
 
         ),
     array(
-        'product_name' => 'Samsung Galaxy S4',
+        'product_name' => 'Samsung Galaxy S4images',
         'is_new' => true,
         'is_sale' =>false,
         'is_hot' =>false,
-        'productImageURL' => asset('shop/images/products/2.jpg')
+        'productImageURL' => asset('shop/images/pic/rsz_iphone-x-64gb-h1-400x460-400x460.png')
 
 
 
@@ -24,7 +24,7 @@ $products = array(
         'is_new' => false,
         'is_sale' =>true,
         'is_hot' =>false,
-        'productImageURL' => asset('shop/images/products/3.jpg')
+        'productImageURL' => asset('shop/images/pic/rsz_iphone-x-64gb-h1-400x460-400x460.png')
 
 
         ),
@@ -33,7 +33,7 @@ $products = array(
         'is_new' => false,
         'is_sale' =>false,
         'is_hot' =>true,
-        'productImageURL' => asset('shop/images/products/2.jpg')
+        'productImageURL' => asset('shop/images/pic/rsz_iphone-x-64gb-h1-400x460-400x460.png')
 
 
         ),
@@ -42,7 +42,7 @@ $products = array(
         'is_new' => false,
         'is_sale' =>true,
         'is_hot' =>false,
-        'productImageURL' => asset('shop/images/products/4.jpg')
+        'productImageURL' => asset('shop/images/pic/rsz_iphone-x-64gb-h1-400x460-400x460.png')
 
 
 
@@ -52,7 +52,7 @@ $products = array(
         'is_new' => true,
         'is_sale' =>false,
         'is_hot' =>false,
-        'productImageURL' => asset('shop/images/products/6.jpg')
+        'productImageURL' => asset('shop/images/pic/rsz_iphone-x-64gb-h1-400x460-400x460.png')
 
 
         )

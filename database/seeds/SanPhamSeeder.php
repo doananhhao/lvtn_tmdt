@@ -13,7 +13,7 @@ class SanPhamSeeder extends Seeder
     {
         $data = [
             [
-                'tensanpham' => 'DEMO 1',
+                'tensanpham' => 'DEMO 5',
                 'gia' => 10000,
                 'soluong' => 3,
                 'mota' => '',
@@ -22,7 +22,7 @@ class SanPhamSeeder extends Seeder
                 'nhacungcap_id' => App\Models\NhaCungCap::inRandomOrder()->first()->id,
             ],
             [
-                'tensanpham' => 'DEMO 2',
+                'tensanpham' => 'DEMO 6',
                 'gia' => 13000,
                 'soluong' => 7,
                 'mota' => '',
@@ -31,7 +31,7 @@ class SanPhamSeeder extends Seeder
                 'nhacungcap_id' => App\Models\NhaCungCap::inRandomOrder()->first()->id,
             ],
             [
-                'tensanpham' => 'DEMO 3',
+                'tensanpham' => 'DEMO 7',
                 'gia' => 21000,
                 'soluong' => 1,
                 'mota' => '',
@@ -40,7 +40,7 @@ class SanPhamSeeder extends Seeder
                 'nhacungcap_id' => App\Models\NhaCungCap::inRandomOrder()->first()->id,
             ],
             [
-                'tensanpham' => 'DEMO 4',
+                'tensanpham' => 'DEMO 8',
                 'gia' => 15000,
                 'soluong' => 5,
                 'mota' => '',

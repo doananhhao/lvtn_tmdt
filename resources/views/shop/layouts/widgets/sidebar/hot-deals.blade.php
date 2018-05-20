@@ -1,6 +1,7 @@
 <!-- ============================================== HOT DEALS ============================================== -->
 <div class="sidebar-widget hot-deals wow fadeInUp">
-	<h3 class="section-title">hot deals</h3>
+	{{-- <h3 class="section-title">hot deals</h3> --}}
+	<h3 class="section-title">GIÁ ĐẶC BIỆT</h3>
 	<div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-xs">
 		
 			<?php $imageCount = 1; ?>
@@ -12,7 +13,7 @@
 					<div class="products">
 						<div class="hot-deal-wrapper">
 							<div class="image">
-                                <img src="{{ asset('shop/images/hot-deals/'.$imageCount.'.jpg') }}" alt="">
+                                <img src="{{ asset('shop/images/pic/hd/'.$imageCount.'.png') }}" alt="">
 							</div>
 							<div class="sale-offer-tag"><span>35%<br>off</span></div>
 							<div class="timing-wrapper">

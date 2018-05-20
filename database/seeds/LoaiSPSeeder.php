@@ -13,16 +13,20 @@ class LoaiSPSeeder extends Seeder
     {
         $data = [
             [
-                'tenloai' => 'Điện Thoại'
+                'tenloai' => 'Điện Thoại',
+                'classfaicon' => 'icon fa fa-desktop fa-fw',
             ],
             [
-                'tenloai' => 'Máy Tính'
+                'tenloai' => 'Máy Tính',
+                'classfaicon' => 'icon fa fa-desktop fa-fw',
             ],
             [
-                'tenloai' => 'Quần'
+                'tenloai' => 'Quần',
+                'classfaicon' => 'icon fa fa-desktop fa-fw',
             ],
             [
-                'tenloai' => 'Áo'
+                'tenloai' => 'Áo',
+                'classfaicon' => 'icon fa fa-desktop fa-fw',
             ]
         ];
 

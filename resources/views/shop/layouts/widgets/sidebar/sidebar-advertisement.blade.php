@@ -16,7 +16,7 @@
             </div><!-- /.container-fluid -->
         </div><!-- /.item -->
 
-        <div class="item" style="background-image: url('{{ asset('shop/images/advertisement/1.jpg') }}');">
+        <div class="item" style="background-image: url('{{ asset('shop/images/pic/rsz_banner-fb-800x600-e1404914347505.jpg') }}');">
             
         </div><!-- /.item -->
 
