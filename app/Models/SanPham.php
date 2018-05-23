@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SanPham extends Model
 {
     protected $table = "sanpham";
-
+    
     function NhaCungCap(){
         return $this->belongsTo('App\Models\NhaCungCap', 'nhacungcap_id');
     }

@@ -3,7 +3,14 @@
     <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Danh mục sản phẩm</div>        
     <nav class="yamm megamenu-horizontal" role="navigation">
         <ul class="nav">
+
+            @foreach($sidemenu as $v)
             <li class="dropdown menu-item">
+                <a href="#" class="dropdown-toggle"><i class="{{ $v->classfaicon }}"></i>{{ $v->tenloai }}</a>
+            </li><!-- /.menu-item -->
+            @endforeach
+
+            {{-- <li class="dropdown menu-item">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-desktop fa-fw"></i>TV & Đồ điện gia dụng</a>
                 @include('shop.layouts.navigation.megamenu-horizontal')
             </li><!-- /.menu-item -->
@@ -46,7 +53,7 @@
             <li class="dropdown menu-item">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-microphone fa-fw"></i>Phụ kiện Thời trang</a>
                 @include('shop.layouts.navigation.megamenu-horizontal')
-            </li><!-- /.menu-item -->
+            </li><!-- /.menu-item --> --}}
           
         </ul><!-- /.nav -->
     </nav><!-- /.megamenu-horizontal -->

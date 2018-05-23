@@ -8,7 +8,15 @@
 					<li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
 					<li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
 					<li><a href="#"><i class="icon fa fa-key"></i>Checkout</a></li>
-					<li><a href="#"><i class="icon fa fa-sign-in"></i>Login</a></li>
+					@if (!Auth::check())
+					<li><a href="{{ route('login') }}"><i class="icon fa fa-sign-in"></i>Đăng nhập</a></li>
+					@else
+					<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+						document.getElementById('logout-form').submit();"><i class="icon fa fa-sign-in"></i>Đăng xuất</a></li>
+					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+						@csrf
+					</form>
+					@endif
 				</ul>
 			</div><!-- /.cnt-account -->
 

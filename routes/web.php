@@ -20,6 +20,17 @@ Route::get('/test', function (){
     echo date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s').'+ 3 days'));
 });
 Route::get('t2', 'Shop\HomeController@test');
-Route::group(['prefix'=>'/'], function () {
-    Route::get('/', 'Shop\HomeController@index');
+
+/**
+ * 
+ */
+
+Auth::routes();
+
+Route::group(['prefix'=>'/home'], function () {
+    Route::get('/', 'Shop\HomeController@index')->name('home');
+});
+
+Route::get('/', function(){
+    return redirect()->route('home');
 });

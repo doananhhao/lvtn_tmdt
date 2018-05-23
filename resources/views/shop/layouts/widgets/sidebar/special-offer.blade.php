@@ -108,17 +108,21 @@ $miniProducts = array(
 	<h3 class="section-title">Gợi ý</h3>
 	<div class="sidebar-widget-body outer-top-xs">
 		<div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
-	        <?php foreach ($miniProducts as $products):?>
-	        <div class="item">
-	        	<div class="products special-product">
-		        	<?php foreach ($products as $product):?>
-						<div class="product">
-							<?php displayProductMicro($product['product_name'],$product['is_new'],$product['is_sale'],$product['is_hot'],$product['productMicroImage']);?>
-						</div>
-		        	<?php endforeach; ?>
-	        	</div>
-	        </div>
-	    	<?php endforeach; ?>
+
+			@for ($i = 1; $i <= 2; $i++)
+
+				<div class="item">
+					<div class="products special-product">
+							@for ($j = ($i*3)-3; $j <= ($i*3)-1; $j++)
+							<div class="product">
+								<?php displayProductMicro($goi_y[$j]->tensanpham, false, false, false, asset('shop/images/pic/muanhieu_'.$goi_y[$j]->hinhanh)) ?>
+							</div>
+							@endfor
+					</div>
+				</div>
+			
+			@endfor
+			
 	    </div>
 	</div><!-- /.sidebar-widget-body -->
 </div><!-- /.sidebar-widget -->

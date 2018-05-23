@@ -13,20 +13,40 @@ class LoaiSPSeeder extends Seeder
     {
         $data = [
             [
-                'tenloai' => 'Điện Thoại',
+                'tenloai' => 'TV & điện gia dụng',
                 'classfaicon' => 'icon fa fa-desktop fa-fw',
             ],
             [
-                'tenloai' => 'Máy Tính',
-                'classfaicon' => 'icon fa fa-desktop fa-fw',
+                'tenloai' => 'Thiết bị điện tử',
+                'classfaicon' => 'icon fa fa-mobile fa-fw',
             ],
             [
-                'tenloai' => 'Quần',
-                'classfaicon' => 'icon fa fa-desktop fa-fw',
+                'tenloai' => 'Phụ kiện điện tử',
+                'classfaicon' => 'icon fa fa-cog fa-fw',
             ],
             [
-                'tenloai' => 'Áo',
-                'classfaicon' => 'icon fa fa-desktop fa-fw',
+                'tenloai' => 'Gia dụng & Đời sống',
+                'classfaicon' => 'icon fa fa-heart-o fa-fw',
+            ],
+            [
+                'tenloai' => 'Mẹ, Bé & Đồ chơi',
+                'classfaicon' => 'icon fa fa-home fa-fw',
+            ],
+            [
+                'tenloai' => 'Sức khỏe & làm đẹp',
+                'classfaicon' => 'icon fa fa-gift fa-fw',
+            ],
+            [
+                'tenloai' => 'Thời trang',
+                'classfaicon' => 'icon fa fa-group fa-fw',
+            ],
+            [
+                'tenloai' => 'Thể thao & Du lịch',
+                'classfaicon' => 'icon fa fa-plane fa-fw',
+            ],
+            [
+                'tenloai' => 'Tạp hóa',
+                'classfaicon' => 'icon fa fa-thumbs-o-up fa-fw',
             ]
         ];
 

@@ -20,7 +20,7 @@ class CreateTableChiTietKhuyenMai extends Migration
             $table->unsignedInteger('sanpham_id');
             $table->float('giamgia')->comment('Phần trăm giảm vd 0.1');
             $table->dateTime('ngaybd');
-            $table->dateTime('ngayketthuc');
+            $table->dateTime('ngayketthuc')->nullable();
             $table->timestamps();
 
             $table->foreign('sanpham_id')
