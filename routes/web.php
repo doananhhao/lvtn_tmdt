@@ -29,6 +29,8 @@ Auth::routes();
 
 Route::group(['prefix'=>'/home'], function () {
     Route::get('/', 'Shop\HomeController@index')->name('home');
+    Route::get('loai-san-pham/{type}',['as'=>'loaisanpham','uses'=>'PageController@getLoaiSp']);
+	Route::get('chi-tiet-san-pham/{tensp}',['as'=>'chitietsanpham','uses'=>'PageController@getChitiet']);
 });
 
 Route::get('/', function(){

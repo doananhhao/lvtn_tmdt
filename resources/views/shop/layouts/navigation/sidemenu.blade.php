@@ -6,8 +6,8 @@
 
             @foreach($sidemenu as $v)
             <li class="dropdown menu-item">
-                <a href="#" class="dropdown-toggle"><i class="{{ $v->classfaicon }}"></i>{{ $v->tenloai }}</a>
-            </li><!-- /.menu-item -->
+                <a href="{{route('loaisanpham',$v->id)}}" class="dropdown-toggle"><i class="{{ $v->classfaicon }}"></i>{{ $v->tenloai }}</a>
+            </li>
             @endforeach
 
             {{-- <li class="dropdown menu-item">
