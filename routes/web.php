@@ -29,6 +29,7 @@ Auth::routes();
 
 Route::group(['prefix'=>'/home'], function () {
     Route::get('/', 'Shop\HomeController@index')->name('home');
+    Route::get('/gio-hang', 'Shop\ShoppingCart@index')->name('cart');
 });
 
 Route::get('/', function(){

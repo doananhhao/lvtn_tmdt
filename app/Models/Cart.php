@@ -39,6 +39,10 @@ class Cart extends Eloquent
 		Session::forget('cart');
 	}
 
+	function getAll(){
+		return $this->items;
+	}
+
 	/**
 	 * 
 	 * $id: id của sản phẩm cần thực hiện

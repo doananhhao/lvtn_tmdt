@@ -4,23 +4,24 @@
 		<div class="header-top-inner">
 			<div class="cnt-account">
 				<ul class="list-unstyled">
-					<li><a href="#"><i class="icon fa fa-user"></i>My Account</a></li>
-					<li><a href="#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-					<li><a href="#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-					<li><a href="#"><i class="icon fa fa-key"></i>Checkout</a></li>
+					@if (Auth::check())
+					<li><a href="#"><i class="icon fa fa-user"></i>Tài khoản</a></li>
+					@endif
+					<li><a href="#"><i class="icon fa fa-heart"></i>Yêu thích</a></li>
+					<li><a href="{{ route('cart') }}"><i class="icon fa fa-shopping-cart"></i>Giỏ hàng</a></li>
 					@if (!Auth::check())
 					<li><a href="{{ route('login') }}"><i class="icon fa fa-sign-in"></i>Đăng nhập</a></li>
 					@else
 					<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-						document.getElementById('logout-form').submit();"><i class="icon fa fa-sign-in"></i>Đăng xuất</a></li>
+						document.getElementById('logout-form').submit();"><i class="icon fa fa-sign-out"></i>Đăng xuất</a></li>
 					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 						@csrf
 					</form>
 					@endif
 				</ul>
 			</div><!-- /.cnt-account -->
-
-			<div class="cnt-block">
+			
+			{{-- <div class="cnt-block">
 				<ul class="list-unstyled list-inline">
 					<li class="dropdown dropdown-small">
 						<a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="key">currency :</span><span class="value">USD </span><b class="caret"></b></a>
@@ -40,7 +41,7 @@
 						</ul>
 					</li>
 				</ul><!-- /.list-unstyled -->
-			</div><!-- /.cnt-cart -->
+			</div><!-- /.cnt-cart --> --}}
 			<div class="clearfix"></div>
 		</div><!-- /.header-top-inner -->
 	</div><!-- /.container -->
