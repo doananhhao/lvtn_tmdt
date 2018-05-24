@@ -52,6 +52,22 @@
 			<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 
+
+		<style type="text/css">
+	    	.star-rating {
+  line-height:32px;
+  font-size:2.5em;
+}
+
+.star-rating .fa-star{color: yellow;}
+
+
+
+
+
+
+	    </style>
+
 	</head>
     <body class="cnt-home">
 
@@ -114,7 +130,29 @@
 	</script>
 	<!-- For demo purposes – can be removed on production : End -->
 
-	
+	<script type="text/javascript">
+	var $star_rating = $('.star-rating .fa');
+
+var SetRatingStar = function() {
+  return $star_rating.each(function() {
+    if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+      return $(this).removeClass('fa-star-o').addClass('fa-star');
+    } else {
+      return $(this).removeClass('fa-star').addClass('fa-star-o');
+    }
+  });
+};
+
+$star_rating.on('click', function() {
+  $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+  return SetRatingStar();
+});
+
+SetRatingStar();
+$(document).ready(function() {
+
+});
+</script>
 
 </body>
 </html>
