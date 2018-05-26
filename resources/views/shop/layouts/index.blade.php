@@ -8,8 +8,8 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 	    <meta name="keywords" content="MediaCenter, Template, eCommerce">
-	    <meta name="robots" content="all">
-
+		<meta name="robots" content="all">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 	    <title>Unicase</title>
 
 	    <!-- Bootstrap Core CSS -->
@@ -115,7 +115,92 @@
 	
 	<script src="{{ asset('') }}/switchstylesheet/switchstylesheet.js"></script>
 	
+	@yield('javascript')
+
 	<script>
+		// add to cart
+		var atc = function(data){
+			var product = document.createElement("div");
+			product.className = 'row';
+			
+			document.getElementById('th_cart').appendChild(product);
+			var row1 = "";
+			row1 += '<div class="col-xs-4">';
+			row1 += '<div class="image" style="max-width: 47px; max-height: 61px;">';
+			//row1 += '<a href="' + baseurl + '/san-pham/' + urlsanpham + '"><img src="' + baseurl + '/shop/images/sanpham/' + urlsanpham + '.jpg" alt=""></a>';
+			row1 += '<a href="' + data.product_URL + '"><img src="' + data.imageURL + '" class="img-responsive" alt="' + data.product_name + '"></a>';
+			row1 += '</div></div>';
+			
+			product.innerHTML += '<br>' + row1;
+			
+			var row2 = "";
+			row2 += '<div class="col-xs-7">';
+			//row2 += '<h3 class="name"><a href="' + baseurl + '/san-pham/' + urlsanpham + '">' + tensp + '</a></h3>';
+			//row2 += '<div class="price">' + gia + 'đ</div>';
+			row2 += '<h3 class="name"><a href="' + data.product_URL + '">' + data.product_name + '</a></h3>';
+			row2 += '<div class="price">' + data.price + '</div>';
+			row2 += '<div>x 1</div></div>';
+			
+			product.innerHTML += row2;
+			
+			product.innerHTML += '<div class="col-xs-1 action"><a href="#" onclick="XoaCart(this, ' + data.id + ')"><i class="fa fa-trash"></i></a></div>';
+
+			document.getElementById('th_cart').innerHTML += "<hr>";
+		}
+		function XoaCart(e, spxoa){
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			ajax = {
+				url: "{{route('remove')}}",
+				type: "POST",
+				dataType: "json",
+				data: {
+					"id": spxoa
+				},
+				success: function(data){
+					$("#totalPrice, #totalPrice2").html(data.totalPrice)
+					$('.count').html(data.count)
+					e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode)
+				},
+				error: function (data) {
+					console.log('Error:', data);
+				}
+			}
+			$.ajax(ajax);
+		}
+		function add_to_cart(e, id){
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			ajax = {
+				url: "{{route('add-to-cart')}}",
+				type: "POST",
+				dataType: "json",
+				data: {
+					"id": id
+				},
+				success: function(data){
+					if (!data.success){
+						alert("Sản phẩm đã có rồi")
+						return;
+					}
+					$("#totalPrice, #totalPrice2").html(data.totalPrice)
+					$('.count').html(data.count)
+					atc(data)
+				},
+				error: function (data) {
+					console.log('Error:', data);
+				}
+			}
+			$.ajax(ajax);
+		}
+		// add to cart
+
 		$(document).ready(function(){ 
 			$(".changecolor").switchstylesheet( { seperator:"color"} );
 			$('.show-theme-options').click(function(){
@@ -149,9 +234,6 @@ $star_rating.on('click', function() {
 });
 
 SetRatingStar();
-$(document).ready(function() {
-
-});
 </script>
 
 </body>

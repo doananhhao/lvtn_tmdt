@@ -16,8 +16,8 @@
 			</div><!-- /.hot-deal-wrapper -->
 
 			<div class="product-info text-left m-t-20">
-				<h3 class="name"><a href="#">{{ $v->tensanpham }}</a></h3>
-				<div class="rating rateit-small"></div>
+				<h3 class="name"><a href="{{ route('chitietsanpham', ['tensp' => $v->id]) }}">{{ $v->tensanpham }}</a></h3>
+				<div class="rateit" data-rateit-value="{{ $v->score }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 
 				<div class="product-price">	
 					<span class="price">
@@ -34,10 +34,10 @@
 				<div class="action">
 					
 					<div class="add-cart-button btn-group">
-						<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
+						<button class="btn btn-primary icon" data-toggle="dropdown" type="button"  onclick="add_to_cart(this, {{ $v->id }})">
 							<i class="fa fa-shopping-cart"></i>													
 						</button>
-						<button class="btn btn-primary" type="button">Add to cart</button>
+						<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $v->id }})">Add to cart</button>
 												
 					</div>
 					

@@ -1,5 +1,5 @@
 <?php
-function displayProductMicro($productName,$is_new,$is_sale,$is_hot,$productMicroImage, $oldPrice = 800.00,$price = 650.99, $score = 4){
+function displayProductMicro($productName,$is_new,$is_sale,$is_hot,$productMicroImage,$id = 1,$price = 650.99, $score = 3){
 ?>
 <div class="product-micro">
 	<div class="row product-micro-row">
@@ -32,15 +32,15 @@ function displayProductMicro($productName,$is_new,$is_sale,$is_hot,$productMicro
 		</div><!-- /.col -->
 		<div class="col col-xs-7">
 			<div class="product-info">
-				<h3 class="name"><a href="#"><?php echo $productName; ?></a></h3>
-				<div class="rating rateit-small"></div>
+				<h3 class="name"><a href="{{ route('chitietsanpham', ['tensp'=>$id]) }}"><?php echo $productName; ?></a></h3>
+				<div class="rateit" data-rateit-value="{{ $score }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 				<div class="product-price">	
-				<span class="price">
-					$<?php echo $price; ?>
-				</span>
-				
-			</div><!-- /.product-price -->
-				<div class="action"><a href="#" class="lnk btn btn-primary">Add To Cart</a></div>
+					<span class="price">
+						<?php echo number_format($price, 0, ',', '.');?>
+					</span>
+					
+				</div><!-- /.product-price -->
+				<div class="action"><a href="#" class="lnk btn btn-primary" onclick="add_to_cart(this, {{ $id }})">Add To Cart</a></div>
 			</div>
 		</div><!-- /.col -->
 	</div><!-- /.product-micro-row -->

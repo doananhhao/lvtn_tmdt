@@ -1,11 +1,11 @@
 <?php
-function displayProduct($productName,$is_new,$is_sale,$is_hot,$productImageURL,$actionType = 'all', $oldPrice = 800.00,$price = 650.99, $score = 4){
+function displayProduct($productName,$is_new,$is_sale,$is_hot,$productImageURL,$id = 1,$actionType = 'homepage-cart', $oldPrice = 800.00,$price = 650.99, $score = 3){
 ?>
 
 	<div class="product">		
 		<div class="product-image">
 			<div class="image">
-                <a href="#"><img  src="{{ asset('shop/images/blank.gif') }}" data-echo="<?php echo $productImageURL;?>" alt=""></a>
+                <a href="{{ route('chitietsanpham', ['tensp'=>$id]) }}"><img  src="{{ asset('shop/images/blank.gif') }}" data-echo="<?php echo $productImageURL;?>" alt=""></a>
 			</div><!-- /.image -->			
 
 			<?php if($is_new):?><div class="tag new"><span>new</span></div><?php endif;?>
@@ -16,16 +16,17 @@ function displayProduct($productName,$is_new,$is_sale,$is_hot,$productImageURL,$
 			
 		
 		<div class="product-info text-left">
-			<h3 class="name"><a href="#"><?php echo $productName;?></a></h3>
-			<div class="rating rateit-small"></div>
-			<div class="description"></div>
+			<h3 class="name"><a href="{{ route('chitietsanpham', ['tensp'=>$id]) }}"><?php echo $productName;?></a></h3>
+			{{-- <div class="rating rateit-small"></div> --}}
+			<div class="rateit" data-rateit-value="{{ $score }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+			{{-- <div class="description"></div> --}}
 
 			<div class="product-price">	
 				<span class="price">
-					$<?php echo $price;?>
+					<?php echo number_format($price, 0, ',', '.');?>
 				</span>
-					<?php if($oldPrice):?>
-					     <span class="price-before-discount">$ <?php echo $oldPrice;?></span>
+					<?php if($oldPrice != 0):?>
+					     <span class="price-before-discount"><?php echo number_format($oldPrice, 0, ',', '.');?></span>
 					<?php endif;?>
 				
 			</div><!-- /.product-price -->
@@ -63,9 +64,9 @@ function displayProduct($productName,$is_new,$is_sale,$is_hot,$productImageURL,$
 			<div class="cart clearfix animate-effect">
 				<div class="action">
 								
-					<button class="btn btn-primary" type="button">Add to cart</button>
+					<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $id }})">Add to cart</button>
 					<button class="left btn btn-primary" type="button"><i class="icon fa fa-heart"></i></button>
-					<button class="left btn btn-primary" type="button"><i class="fa fa-retweet"></i></button>						
+					{{-- <button class="left btn btn-primary" type="button"><i class="fa fa-retweet"></i></button>						 --}}
 
 		                
 					

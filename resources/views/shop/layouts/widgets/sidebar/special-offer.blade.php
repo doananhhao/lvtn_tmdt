@@ -114,8 +114,25 @@ $miniProducts = array(
 				<div class="item">
 					<div class="products special-product">
 							@for ($j = ($i*3)-3; $j <= ($i*3)-1; $j++)
+							<?php
+								$sp = $goi_y[$j];
+								$km = $sp->ChiTietKhuyenMai->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))->first();
+								$dg = $sp->DanhGia;
+								if ($dg->isEmpty())
+									$score = 5;
+								else {
+									// 1 vote tối đa 10 sao
+									$star = 0;
+									$vote_count = 0;
+									foreach ($dg as $v){
+										$vote_count++;
+										$star += $v->votes;
+									}
+									$score = round($star / $vote_count);
+								}
+							?>
 							<div class="product">
-								<?php displayProductMicro($goi_y[$j]->tensanpham, false, false, false, asset('shop/images/pic/muanhieu_'.$goi_y[$j]->hinhanh)) ?>
+									<?php displayProductMicro($sp->tensanpham, false, false, false, asset('shop/images/pic/mh_'.$sp->hinhanh), $sp->id, $km != null ? (1-$km->giamgia)*$sp->gia : $sp->gia, $score/2) ; ?>								
 							</div>
 							@endfor
 					</div>

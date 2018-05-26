@@ -1,4 +1,4 @@
-<div class="col-md-4 col-sm-12 estimate-ship-tax">
+{{-- <div class="col-md-4 col-sm-12 estimate-ship-tax">
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -69,18 +69,15 @@
 				</tr>
 		</tbody><!-- /tbody -->
 	</table><!-- /table -->
-</div><!-- /.estimate-ship-tax -->
+</div><!-- /.estimate-ship-tax --> --}}
 
-<div class="col-md-4 col-sm-12 cart-shopping-total">
+{{-- <div class="col-md-8 col-sm-12 cart-shopping-total">
 	<table class="table table-bordered">
 		<thead>
 			<tr>
 				<th>
-					<div class="cart-sub-total">
-						Subtotal<span class="inner-left-md">$600.00</span>
-					</div>
 					<div class="cart-grand-total">
-						Grand Total<span class="inner-left-md">$600.00</span>
+						Tổng giá<span class="inner-left-md">$600.00</span>
 					</div>
 				</th>
 			</tr>
@@ -89,11 +86,11 @@
 				<tr>
 					<td>
 						<div class="cart-checkout-btn pull-right">
-							<button type="submit" class="btn btn-primary">PROCCED TO CHEKOUT</button>
+							<button type="submit" class="btn btn-primary">ĐẶT HÀNG</button>
 							<span class="">Checkout with multiples address!</span>
 						</div>
 					</td>
 				</tr>
 		</tbody><!-- /tbody -->
 	</table><!-- /table -->
-</div><!-- /.cart-shopping-total -->
+</div><!-- /.cart-shopping-total --> --}}
