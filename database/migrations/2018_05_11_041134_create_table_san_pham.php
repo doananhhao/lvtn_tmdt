@@ -17,7 +17,7 @@ class CreateTableSanPham extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('tensanpham');
-            $table->float('gia');
+            $table->unsignedInteger('gia');
             $table->integer('soluong');
             $table->string('mota', 10000);
             $table->string('hinhanh'); //tên hình đại điện của sản phẩm .*

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class SanPham extends Model
 {
     protected $table = "sanpham";
+
+    protected $fillable = [
+        'tensanpham', 'gia', 'soluong', 'loaisp_id', 'nhacungcap_id', 'mota', 'hinhanh'
+    ];
     
     function NhaCungCap(){
         return $this->belongsTo('App\Models\NhaCungCap', 'nhacungcap_id');

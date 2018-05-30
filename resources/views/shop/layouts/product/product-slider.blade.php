@@ -53,10 +53,26 @@
 				<div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
 					@foreach($sp_moi['sp'] as $sp)
 					@if($sp->loaisp_id == $v->id)
+					<?php
+						$km = $sp->ChiTietKhuyenMai->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))->first();
+						$dg = $sp->DanhGia;
+						if ($dg->isEmpty())
+							$score = 5;
+						else {
+							// 1 vote tối đa 10 sao
+							$star = 0;
+							$vote_count = 0;
+							foreach ($dg as $v){
+								$vote_count++;
+								$star += $v->votes;
+							}
+							$score = round($star / $vote_count);
+						}
+					?>
 					{{-- @include('shop.layouts.product.product-item') --}}
 					<div class="item item-carousel">
 						<div class="products">
-							<?php displayProduct($sp->tensanpham, false, false, false, asset('shop/images/pic/'.$sp->hinhanh)) ; ?>
+							<?php displayProduct($sp->tensanpham, false, false, false, asset('shop/images/pic/'.$sp->hinhanh), $sp->id, 'homepage-cart', $km != null ? (1-$km->giamgia)*$sp->gia : 0, $sp->gia, $score/2) ; ?>
 						</div><!-- /.products -->
 					</div><!-- /.item -->
 					@endif

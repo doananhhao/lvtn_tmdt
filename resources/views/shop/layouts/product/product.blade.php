@@ -22,11 +22,9 @@ function displayProduct($productName,$is_new,$is_sale,$is_hot,$productImageURL,$
 			{{-- <div class="description"></div> --}}
 
 			<div class="product-price">	
-				<span class="price">
-					<?php echo number_format($price, 0, ',', '.');?>
-				</span>
+				<span class="price"><?php echo number_format($price, 0, ',', '.');?></span>
 					<?php if($oldPrice != 0):?>
-					     <span class="price-before-discount"><?php echo number_format($oldPrice, 0, ',', '.');?></span>
+				<span class="price-before-discount"><?php echo number_format($oldPrice, 0, ',', '.');?></span>
 					<?php endif;?>
 				
 			</div><!-- /.product-price -->

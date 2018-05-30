@@ -17,7 +17,7 @@ class CreateTableLoaiKhuyenMai extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('tenkhuyenmai'); //tên của đợt khuyến mãi
-            $table->string('mota')->comment('Ghi chú thêm');
+            $table->string('mota', 10000)->comment('Ghi chú thêm');
             $table->timestamps();
         });
     }
