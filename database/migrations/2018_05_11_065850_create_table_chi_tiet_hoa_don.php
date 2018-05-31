@@ -20,7 +20,7 @@ class CreateTableChiTietHoaDon extends Migration
             $table->unsignedInteger('sanpham_id');
             $table->unsignedInteger('loaikhuyenmai_id')->nullable();
             $table->unsignedInteger('soluong'); //số lượng sản phẩm
-            $table->float('gia')->comment('Gía tại thời điểm bán của sản phẩm');
+            $table->unsignedInteger('gia')->comment('Gía tại thời điểm bán của sản phẩm');
             $table->timestamps();
 
             $table->foreign('hoadon_id')

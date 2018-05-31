@@ -61,12 +61,15 @@ class HomeController extends Controller
 
     function test(){
         echo "<pre>";
-        var_dump(ChiTietKhuyenMai::where([
-            ['sanpham_id', 5],
-            ['ngayketthuc', '>=', '2018-05-23 15:55:52']
-        ])->orderBy('giamgia', 'desc')->first());
 
-        // var_dump(SanPham::find(5)->ChiTietKhuyenMai->where('ngayketthuc', '>=', '2018-05-23 15:55:52')->toArray());
+        // var_dump(ChiTietKhuyenMai::where([
+        //     ['sanpham_id', 5],
+        //     ['ngayketthuc', '>=', '2018-05-23 15:55:52']
+        // ])->orderBy('giamgia', 'desc')->first());
+        $list = $this->getSPKMdacbiet();
+        foreach ($list as $sp){
+            echo "$sp->id - $sp->tensanpham: =score: $sp->score<br>";            
+        }
 
         // var_dump(Session::has('cart'));
     }
@@ -84,6 +87,20 @@ class HomeController extends Controller
         foreach ($list as $v){
             $sp = SanPham::find($v->sanpham_id);
             $sp->giamgia = $v->giamgia;
+            $dg = $sp->DanhGia;
+            if ($dg->isEmpty())
+                $score = 5;
+            else {
+                // 1 vote tối đa 10 sao
+                $star = 0;
+                $vote_count = 0;
+                foreach ($dg as $v){
+                    $vote_count++;
+                    $star += $v->votes;
+                }
+                $score = round($star / $vote_count);
+            }
+            $sp->score = $score/2;
             $list2[] = $sp;
         }
         return $list2;
