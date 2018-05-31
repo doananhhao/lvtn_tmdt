@@ -11,7 +11,6 @@
 				        }else{              // không đăng nhập
 				        	?><li><a href="{{ route('login') }}"><i class="icon fa fa-user"></i>Tài khoản của tôi</a></li>
 				            <?php
-				            
 				        } 
 				        ?>
 					<li><a href="#"><i class="icon fa fa-heart"></i>Yêu thích</a></li>
