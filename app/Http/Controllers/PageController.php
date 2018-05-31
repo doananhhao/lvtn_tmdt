@@ -10,6 +10,9 @@ use App\Models\ChiTietHoaDon;
 use App\Models\HoaDon;
 use App\Models\LoaiSP;
 use App\Models\ChiTietKhuyenMai;
+use App\Models\BinhLuan;
+use App\Models\DanhGia;
+use App\Models\ThanhVien;
 
 
 
@@ -46,8 +49,21 @@ class PageController extends Controller
             $sp->giamgia = $v->giamgia;
             $giamgiadb[] = $sp;
         }
-    	return view('shop.layouts.page.chitietsanpham',compact('sanpham','giamgiadb'));
+        $sobinhluan = BinhLuan::where('sanpham_id',$id)->count();
+        $binhluan = BinhLuan::join('users','user_id','=','users.id')->where('sanpham_id',$id)->paginate(10);
+
+        //$sodanhgia = DanhGia::where('sanpham_id',$id)->count();
+        //$danhgia = DanhGia::join('thanhvien','thanhvien_id','=','users.id')->join('users','user_id','=','users.id')->where('sanpham_id',$id)->paginate(10);
+        
+    	return view('shop.layouts.page.chitietsanpham',compact('sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia'));
     } 
+
+    public function getInfo(){
+        return view('shop.layouts.page.info');
+    }
+    public function searchSP(){
+        return view('shop.layouts.page.timkiem');
+    }
      
     public function getAbout(){
     	return view('page.gioithieu');

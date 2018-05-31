@@ -8,7 +8,7 @@
     </div><!-- /.contact-row -->
     <!-- ============================================================= SEARCH AREA ============================================================= -->
     <div class="search-area">
-        <form>
+        <form method="get">
             <div class="control-group">
     
                 <ul class="categories-filter animate-dropdown">
@@ -17,17 +17,17 @@
                         <a class="dropdown-toggle"  data-toggle="dropdown" href="#">Categories <b class="caret"></b></a>
     
                         <ul class="dropdown-menu" role="menu" >
-                            <li class="menu-header">Computer</li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Laptops</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Tv & audio</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Gadgets</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Cameras</a></li>
-    
-                        </ul>
+                        <li class="menu-header">Computer</li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category">- Laptops</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category">- Tv & audio</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category">- Gadgets</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category">- Cameras</a></li>
+
+                    </ul>
                     </li>
                 </ul>
     
-                <input class="search-field" placeholder="Search here..." />
+                <input class="search-field" type="text" placeholder="Tìm kiếm..." />
     
                 <a class="search-button" href="#" ></a>    
     

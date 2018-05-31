@@ -447,8 +447,17 @@
 											<h4 class="title">Đánh giá sản phẩm</h4>
 
 											<div class="container">
+												<div class="review-form">
+												<div class="form-container">
+													<?php
+													if (Auth::check()){ // có đăng nhập
+														?>
+													<form role="form" class="cnt-form">
   <div class="row">
-    <div class="col-lg-12">
+
+    <div class="col-lg-3" >
+    	<br>
+
       <div class="star-rating">
         <span class="fa fa-star-o" data-rating="1"></span>
         <span class="fa fa-star-o" data-rating="2"></span>
@@ -456,41 +465,50 @@
         <span class="fa fa-star-o" data-rating="4"></span>
         <span class="fa fa-star-o" data-rating="5"></span>
         <input type="hidden" name="whatever1" class="rating-value" value="2.56">
+        <div style="font-size: 14px">Chất lượng sản phẩm</div>
 
 
       </div>
+     
     </div>
-  </div>
-  
+    <div class="col-lg-3">
+    	<div class="form-group">
+																	
+			<textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
+		</div><!-- /.form-group -->
+    </div>
+  </div> 
+  <div style="width: 48.5%;text-align: right;">
+		<button class="btn btn-primary btn-upper">Đánh giá</button>
+</div><!-- /.action -->
+  </form><!-- /.cnt-form -->
+												
+												<?php
+									        }else{              // không đăng nhập
+									        	?>
+									        	<form role="form" class="cnt-form">
+												  <div class="row">
+												  	<br>
+												    <div><a href="{{ route('login') }}">Đăng nhập</a>  để đánh giá sản phẩm này.</div>
+												    <br>
+												    <br>
+												  </div> 
+												  
+												  </form><!-- /.cnt-form -->
+									        	<?php
+				            
+										        } 
+										        ?>
+											</div><!-- /.form-container -->
+											</div><!-- /.review-form -->
+
+										</div><!-- /.product-reviews -->
   
 </div>
 
 
 
-											<div class="review-form">
-												<div class="form-container">
-													<form role="form" class="cnt-form">
-
-														<div class="row">
-															
-
-															<div class="col-md-12">
-																<div class="form-group">
-																	<label for="exampleInputReview">Review <span class="astk">*</span></label>
-																	<textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
-																</div><!-- /.form-group -->
-															</div>
-														</div><!-- /.row -->
-
-														<div class="action text-right">
-															<button class="btn btn-primary btn-upper">SUBMIT REVIEW</button>
-														</div><!-- /.action -->
-
-													</form><!-- /.cnt-form -->
-												</div><!-- /.form-container -->
-											</div><!-- /.review-form -->
-
-										</div><!-- /.product-reviews -->
+											
 										
 
 										
@@ -501,11 +519,13 @@
 
 										<div class="reviews">
 											 <div class="container">
+
+
     			
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="rating-block">
-					<h4>Average user rating</h4>
+					<h4>30 Đánh giá</h4>
 					<h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
 					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
 					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
@@ -525,7 +545,7 @@
 				</div>
 			</div>
 			<div class="col-sm-3">
-				<h4>Rating breakdown</h4>
+				<h4>Xếp hạng đánh giá</h4>
 				<div class="pull-left">
 					<div class="pull-left" style="width:35px; line-height:1;">
 						<div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>
@@ -594,99 +614,7 @@
 			</div>			
 		</div>			
 		
-		<div class="row">
-			<div class="col-sm-6">
-				<hr/>
-				<div class="review-block">
-					<div class="row">
-						<div class="col-sm-3">
-							<img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-							<div class="review-block-name"><a href="#">nktailor</a></div>
-							<div class="review-block-date">January 29, 2016<br/>1 day ago</div>
-						</div>
-						<div class="col-sm-9">
-							<div class="review-block-rate">
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-							</div>
-							<div class="review-block-title">this was nice in buy</div>
-							<div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-						</div>
-					</div>
-					<hr/>
-					<div class="row">
-						<div class="col-sm-3">
-							<img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-							<div class="review-block-name"><a href="#">nktailor</a></div>
-							<div class="review-block-date">January 29, 2016<br/>1 day ago</div>
-						</div>
-						<div class="col-sm-9">
-							<div class="review-block-rate">
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-							</div>
-							<div class="review-block-title">this was nice in buy</div>
-							<div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-						</div>
-					</div>
-					<hr/>
-					<div class="row">
-						<div class="col-sm-3">
-							<img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-							<div class="review-block-name"><a href="#">nktailor</a></div>
-							<div class="review-block-date">January 29, 2016<br/>1 day ago</div>
-						</div>
-						<div class="col-sm-9">
-							<div class="review-block-rate">
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-								  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-							</div>
-							<div class="review-block-title">this was nice in buy</div>
-							<div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 		
     </div> <!-- /container -->
 
@@ -700,27 +628,89 @@
 
 								<div id="tags" class="tab-pane">
 									<div class="product-tag">
+
+
+						<?php
+						if (Auth::check()){ // có đăng nhập
+							?>
+									<div class="review-form">
+												<div class="form-container">
+													<form role="form" class="cnt-form">
+
+														<div class="row">
+															
+
+															<div class="col-md-12">
+																<div class="form-group">
+																	<h4 class="title-review-comments">Viết bình luận <span class="astk">*</span></h4>
+																	<textarea class="form-control txt txt-review" id="exampleInputReview" rows="3" placeholder=""></textarea>
+																</div><!-- /.form-group -->
+															</div>
+														</div><!-- /.row -->
+
+														<div class="action text-right">
+															<button class="btn btn-primary btn-upper">Bình luận</button>
+														</div><!-- /.action -->
+
+													</form><!-- /.cnt-form -->
+												</div><!-- /.form-container -->
+											</div><!-- /.review-form -->
+											<?php
+									        }else{              // không đăng nhập
+									        	?>
+									        	<div class="review-form">
+												<div class="form-container">
+													<form role="form" class="cnt-form">
+
+														<div class="row">
+															
+
+															<div class="col-md-12">
+																<div class="form-group">
+																	<h4 class="title-review-comments">Viết bình luận <span class="astk">*</span></h4><br>
+																	<div><a href="{{ route('login') }}">Đăng nhập</a> hoặc <a href="{{ route('register') }}">Đăng kí</a> để đặt câu hỏi cho nhà bán hàng ngay và câu trả lời sẽ được hiển thị tại đây.</div>
+																</div><!-- /.form-group -->
+															</div>
+														</div><!-- /.row -->
+
+														
+
+													</form><!-- /.cnt-form -->
+												</div><!-- /.form-container -->
+											</div><!-- /.review-form -->
+									        	<?php
+				            
+				        } 
+				        ?>
 										
 										
 										<div class="blog-review wow fadeInUp">
+
+
+
 	<div class="row">
 		<div class="col-md-12">
-			<h3 class="title-review-comments">16 comments</h3>
+			<h3 class="title-review-comments">Bình luận về sản phẩm này ({{$sobinhluan}})</h3>
 		</div>
+
+
+		@foreach($binhluan as $bl)	
 		<div class="col-md-2 col-sm-2">
-			<img src="../shop/images/blog-post/c1.jpg" alt="Responsive image" class="img-rounded img-responsive">
+			<img src="../shop/images/blog-post/{{$bl->avatar}}" alt="Responsive image" class="img-rounded img-responsive">
 		</div>
 		<div class="col-md-10 col-sm-10 blog-comments outer-bottom-xs">
 			<div class="blog-comments inner-bottom-xs">
-				<h4 style="display: inline-block;">Jone doe</h4>
+				<h4 style="display: inline-block;">{{$bl->name}}</h4>
 				<span class="review-action pull-right">
-					03 Day ago &sol;   
-					<a href=""> Repost</a> &sol;
-					<a href=""> Reply</a>
+					{{$bl->created_at->format('d/m/Y')}}   
+					
+					<!-- <a href="">&sol;  Reply</a> -->
 				</span>
-				<p>Integer sit amet commodo eros, sed dictum ipsum. Integer sit amet commodo eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibul um quis convallis lorem, ac volutpat magna. Suspendisse potenti.</p>
+				<p>{{$bl->noidung}}</p>
 			</div>
-			<div class="blog-comments-responce outer-top-xs ">
+
+
+			<!-- <div class="blog-comments-responce outer-top-xs ">
 				<div class="row">
 					<div class="col-md-2 col-sm-2">
 						<img src="../shop/images/blog-post/c2.jpg" alt="Responsive image" class="img-rounded img-responsive">
@@ -736,52 +726,17 @@
 							<p>Integer sit amet commodo eros, sed dictum ipsum. Integer sit amet commodo eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 						</div>
 					</div>
-					<div class="col-md-2 col-sm-2">
-						<img src="../shop/images/blog-post/c3.jpg" alt="Responsive image" class="img-rounded img-responsive">
-					</div>
-					<div class="col-md-10 col-sm-10">
-						<div class=" inner-bottom-xs">
-							<h4 style="display: inline-block;">mike</h4>
-							<span class="review-action pull-right">
-								03 Day ago &sol;   
-								<a href=""> Repost</a> &sol;
-								<a href=""> Reply</a>
-							</span>
-							<p>Integer sit amet commodo eros, sed dictum ipsum. Integer sit amet commodo eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-						</div>
-					</div>
+					
+					
 				</div>
-			</div>
+			</div> -->
+
+
 		</div>
-		<div class="col-md-2 col-sm-2">
-			<img src="../shop/images/blog-post/c4.jpg" alt="Responsive image" class="img-rounded img-responsive">
-		</div>
-		<div class="col-md-10 col-sm-10">
-			<div class="blog-comments inner-bottom-xs outer-bottom-xs">
-				<h4 style="display: inline-block;">onrents</h4>
-				<span class="review-action pull-right">
-					03 Day ago &sol;   
-					<a href=""> Repost</a> &sol;
-					<a href=""> Reply</a>
-				</span>
-				<p>Integer sit amet commodo eros, sed dictum ipsum. Integer sit amet commodo eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibul um quis convallis lorem, ac volutpat magna. Suspendisse potenti.</p>
-			</div>
-		</div>
-		<div class="col-md-2 col-sm-2">
-			<img src="../shop/images/blog-post/c5.jpg" alt="Responsive image" class="img-rounded img-responsive">
-		</div>
-		<div class="col-md-10 col-sm-10">
-			<div class="blog-comment inner-bottom-xs">
-				<h4 style="display: inline-block;">michael lee</h4>
-				<span class="review-action pull-right">
-					03 Day ago &sol;   
-					<a href=""> Repost</a> &sol;
-					<a href=""> Reply</a>
-				</span>
-				<p>Integer sit amet commodo eros, sed dictum ipsum. Integer sit amet commodo eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibul um quis convallis lorem, ac volutpat magna. Suspendisse potenti.</p>
-			</div>
-		</div>
-		<div class="post-load-more col-md-12"><a class="btn btn-upper btn-primary" href="#">Load more</a></div>
+		@endforeach
+		<div class="clearfix"></div>
+		<div style="text-align: center;">{{$binhluan->links()}}</div>
+		
 	</div>
 </div>					
 

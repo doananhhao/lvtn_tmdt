@@ -61,12 +61,10 @@
 
 .star-rating .fa-star{color: yellow;}
 
-
-
-
-
-
 	    </style>
+
+
+	    
 
 	</head>
     <body class="cnt-home">
@@ -153,6 +151,14 @@ $(document).ready(function() {
 
 });
 </script>
+
+
+
+
+
+
+
+
 
 </body>
 </html>

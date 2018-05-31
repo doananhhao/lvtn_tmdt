@@ -54,6 +54,9 @@ class HomeController extends Controller
          */
         $this->data['giamgia'] = $this->getAllSaleProduct();
         $this->data['giamgiadb'] = $this->getSPKMdacbiet();
+
+        
+        
     }
 
     function test(){
