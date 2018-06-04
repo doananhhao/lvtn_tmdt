@@ -67,7 +67,7 @@ class LoaiKhuyenMaiController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect()->route('loai-khuyen-mai.chi-tiet-khuyen-mai.index', ['loai_khuyen_mai' => $id]);
     }
 
     /**

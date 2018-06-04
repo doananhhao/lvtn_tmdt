@@ -12,6 +12,7 @@
                     <thead>
                         <tr>
                             <th>Tên nhà cung cấp</th>
+                            <th>Sản phẩm</th>
                             <th>Địa chỉ</th>
                             <th>Số điện thoại</th>
                             <th>Ngày thêm</th>
@@ -22,11 +23,12 @@
                     <tbody>
                         @foreach ($ncc as $v)
                         <tr>
-                            <td>{{ $v->ten }}</td>
+                            <td><a href="{{ route('nha-cung-cap.show', ['id' => $v->id]) }}" data-toggle="tooltip" data-original-title="Các sản phẩm thuộc {{ $v->ten }}">{{ $v->ten }}</a></td>
+                            <td>{{ count($v->SanPham) }}</td>
                             <td>{{ $v->diachi }}</td>
                             <td>{{ $v->sdt }}</td>
-                            <td>{{ date('d-m-Y H:i:s', strtotime($v->created_at)) }}</td>
-                            <td>{{ date('d-m-Y H:i:s', strtotime($v->updated_at)) }}</td>
+                            <td>{{ date('d-m-Y', strtotime($v->created_at)) }}</td>
+                            <td>{{ date('d-m-Y', strtotime($v->updated_at)) }}</td>
                             <td>
                                 <form id="form{{ $v->id }}" action="{{ route('nha-cung-cap.destroy', ['id' =>$v->id]) }}" method="POST">
                                     @csrf

@@ -12,6 +12,7 @@
                     <thead>
                         <tr>
                             <th>Loại sản phẩm</th>
+                            <th>Sản phẩm</th>
                             <th>Ngày thêm</th>
                             <th>Ngày cập nhật</th>
                             <th>Hành động</th>                            
@@ -20,9 +21,10 @@
                     <tbody>
                         @foreach ($loaisp as $v)
                         <tr>
-                            <td>{{ $v->tenloai }}</td>
-                            <td>{{ date('d-m-Y H:i:s', strtotime($v->created_at)) }}</td>
-                            <td>{{ date('d-m-Y H:i:s', strtotime($v->updated_at)) }}</td>
+                            <td><a href="{{ route('loai-san-pham.show', ['id' => $v->id]) }}" data-toggle="tooltip" data-original-title="Danh sách các sản phẩm {{ $v->tenloai }}">{{ $v->tenloai }}</a></td>
+                            <td>{{ count($v->SanPham) }}</td>
+                            <td>{{ date('d-m-Y', strtotime($v->created_at)) }}</td>
+                            <td>{{ date('d-m-Y', strtotime($v->updated_at)) }}</td>
                             <td>
                                 <form id="form{{ $v->id }}" action="{{ route('loai-san-pham.destroy', ['id' =>$v->id]) }}" method="POST">
                                     @csrf

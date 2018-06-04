@@ -70,7 +70,12 @@ class NhaCungCapController extends Controller
      */
     public function show($id)
     {
-        return redirect()->route('nha-cung-cap.index');
+        if (NhaCungCap::find($id) == null)
+            return abort(404);
+        $ncc = NhaCungCap::find($id);
+        $this->data['dssp'] = $ncc->SanPham()->orderBy('id', 'desc')->paginate(15);
+        $this->data['title2'] = $ncc->ten;
+        return view('admin.sanpham.index', $this->data);
     }
 
     /**

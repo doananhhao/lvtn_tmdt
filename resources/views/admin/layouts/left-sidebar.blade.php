@@ -125,6 +125,21 @@
                         </li>
                     </ul>
                 </li>
+
+
+                <li class="nav-small-cap m-t-10">--- Xét duyệt</li>
+                <li>
+                    <a href="{{ route('dang-ban.index') }}" class="waves-effect">
+                        <i data-icon="v" class="linea-icon linea-ecommerce fa-fw"></i>
+                        <span class="hide-menu">SP đăng bán</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('danh-gia.index') }}" class="waves-effect">
+                        <i data-icon="%" class="linea-icon linea-elaborate fa-fw"></i>
+                        <span class="hide-menu">SP đánh giá</span>
+                    </a>
+                </li>
                 {{-- NỘI DUNG ADMIN --}}
                 {{-- <li class="nav-small-cap m-t-10">--- Main Menu</li>
                 <li>

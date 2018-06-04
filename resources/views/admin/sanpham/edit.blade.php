@@ -9,7 +9,7 @@
             <p class="text-muted"></p>
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('san-pham.update', ['id' => $sp->id]) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    <form action="{{ route('san-pham.update', ['id' => $sp->id]) }}" method="POST" class="form-horizontal">
                         @csrf
                         @method('PUT')
                         <div class="form-group{{ $errors->has('tensanpham') ? ' has-danger' : '' }}">
