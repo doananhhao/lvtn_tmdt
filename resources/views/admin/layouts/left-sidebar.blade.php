@@ -37,7 +37,7 @@
                 </div>
             </div>
             <ul class="nav" id="side-menu">
-                <li class="sidebar-search hidden-sm hidden-md hidden-lg">
+                {{-- <li class="sidebar-search hidden-sm hidden-md hidden-lg">
                     <!-- input-group -->
                     <div class="input-group custom-search-form">
                         <input type="text" class="form-control" placeholder="Search...">
@@ -48,7 +48,7 @@
                         </span>
                     </div>
                     <!-- /input-group -->
-                </li>
+                </li> --}}
                 {{-- NỘI DUNG ADMIN --}}
                 <li>
                     <a href="{{ route('dashboard') }}" class="waves-effect">
@@ -128,6 +128,18 @@
 
 
                 <li class="nav-small-cap m-t-10">--- Xét duyệt</li>
+                <li>
+                    <a href="{{ route('hoa-don.index') }}" class="waves-effect">
+                        <i data-icon="3" class="linea-icon linea-ecommerce fa-fw"></i>
+                        <span class="hide-menu">Hóa đơn</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="waves-effect">
+                        <i data-icon="&#xe00c;" class="linea-icon linea-elaborate fa-fw"></i>
+                        <span class="hide-menu">Bình luận</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('dang-ban.index') }}" class="waves-effect">
                         <i data-icon="v" class="linea-icon linea-ecommerce fa-fw"></i>

@@ -56,7 +56,6 @@ class LoaiSPController extends Controller
             'tenloai' => $request->tenloai,
             'classfaicon' => $request->classfaicon
         ]);
-        
         return back()->with('success', 'Bạn đã thêm thành công '.$request->ten)->withInput();
     }
 

@@ -7,7 +7,7 @@
                 </span>
             </div>
             <div class="r-panel-body">
-                <ul>
+                {{-- <ul>
                     <li>
                         <b>Layout Options</b>
                     </li>
@@ -29,7 +29,7 @@
                             <label for="checkbox2"> Fix Sidebar </label>
                         </div>
                     </li>
-                </ul>
+                </ul> --}}
                 <ul id="themecolors" class="m-t-20">
                     <li>
                         <b>With Light sidebar</b>

@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Admin\Duyet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DangBan;
+use App\Models\LoaiSP;
 
 class DangBanController extends Controller
 {
+    //quản lý số trang
+    private $paginate_set = 15;
     private $data = [];
 
     function __construct(){
         $this->data['title'] = 'Duyệt sản phẩm đăng bán của người dùng';
-        $this->data['title2'] = 'Danh sách các yêu cầu';
+        $this->data['title2'] = 'Danh sách các yêu cầu đăng bán';
     }
     /**
      * Display a listing of the resource.
@@ -21,21 +24,33 @@ class DangBanController extends Controller
      */
     public function index(Request $request)
     {
+        // $this->data['search'] = 1;
         /**
          * null: hiển thị tất cả
          * 0:    hiển thị chưa duyệt
          * 1:    hiển thị đã duyệt
          */
         $tinhtrang = null;
+        $sanpham_id = null;
         if ($request->has('tinhtrang'))
             $tinhtrang = $request->get('tinhtrang');
+        if ($request->has('sanpham'))
+            $sanpham_id = $request->get('sanpham');
+        if (($sanpham_id != null && DangBan::where('sanpham_id', $sanpham_id)->first() == null) || ($tinhtrang != null && DangBan::where('tinhtrang', $tinhtrang)->first() == null))
+            return abort(404);
 
-        if ($tinhtrang == null)
-            $dangban = DangBan::orderBy('id', 'desc')->paginate(15);
-        else $dangban = DangBan::where('tinhtrang', $tinhtrang)->orderBy('id', 'desc')->paginate(15);
+        if ($tinhtrang == null){
+            if ($sanpham_id == null)
+                $dangban = DangBan::orderBy('created_at', 'desc')->paginate($this->paginate_set);
+            else $dangban = DangBan::where('sanpham_id', $sanpham_id)->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+        }else{
+            if ($sanpham_id == null)
+                $dangban = DangBan::where('tinhtrang', $tinhtrang)->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+            else $dangban = DangBan::where([['tinhtrang', $tinhtrang], ['sanpham_id', $sanpham_id]])->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+        }
         $dangban->appends(request()->query());
         $this->data['dangban'] = $dangban;
-
+        $this->data['loaisp'] = LoaiSP::all();
         return view('admin.dang-ban.index', $this->data);
     }
 

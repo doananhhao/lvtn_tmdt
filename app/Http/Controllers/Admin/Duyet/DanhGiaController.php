@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin\Duyet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DanhGia;
+use App\Models\LoaiSP;
 class DanhGiaController extends Controller
 {
+    //quản lý số trang
+    private $paginate_set = 15;
     private $data = [];
 
     function __construct(){
@@ -20,21 +23,33 @@ class DanhGiaController extends Controller
      */
     public function index(Request $request)
     {
+        // $this->data['search'] = 1;
         /**
          * null: hiển thị tất cả
          * 0:    hiển thị chưa duyệt
          * 1:    hiển thị đã duyệt
          */
         $tinhtrang = null;
+        $sanpham_id = null;
         if ($request->has('tinhtrang'))
             $tinhtrang = $request->get('tinhtrang');
+        if ($request->has('sanpham'))
+            $sanpham_id = $request->get('sanpham');
+        if (($sanpham_id != null && DanhGia::where('sanpham_id', $sanpham_id)->first() == null) || ($tinhtrang != null && DangBan::where('tinhtrang', $tinhtrang)->first() == null))
+            return abort(404);
 
-        if ($tinhtrang == null)
-            $dg = DanhGia::orderBy('created_at', 'desc')->paginate(15);
-        else $dg = DanhGia::where('tinhtrang', $tinhtrang)->orderBy('created_at', 'desc')->paginate(15);
+        if ($tinhtrang == null){
+            if ($sanpham_id == null)
+                $dg = DanhGia::orderBy('created_at', 'desc')->paginate($this->paginate_set);
+            else $dg = DanhGia::where('sanpham_id', $sanpham_id)->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+        }else{
+            if ($sanpham_id == null)
+                $dg = DanhGia::where('tinhtrang', $tinhtrang)->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+            else $dg = DanhGia::where([['tinhtrang', $tinhtrang], ['sanpham_id', $sanpham_id]])->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+        }
         $dg->appends(request()->query());
         $this->data['dg'] = $dg;
-
+        $this->data['loaisp'] = LoaiSP::all();
         return view('admin.danh-gia.index', $this->data);
     }
 

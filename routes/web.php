@@ -15,18 +15,19 @@ Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
     echo "<pre>";
+    var_dump(App\Models\DanhGia::where('sanpham_id', 2)->orderBy('created_at', 'desc')->paginate(15));
     // foreach ($users as $user)
     // var_dump($user);
 
     // echo route('loai-khuyen-mai.chi-tiet-khuyen-mai.show', ['loai_khuyen_mai' => 5, 'chi-tiet-khuyen-mai' => 9]);
 
-    var_dump(App\Models\DanhGia::find(4, 2)->toArray());
+    // var_dump(App\Models\DanhGia::find(4, 2)->toArray());
 
     // echo date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s').'+ 3 days'));
 
     // session(['cart' => [1,2,3,4]]);
     // echo "lưu session";
-});
+})->name('test1');
 Route::get('t2', 'Shop\HomeController@test');
 
 /**
@@ -78,8 +79,17 @@ Route::group(['prefix' => '/admin'], function (){
     Route::group(['prefix' => '/dang-ban'], function (){
         Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
     });
+    Route::group(['prefix' => '/binh-luan'], function (){
+        Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
+    });
+    Route::group(['prefix' => '/hoa-don', 'as' => 'hoa-don.'], function (){
+        Route::get('/', 'Admin\Duyet\HoaDonController@index')->name('index');
+    });
 });
 
+Route::get('/admin', function(){
+    return redirect()->route('nha-cung-cap.index');
+});
 Route::get('/', function(){
     return redirect()->route('home');
 });

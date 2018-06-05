@@ -26,14 +26,21 @@
                         <i class="icon-arrow-left-circle ti-menu"></i>
                     </a>
                 </li>
+                @if (isset($search))
                 <li>
-                    <form role="search" class="app-search hidden-xs">
-                        <input type="text" placeholder="Search..." class="form-control">
+                    <form action="" method="GET" role="search" class="app-search hidden-xs">
+                        <input type="text" placeholder="Search..." class="form-control" name='search'>
+                        @foreach(request()->all() as $k=>$v)
+                        @if($k != 'search')
+                        <input type="hidden" value="{{ $v }}" name="{{ $k }}">
+                        @endif
+                        @endforeach
                         <a href="">
                             <i class="fa fa-search"></i>
                         </a>
                     </form>
                 </li>
+                @endif
             </ul>
             <ul class="nav navbar-top-links navbar-right pull-right">
                 <li class="dropdown">
