@@ -19,6 +19,7 @@ class CreateTableDanhGia extends Migration
             $table->unsignedInteger('sanpham_id');
             $table->string('tieude', 255);
             $table->string('noidung', 1500);
+            $table->boolean('tinhtrang')->default(FALSE);
             $table->smallInteger('votes')->comment('Đánh giá số sao tối đa 10');
             $table->timestamps();
 

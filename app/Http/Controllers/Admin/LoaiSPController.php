@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use App\Models\LoaiSP;
+use App\Models\SanPham;
 
 class LoaiSPController extends Controller
 {
@@ -23,7 +24,7 @@ class LoaiSPController extends Controller
     public function index()
     {
         $this->data['loaisp'] = LoaiSP::orderBy('id', 'desc')->paginate(15);
-        $this->data['title2'] = 'Danh sách oại sản phẩm';
+        $this->data['title2'] = 'Danh sách loại sản phẩm';
         return view('admin.loaisp.index', $this->data);
     }
 
@@ -55,7 +56,6 @@ class LoaiSPController extends Controller
             'tenloai' => $request->tenloai,
             'classfaicon' => $request->classfaicon
         ]);
-        
         return back()->with('success', 'Bạn đã thêm thành công '.$request->ten)->withInput();
     }
 
@@ -67,7 +67,12 @@ class LoaiSPController extends Controller
      */
     public function show($id)
     {
-        //
+        if (LoaiSP::find($id) == null)
+            return abort(404);
+        $loaisp = LoaiSP::find($id);
+        $this->data['dssp'] = $loaisp->SanPham()->orderBy('id', 'desc')->paginate(15);
+        $this->data['title2'] = $loaisp->tenloai;
+        return view('admin.sanpham.index', $this->data);
     }
 
     /**

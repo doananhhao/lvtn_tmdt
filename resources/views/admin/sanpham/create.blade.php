@@ -9,7 +9,7 @@
             <p class="text-muted"></p>
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('san-pham.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                    <form action="{{ route('san-pham.store') }}" method="POST" class="form-horizontal">
                         @csrf
                         <div class="form-group{{ $errors->has('tensanpham') ? ' has-danger' : '' }}">
                             <label for="tensanpham" class="col-md-12 text-muted">Tên sản phẩm</label>

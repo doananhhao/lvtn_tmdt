@@ -12,6 +12,7 @@
                     <thead>
                         <tr>
                             <th>Loại khuyến mãi</th>
+                            <th>Sản phẩm</th>
                             <th>Ngày thêm</th>
                             <th>Ngày cập nhật</th>
                             <th>Hành động</th>                            
@@ -21,6 +22,7 @@
                         @foreach ($loaikm as $v)
                         <tr>
                             <td>{{ $v->tenkhuyenmai }}</td>
+                            <td><span class="p-l-20">{{ count($v->ChiTietKhuyenMai) }}</span></td>
                             <td>{{ date('d-m-Y H:i:s', strtotime($v->created_at)) }}</td>
                             <td>{{ date('d-m-Y H:i:s', strtotime($v->updated_at)) }}</td>
                             <td>
@@ -29,6 +31,7 @@
                                     @method('DELETE')
                                 </form>
                                 <a href="{{ route('loai-khuyen-mai.edit', ['id' => $v->id]) }}" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                <a href="{{ route('loai-khuyen-mai.show', ['id' => $v->id])}}" data-toggle="tooltip" data-original-title="Chi tiết"> <i class="fa fa-info text-success m-r-10"></i> </a>
                                 <a href="{{ route('loai-khuyen-mai.destroy', ['id' =>$v->id]) }}" id='orm{{ $v->id }}' class='deleteWarning' data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
                             </td>
                         </tr>

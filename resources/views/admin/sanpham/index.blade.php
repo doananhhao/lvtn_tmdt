@@ -26,7 +26,7 @@
                             <td><a href="{{ route('san-pham.show', ['id' => $sp->id]) }}" class="text-primary">{{ $sp->tensanpham }}</a></td>
                             <td>{{ number_format($sp->gia, 0, ',', '.') }}</td>
                             <td>{{ $sp->soluong }}</td>
-                            <td>{{ $sp->LoaiSP->tenloai }}</td>
+                            <td><a href="{{ route('loai-san-pham.show', ['id' => $sp->LoaiSP->id]) }}">{{ $sp->LoaiSP->tenloai }}</a></td>
                             <td>{{ $sp->NhaCungCap->ten }}</td>
                             <td>{{ date('d-m-Y H:i:s', strtotime($sp->created_at)) }}</td>
                             <td>
