@@ -12,24 +12,8 @@
         
         <div class="col-lg-12">
             <div class="white-box">
-                <h3 class="box-title m-b-0">Quản lý đơn hàng </h3>
-                <br>
-                <div class="table-data__tool">
-                        <div class="table-data__tool-left">
-                            <div class="rs-select2--light rs-select2--md" >
-                                <select class="js-select2" name="order_status" id="status"  onchange="window.location.href = '{{ route('order_list') }}' + '/status/' + this.value">
-                                    <option value="all" {{ (isset($status) && $status == 'all')?'selected':'' }}>Tất cả</option>
-                                    <option value="complete" {{ (isset($status) && $status == 'complete')?'selected':'' }}>Đã mua</option>
-                                    <option value="ongoing" {{ (isset($status) && $status == 'ongoing')?'selected':'' }}>Đang mua</option>
-                                </select>
-                                <div class="dropDownSelect2"></div>
-                            </div>
-                            
-                            
-                        </div>
-                        
-                    </div>
-                    <br>
+                <h3 class="box-title m-b-0">Đơn hàng đã hủy</h3>
+                
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -47,7 +31,7 @@
                         <tbody>
                             @foreach($orders as $order)
                             <tr>
-                                <td><a href="{{ route('order-detail', ['id' => $order['id']]) }}">{{ $order['id'] }}</a></td>
+                                <td><a href="{{ route('cancel-order-detail', ['id' => $order['id']]) }}">{{ $order['id'] }}</a></td>
                                 <td><span class="text-muted"><i class="fa fa-clock-o"></i> {{ date('d-m-Y ', strtotime($order['created_at'])) }}</span> </td>
                                 <td>{{ $order['diachi'] }}</td>
                                 <td>{{ $order['sdt'] }}</td>

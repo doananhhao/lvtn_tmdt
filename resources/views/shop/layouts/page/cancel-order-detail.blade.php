@@ -5,30 +5,7 @@
 
 @section('content')
 
-<div class="col-sm-12">
-        <div class="white-box">
-            <h3 class="box-title m-b-0">Tình trạng đơn hàng</h3>
-            <p class="text-muted m-b-30 font-13"> </p>
-            <div id="exampleBasic2" class="wizard">
-                <ul class="wizard-steps" role="tablist">
-                    <li class="active" role="tab">
-                        <h4><span><i class="ti-user"></i></span>Account</h4>
-                    </li>
-                    <li role="tab">
-                        <h4><span><i class="ti-credit-card"></i></span>Billing</h4>
-                    </li>
-                    <li role="tab">
-                        <h4><span><i class="ti-check"></i></span>Confirmation</h4>
-                    </li>
-                </ul>
-                <div class="wizard-content">
-                    <div class="wizard-pane active" role="tabpanel">mấy cái jquery vs js để ngay dưới file blade này, có gì xóa</div>
-                    <div class="wizard-pane" role="tabpanel">zczxczxc</div>
-                    <div class="wizard-pane" role="tabpanel">gnfgnfgn</div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 
 <div class="col-sm-12">

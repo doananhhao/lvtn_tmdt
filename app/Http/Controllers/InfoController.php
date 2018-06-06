@@ -15,7 +15,9 @@ class InfoController extends Controller
 {
     protected $data = array();
 
-    
+    function __construct(){
+        $this->middleware('auth');
+    }
 
     public function index()
     {
@@ -49,79 +51,36 @@ class InfoController extends Controller
      * CÁC HÀM XỬ LÝ CỦA Order
      */
 
-    private function check_validator_detail(Request $request){
-        return Validator::make($request->all(), [
-            'phone_id' => 'required|exists:phone,id',
-            'amount' => 'required|min:1',
-            'order_id' => 'required|exists:orders,id',
-        ]);
-    }
 
-    private function check_delivered($id){
-        $order = Orders::find($id)->toArray;
-        return $order['delivered'] == 1?true:false;
-    }
+    
     
 
-    public function save_detail(Request $request){
-        $validator = $this->check_validator_detail($request);
+    public function save_edit_user(Request $request){
 
-        $errors = $validator->errors()->toArray();
-        
-        $order_detail = Order_detail::find($request->order_detail_id);
+		$this->validate($request, [
+				
+            'hoten'  => 'required|min:3',
+            'diachi' => 'required|min:3',
+            'sdt'     => 'required|min:10|max:11',
+            
+        ]);
 
-        if ($validator->fails()){
-            if (isset($errors['order_id']) || ($order_detail != null && $order_detail->order_id == $request->order_id))
-                return redirect()->route('order_list');
-        
-            if ($request->order_detail_id == null)
-                return redirect()->route('add_order_detail', ['order_id' => $request->order_id])->withErrors($validator)->withInput();
+        $sanpham = Auth::user();
+        $sanpham->name = $request->hoten;
+        $sanpham->diachi = $request->diachi;
+        $sanpham->sdt = $request->sdt;
+       
+        $sanpham->save();
 
-            if ($order_detail != null && $order_detail->order_id == $request->order_id)
-                return redirect()->route('edit_order_detail', ['order_id' => $request->order_id, 'order_detail_id' => $request->order_detail_id])->withErrors($validator)->withInput();
-
-            return redirect()->route('order_list');
-        }
-
-        if ($order_detail == null){
-            $order_detail = new Order_detail(); 
-        }
-        if (Order_detail::where([['phone_id', $request->phone_id],['order_id', $request->order_id]])->first() != null){
-            $order_detail = Order_detail::where([['phone_id', $request->phone_id],['order_id', $request->order_id]])->first();
-        }
-
-        $order_detail->order_id = $request->order_id;
-        $order_detail->phone_id = $request->phone_id;
-        $order_detail->amount = $request->amount;
-
-        $order_detail->save();
-        
-        return redirect()->route('order_detail', ['id' => $request->order_id]);
-        
+        return back()->with('success', 'Bạn đã cập nhật thành công '.$request->tensanpham)->withInput();
     }
 
-    public function edit_order_detail($order_id, $order_detail_id){
-        // check chưa giao => tiếp
-        if (Orders::find($order_id)->delivered == 1)
-            return abort(404);
-        if (Order_detail::find($order_detail_id) == null)
-            return abort(404);
-        $order = Orders::find($order_id);
-        if ($order == null)
-            return abort(404);
+    
 
-        $order = $order->toArray();
-
-        $this->data['phone'] = Phone::all()->toArray();
-        $this->data['titile'] = 'Admin - cập nhật chi tiết của đơn đặt hàng';
-        $this->data['titile2'] = 'Cập nhật - Chi tiết dơn hàng Mã Số '.$order['id'];
-        $this->data['order_id'] = $order['id'];
-        $this->data['order_detail_info'] = Order_detail::find($order_detail_id)->toArray();
-        return view('admin.content.add_order_detail', $this->data);
-    }
+   
 
    public function getInfo(){
-
+       
         return view('shop.layouts.page.acc-info');
     }
     public function changePass(){
@@ -129,8 +88,39 @@ class InfoController extends Controller
         return view('shop.layouts.page.change-pass');
     }
 
-    public function list_order(){
+    public function getLevel(){
+
+        return view('shop.layouts.page.level');
+    }
+
+    public function list_order_cancel(){
+        $order_list = HoaDon::where('user_id',Auth::user()->id)->get()->toArray();
+        $this->data['orders'] = $order_list; 
         
+        return view('shop.layouts.page.cancel-order-list', $this->data);
+    }
+
+    public function order_detail_cancel($id){
+        
+
+        
+        $orders_detail = SanPham::join('ChiTietHoaDon','SanPham.id','sanpham_id')->where('hoadon_id', $id)->get()->toArray();;
+        
+        
+        $this->data['orders_detail'] = $orders_detail;
+       
+
+        return view('shop.layouts.page.cancel-order-detail', $this->data);
+    }
+
+    public function list_order(){
+        // $total_price=0;
+        // $orders_totalprice = SanPham::join('ChiTietHoaDon','SanPham.id','sanpham_id')->join('HoaDon','HoaDon.id','hoadon_id')->where('HoaDon.user_id', Auth::user()->id)->get()->toArray();;
+        // foreach ($orders_totalprice as $key=>$value){
+        //     $total_price += $value['soluong']*$value['gia'];
+        // }
+        // $this->data['total_price'] = $total_price;
+
         $order_list = HoaDon::where('user_id',Auth::user()->id)->get()->toArray();
         $this->data['orders'] = $order_list; 
         
@@ -199,49 +189,9 @@ class InfoController extends Controller
 
     
 
-    public function save_edit_order(Request $request){
-        $validator = $this->check_validator_order($request);
+    
 
-        /**
-         * Nếu đã thanh toán xong thì không được sửa hóa đơn
-         */
-        if (Orders::where([['id', $request->order_id], ['delivered', '1']])->first() == null)
-            return abort(404);
-
-        if ($validator->fails() || $request->order_id == null){
-            if ($request->order_id == null)
-                return redirect()->route('order_list');
-            return redirect()->route('edit_order', ['id' => $request->order_id])->withErrors($validator)->withInput();
-        }
-
-        $this->save_order_f($request);
-        return redirect()->route('order_list');
-    }
-
-    private function save_order_f(Request $request){
-        $order = new Orders();
-        if ($request->order_id != null)
-            $order = Orders::find($request->order_id);
-        $order->order_by = $request->order_by;
-        $order->address = $request->address;
-        $order->phone = $request->phone;
-        /**
-         * Vì function này được dùng khi lập hóa đơn mua trực tiếp nên ship = 0
-         * Mua qua ship khi đặt hàng qua giỏ hàng (cart)
-         */
-        $order->ship = 0;
-        $order->delivered = 0;
-        $order->save();
-    }
-
-    private function check_validator_order(Request $request){
-        return Validator::make($request->all(), [
-            'order_id' => 'exists:orders,id',
-            'order_by' => 'required|min:6',
-            'address' => 'required|min:10',
-            'phone' => 'required|numeric|min:7',
-        ]);
-    }
+    
 
     
 }

@@ -6,7 +6,7 @@
 				<ul class="list-unstyled">
 						<?php
 						if (Auth::check()){ // có đăng nhập
-							?><li><a href="{{route('info')}}"><i class="icon fa fa-user"></i>Thông tin tài khoản</a></li>
+							?><li><a href="{{ route('acc-info') }}"><i class="icon fa fa-user"></i>Thông tin tài khoản</a></li>
 				            <?php
 				        }else{              // không đăng nhập
 				        	?><li><a href="{{ route('login') }}"><i class="icon fa fa-user"></i>Tài khoản của tôi</a></li>

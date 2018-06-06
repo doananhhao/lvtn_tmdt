@@ -8,57 +8,41 @@
 
 
 
-<div class="main-content">
-<div class="section__content section__content--p30">
-<div class="container-fluid">
-<div class="row">
-<div class="col-lg-6">
-                                <div class="card">
-                                    <div class="card-header">Đổi Mật Khẩu Mới</div>
-                                    <div class="card-body card-block">
-                                        <form action="" method="post" class="">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-key"></i>
-                                                    </div>
-                                                    <input type="text" id="username" name="username" placeholder="Mật khẩu hiện tại" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-check"></i>
-                                                    </div>
-                                                    <input type="email" id="email" name="email" placeholder="Mật khẩu mới" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-check-circle"></i>
-                                                    </div>
-                                                    <input type="password" id="password" name="password" placeholder="Nhập lại mật khẩu mới" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="form-actions form-group">
-                                                <button type="submit" class="btn btn-success btn-sm">Đổi mật khẩu</button>
-                                            </div>
-                                        </form>
-                                    </div>
+<div class="col-md-12">
+        <div class="white-box">
+            <h3 class="box-title m-b-0">Thay đổi mật khẩu</h3>
+            <p class="text-muted m-b-30 font-13">  </p>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <form>
+                        <div class="form-group">
+                                <label for="exampleInputpwd">Mật khẩu cũ</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-lock"></i></div>
+                                    <input type="password" class="form-control" id="exampleInputpwd" placeholder="Mật khẩu hiện tại">
                                 </div>
-                            </div>
-</div>
-<div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputpwd1">Mật khẩu mới</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-lock"></i></div>
+                                <input type="password" class="form-control" id="exampleInputpwd1" placeholder="Mật khẩu mới">
                             </div>
                         </div>
-</div>
-</div>
-</div>
-<div class="clearfix"></div>
+                        <div class="form-group">
+                            <label for="exampleInputpwd2">Nhập lại mật khẩu mới</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-lock"></i></div>
+                                <input type="password" class="form-control" id="exampleInputpwd2" placeholder="Nhập lại mật khẩu mới">
+                            </div>
+                        </div>
+                        <div class="col-sm-7" style="text-align: right;">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Đổi mật khẩu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection

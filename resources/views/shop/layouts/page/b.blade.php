@@ -10,16 +10,19 @@
 
 <div class="col-sm-12">
         <div class="white-box">
-                
+                @if (session('thongbao'))
+                <div class="alert alert-success">
+                    {{ session('thongbao') }}
+                </div>
+                @endif
             <h3 class="box-title m-b-0">Thông tin tài khoản</h3>
             <p class="text-muted m-b-30 font-13">  </p>
-            <form class="form" method="POST" action="{{route('edit-info')}}" enctype="multipart/form-data">
-                @csrf
-               
+            <form class="form"  action="">
+                
                 <div class="form-group row">
                     <label for="hoten" class="col-2 col-form-label">Họ tên</label>
                     <div class="col-6">
-                        <input class="form-control" type="text" value="{{ old('hoten') ? old('hoten') : Auth::user()->name }}" name="hoten" id="hoten">
+                        <input class="form-control" type="text" value="{{ Auth::user()->name }}" name="hoten" id="hoten">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -37,13 +40,13 @@
                 <div class="form-group row">
                     <label for="diachi" class="col-2 col-form-label">Địa chỉ</label>
                     <div class="col-6">
-                        <input class="form-control" type="text" value="{{ old('diachi') ? old('diachi') : Auth::user()->diachi }}" name="diachi" id="diachi">
+                        <input class="form-control" type="text" value="{{ Auth::user()->diachi }}" name="diachi" id="diachi">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="sdt" class="col-2 col-form-label">Số điện thoại</label>
                     <div class="col-6">
-                        <input class="form-control" type="tel" value="{{ old('sdt') ? old('sdt') : Auth::user()->sdt }}" name="sdt" id="sdt">
+                        <input class="form-control" type="tel" value="{{ Auth::user()->sdt }}" name="sdt" id="sdt">
                     </div>
                 </div>
                 
@@ -61,27 +64,5 @@
             </form>
         </div>
     </div>
-
-@endsection
-@section('custom_plugin')
-    <!-- Sweet-Alert  -->
-    <link href="{{ asset('plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
-    <script src="{{ asset('plugins/bower_components/sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
-    <!-- Summernote -->
-    <link href="{{ asset('plugins/bower_components/summernote-master/dist/summernote-bs4.css') }}" rel="stylesheet" type="text/css">
-    <script src="{{ asset('plugins/bower_components/summernote-master/dist/summernote-bs4.js') }}"></script>
-    <script src="{{ asset('plugins/bower_components/summernote-master/lang/summernote-vi-VN.js') }}"></script>
-
-    <script>
-        $('.summernote').summernote({
-            tabsize: 2,
-            height: 100,
-            lang: 'vi-VN'
-        });
-    @if (session('success'))
-        swal("Chúc mừng", "{{ session('success') }}", "success")
-    @endif
-    </script>
 
 @endsection

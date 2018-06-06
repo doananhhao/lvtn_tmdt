@@ -351,7 +351,7 @@
 
 									<div class="col-sm-6">
 										<div class="price-box">
-											<span class="price">{{$sanpham->gia}}</span>
+											<span class="price">{{number_format($sanpham->gia, 0, ',', '.')}} VNĐ</span>
 											<span class="price-strike">$900.00</span>
 										</div>
 									</div>

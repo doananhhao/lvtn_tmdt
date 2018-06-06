@@ -24,7 +24,7 @@
                                     <a href="{{ route('order_list') }}">Danh sách đơn hàng</a>
                                 </li>
                                 <li>
-                                    <a href="index.html">Đơn hàng hủy</a>
+                                    <a href="{{ route('cancel_order_list') }}">Đơn hàng hủy</a>
                                 </li>
                                 
                             </ul>
