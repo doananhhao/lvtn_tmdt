@@ -26,7 +26,7 @@
 				<div class="cart-item product-summary" id="th_cart">
 					@foreach ($header_cart->getAll() as $id=>$soluong)
 					<?php $sp = SanPham::find($id) ?>
-					<div class="row">
+					<div class="row" id="cart_num_{{ $sp->id }}">
 						<div class="col-xs-4">
 							<div class="image" style="max-width: 47px; max-height: 61px;">
 								<a href="{{ route('chitietsanpham', ['tensp' => $sp->id]) }}"><img src="{{ asset('shop/images/pic/mh_'.$sp->hinhanh) }}" class="img-responsive" alt="{{ $sp->tensanpham }}"></a>
@@ -34,8 +34,8 @@
 						</div>
 						<div class="col-xs-7">
 							<h3 class="name"><a href="{{ route('chitietsanpham', ['tensp' => $sp->id]) }}">{{ $sp->tensanpham }}</a></h3>
-							<div class="price">{{ $sp->gia }}</div>
-							<div>x {{ $soluong }}</div>
+							<div class="price">{{ number_format($sp->gia,0,',','.') }}</div>
+							<div>x <span id="count_{{$sp->id}}">{{ $soluong }}</span></div>
 						</div>
 						<div class="col-xs-1 action">
 							<a href="#" onclick="XoaCart(this, {{$id}})"><i class="fa fa-trash"></i></a>
@@ -55,7 +55,7 @@
 				</div>
 				<div class="clearfix"></div>
 					
-				<a href="{{ route('cart') }}" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>	
+				<a href="{{ route('cart') }}" class="btn btn-upper btn-primary btn-block m-t-20">Chi tiết</a>	
 			</div><!-- /.cart-total-->
 					
 				

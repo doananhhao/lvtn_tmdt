@@ -70,4 +70,8 @@ class User extends Authenticatable
     function HoaDon(){
         return $this->hasMany('App\Models\HoaDon');
     }
+
+    function PhanCong(){
+        return $this->hasMany('App\Models\PhanCong', 'nhanvien_id');
+    }
 }

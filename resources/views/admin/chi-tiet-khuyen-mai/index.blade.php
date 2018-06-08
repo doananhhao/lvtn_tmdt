@@ -40,7 +40,7 @@
                                     @method('DELETE')
                                 </form>
                                 <a href="{{ route('loai-khuyen-mai.edit', ['id' => $loaikm->id]) }}" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                <a href="{{ route('loai-khuyen-mai.destroy', ['id' =>$loaikm->id]) }}" id='orm{{ $loaikm->id }}loai' class='deleteWarning' data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                                <a href="{{ route('loai-khuyen-mai.destroy', ['id' =>$loaikm->id]) }}" id='orm{{ $loaikm->id }}loai' class='deleteWarning' data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
                             </td>
                         </tr>
                     </tbody>

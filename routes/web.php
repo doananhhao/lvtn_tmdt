@@ -45,6 +45,7 @@ Route::group(['prefix'=>'/home'], function () {
         Route::post('/cart-plus', 'Shop\ShoppingCart@cartPlus')->name('cart_plus');
         Route::post('/add-to-cart', 'Shop\ShoppingCart@add_to_cart')->name('add-to-cart');
         Route::post('/remove', 'Shop\ShoppingCart@remove')->name('remove');
+        Route::post('muahang', 'Shop\ShoppingCart@muahang')->name('muahang');
     });
 
     Route::get('loai-san-pham/{type}',['as'=>'loaisanpham','uses'=>'PageController@getLoaiSp']);
@@ -98,3 +99,7 @@ Route::get('/admin', function(){
 Route::get('/', function(){
     return redirect()->route('home');
 });
+Route::post('/logout', function(){
+    auth()->logout();
+    return redirect()->route('home');
+})->name('logout');

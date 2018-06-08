@@ -35,6 +35,19 @@ class Cart
 		return $total;
 	}
 
+	function getLoaiKM($id){
+		$ctkm = ChiTietKhuyenMai::where([
+            ['sanpham_id', $id],
+            ['ngayketthuc', '>', date('Y-m-d H:i:s')]
+		])->orWhere([
+			['sanpham_id', $id],
+			['ngayketthuc', null]
+		])->orderBy('giamgia', 'desc')->first();
+		if ($ctkm != null)
+			return $ctkm->loaikhuyenmai_id;
+		return NULL;
+	}
+
 	function SoLuong($id){
 		return $this->items[$id];
 	}

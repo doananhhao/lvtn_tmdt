@@ -39,6 +39,35 @@
 
 @section('javascript')
 <script>
+	@if (count($errors) > 0)
+	$('#responsive-modal').modal('show');
+	@endif
+	function deleteItem(e, spxoa){
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		ajax = {
+			url: "{{route('remove')}}",
+			type: "POST",
+			dataType: "json",
+			data: {
+				"id": spxoa
+			},
+			success: function(data){
+				e.parentNode.parentNode.remove();
+				$('#total-price-cart').html(data.totalPrice)
+				$('#cart_num_' + spxoa).remove()
+				$("#totalPrice, #totalPrice2").html(data.totalPrice)
+				$('.count').html(data.count)
+			},
+			error: function (data) {
+				console.log('Error:', data);
+			}
+		}
+		$.ajax(ajax);
+	}
 	function cal_cart(e, plus, id){
 		$.ajaxSetup({
 			headers: {
@@ -57,10 +86,14 @@
 					alert("Xóa sản phẩm khỏi giỏ hàng")
 					e.parentNode.parentNode.parentNode.parentNode.remove();
 					$('#total-price-cart').html(data.totalPrice)
+					$('#cart_num_' + id).remove()
+					$("#totalPrice, #totalPrice2").html(data.totalPrice)
+					$('.count').html(data.count)
 					return;
 				}
 				price = e.parentNode.parentNode.parentNode.parentNode.lastChild.previousSibling;
 				price.lastChild.innerHTML = data.price;
+				$('span#count_' + id).html(data.soluong)
 				$('#total-price-cart, #totalPrice2').html(data.totalPrice)
 			},
 			error: function (data) {

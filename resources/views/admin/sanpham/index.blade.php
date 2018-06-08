@@ -35,7 +35,7 @@
                                     @method('DELETE')
                                 </form>
                                 <a href="{{ route('san-pham.edit', ['id' => $sp->id]) }}" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                <a href="{{ route('san-pham.destroy', ['id' =>$sp->id]) }}" id='orm{{ $sp->id }}' class='deleteWarning' data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger m-r-10"></i> </a>
+                                <a href="{{ route('san-pham.destroy', ['id' =>$sp->id]) }}" id='orm{{ $sp->id }}' class='deleteWarning' data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger m-r-10"></i> </a>
                                 <a href="{{ route('san-pham.images', ['id' =>$sp->id]) }}" data-toggle="tooltip" data-original-title="Images"> <i class="fa fa-file-image-o text-success m-r-10"></i> </a>
                             </td>
                         </tr>

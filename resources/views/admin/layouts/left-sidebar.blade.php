@@ -133,6 +133,17 @@
                         <i data-icon="3" class="linea-icon linea-ecommerce fa-fw"></i>
                         <span class="hide-menu">Hóa đơn</span>
                     </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="#">Hóa đơn mới</a>
+                        </li>
+                        <li>
+                            <a href="#">Đã hoàn thành</a>
+                        </li>
+                        <li>
+                            <a href="#">Đã hủy</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#" class="waves-effect">

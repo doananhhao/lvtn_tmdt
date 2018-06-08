@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Duyet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DanhGia;
+use App\Models\SanPham;
 use App\Models\LoaiSP;
 class DanhGiaController extends Controller
 {
@@ -35,7 +36,8 @@ class DanhGiaController extends Controller
             $tinhtrang = $request->get('tinhtrang');
         if ($request->has('sanpham'))
             $sanpham_id = $request->get('sanpham');
-        if (($sanpham_id != null && DanhGia::where('sanpham_id', $sanpham_id)->first() == null) || ($tinhtrang != null && DangBan::where('tinhtrang', $tinhtrang)->first() == null))
+        // if (($sanpham_id != null && DanhGia::where('sanpham_id', $sanpham_id)->first() == null) || ($tinhtrang != null && DanhGia::where('tinhtrang', $tinhtrang)->first() == null))
+        if ($sanpham_id != null && SanPham::find($sanpham_id) == null)
             return abort(404);
 
         if ($tinhtrang == null){

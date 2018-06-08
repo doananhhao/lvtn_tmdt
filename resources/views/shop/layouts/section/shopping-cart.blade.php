@@ -41,7 +41,7 @@
 							])->orderBy('giamgia', 'desc')->first();
 				?>
 				<tr>
-					<td class="romove-item"><a href="#" title="cancel" class="icon"><i class="fa fa-trash-o"></i></a></td>
+					<td class="romove-item"><a onclick="deleteItem(this, {{$id}})" title="Xóa khỏi giỏ hàng" class="icon"><i class="fa fa-trash-o"></i></a></td>
 					<td class="cart-image" style="max-width: 154px; max-height: 146px;">
 						<a class="entry-thumbnail" href="{{ route('chitietsanpham', ['tensp' => $id]) }}">
 						    <img src="{{ asset('shop/images/pic/mh_'.$sp->hinhanh) }}" class="img-responsive" alt="">
@@ -89,8 +89,49 @@
 					@if (Auth::check())
 					<td></td>
 					<td class="text-center">
-						<a href="#" class="btn btn-primary">ĐẶT HÀNG</a>
+						<a data-toggle="modal" data-target="#responsive-modal" class="model_img img-responsive btn btn-primary">ĐẶT HÀNG</a>
 					</td>
+					<div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title">Thông tin đặt mua</h4>
+								</div>
+								<div class="modal-body">
+									<form id="form_dathang" action="{{ route('muahang') }}" method="POST">
+										@csrf
+										<div class="form-group{{ $errors->has('diachi') ? ' has-error' : '' }}">
+											<label for="diachi">Địa chỉ</label>
+											<input type="text" class="form-control" name="diachi" value="{{ old('diachi') ? old('diachi') : auth::User()->diachi }}" id="diachi" placeholder="Nhập địa chỉ..">
+											@if ($errors->has('diachi'))
+											<span class="help-block text-danger">
+												{{ $errors->first('diachi') }}
+											</span>
+											@endif
+										</div>
+										<div class="form-group{{ $errors->has('sdt') ? ' has-error' : '' }}">
+											<label for="sdt">Điện thoại</label>
+											<input type="text" class="form-control" name="sdt" value="{{ old('diachi') ? old('sdt') : auth::User()->sdt }}" id="sdt" placeholder="Nhập số điện thoại..">
+											@if ($errors->has('sdt'))
+											<span class="help-block text-danger">
+												{{ $errors->first('sdt') }}
+											</span>
+											@endif
+										</div>
+										<div class="form-group">
+											<label for="mota">Ghi chú</label>
+											<textarea class="form-control" id="mota" name="mota"></textarea>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+									<button type="button" onclick="document.getElementById('form_dathang').submit()" class="btn btn-danger">Đặt hàng</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					@else
 					<td class="text-center" colspan="2" style="font-size:15px;">
 						<a href="{{ route('login') }}" style="font-size:17px;">Đăng nhập</a> hoặc 
