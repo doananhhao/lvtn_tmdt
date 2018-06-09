@@ -21,6 +21,10 @@ class DatabaseSeeder extends Seeder
             KhuyenMaiSeeder::class,
             BinhLuanSeeder::class,
             HoaDonSeeder::class,
+            PhongBanSeeder::class,
+            ChucVuSeeder::class,
+            NhanVienSeeder::class,
+            CongDoanSeeder::class,
         ]);
     }
 }

@@ -21,4 +21,8 @@ class HoaDon extends Model
     function PhanCong(){
         return $this->hasMany('App\Models\PhanCong', 'hoadon_id');
     }
+
+    function CongDoanHoaDon(){
+        return $this->hasMany('App\Models\CongDoanHoaDon', 'hoadon_id');
+    }
 }

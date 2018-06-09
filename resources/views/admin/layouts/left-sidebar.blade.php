@@ -126,8 +126,7 @@
                     </ul>
                 </li>
 
-
-                <li class="nav-small-cap m-t-10">--- Xét duyệt</li>
+                <li class="nav-small-cap m-t-10">--- Xử lý Hóa đơn</li>
                 <li>
                     <a href="{{ route('hoa-don.index') }}" class="waves-effect">
                         <i data-icon="3" class="linea-icon linea-ecommerce fa-fw"></i>
@@ -145,6 +144,8 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-small-cap m-t-10">--- Xét duyệt</li>
                 <li>
                     <a href="#" class="waves-effect">
                         <i data-icon="&#xe00c;" class="linea-icon linea-elaborate fa-fw"></i>

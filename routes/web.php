@@ -15,7 +15,7 @@ Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
     echo "<pre>";
-    var_dump(App\Models\DanhGia::where('sanpham_id', 2)->orderBy('created_at', 'desc')->paginate(15));
+    var_dump(App\Models\ChucVu::where('ten', 'like', '%Trưởng phòng%')->first()->id);
     // foreach ($users as $user)
     // var_dump($user);
 
@@ -89,7 +89,7 @@ Route::group(['prefix' => '/admin'], function (){
         Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
     });
     Route::group(['prefix' => '/hoa-don', 'as' => 'hoa-don.'], function (){
-        Route::get('/', 'Admin\Duyet\HoaDonController@index')->name('index');
+        Route::get('/', 'Admin\XLHoaDon\KTHoaDonController@index')->name('index');
     });
 });
 

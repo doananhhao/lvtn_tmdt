@@ -71,7 +71,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\HoaDon');
     }
 
-    function PhanCong(){
-        return $this->hasMany('App\Models\PhanCong', 'nhanvien_id');
+    function NhanVien(){
+        return $this->hasOne('App\Models\NhanVien', 'nhanvien_id');
     }
 }

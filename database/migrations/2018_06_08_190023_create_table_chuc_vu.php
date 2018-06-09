@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableCongViec extends Migration
+class CreateTableChucVu extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTableCongViec extends Migration
      */
     public function up()
     {
-        Schema::create('congviec', function (Blueprint $table) {
+        Schema::create('chucvu', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('tenviec');
+            $table->string('ten');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTableCongViec extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('chucvu');
     }
 }

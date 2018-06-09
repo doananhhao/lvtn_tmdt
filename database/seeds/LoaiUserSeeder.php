@@ -16,6 +16,9 @@ class LoaiUserSeeder extends Seeder
                 'tenloai' => 'Quản trị viên'
             ),
             array(
+                'tenloai' => 'Moderator'
+            ),
+            array(
                 'tenloai' => 'Nhân viên'
             ),
             array(

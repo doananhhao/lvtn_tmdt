@@ -21,9 +21,6 @@ class CreateTableHoaDon extends Migration
             $table->string('sdt', 14);
             $table->string('mota', 1000)->nullable()->comment('lời nhắn nếu có');
             $table->boolean('dahuy')->default(FALSE);
-            $table->boolean('ischeck')->default(FALSE);
-            $table->boolean('ispacked')->default(FALSE);
-            $table->boolean('isship')->default(FALSE);
             $table->timestamps();
 
             $table->foreign('user_id')
