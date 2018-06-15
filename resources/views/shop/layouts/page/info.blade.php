@@ -48,7 +48,7 @@
                 <li> <a href="index.html" class="waves-effect"><i class="linea-icon icon-user fa-fw " data-icon="v"></i> <span class="hide-menu "> Thông tin tài khoản<span class="fa arrow"></span> </span></a>
                     <ul class="nav nav-second-level">
                         <li> <a href="{{ route('acc-info') }}">Thông tin cá nhân </a> </li>
-                        <li> <a href="{{ route('change-pass') }}">Đổi mật khẩu</a> </li>
+                        <li> <a href="{{ route('change-password') }}">Đổi mật khẩu</a> </li>
                         <li> <a href="index3.html">Mã giảm giá</a> </li>
                         <li> <a href="{{ route('level') }}">Thành viên</a> </li>
                     </ul>

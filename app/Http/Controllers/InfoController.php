@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\HoaDon;
 use App\Models\ChiTietHoaDon;
 use App\Models\SanPham;
+use App\Models\ThanhVien;
+use App\Models\CapDo;
 use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
@@ -83,14 +86,20 @@ class InfoController extends Controller
        
         return view('shop.layouts.page.acc-info');
     }
-    public function changePass(){
-
-        return view('shop.layouts.page.change-pass');
-    }
+    
 
     public function getLevel(){
+        $thanhvien = ThanhVien::where('user_id',Auth::user()->id)->get();
+        $capdo = CapDo::all();
+        
+        $diemhientai=null;
 
-        return view('shop.layouts.page.level');
+        
+        $this->data['thanhvien'] = $thanhvien; 
+        $this->data['capdo'] = $capdo; 
+        $this->data['diemhientai'] = $diemhientai; 
+        
+        return view('shop.layouts.page.level', $this->data);
     }
 
     public function list_order_cancel(){
@@ -128,7 +137,8 @@ class InfoController extends Controller
     }
 
     public function order_detail($id){
-        
+        $order = HoaDon::where('id',$id)->get();
+        $this->data['orders'] = $order; 
 
         
         $orders_detail = SanPham::join('ChiTietHoaDon','SanPham.id','sanpham_id')->where('hoadon_id', $id)->get()->toArray();;

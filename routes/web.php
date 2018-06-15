@@ -18,7 +18,8 @@ Route::get('/test', function (){
     var_dump(App\Models\DanhGia::where('sanpham_id', 2)->orderBy('created_at', 'desc')->paginate(15));
     // foreach ($users as $user)
     // var_dump($user);
-
+    // foreach (App\Models\HoaDon::find(1)->ChiTietHoaDon as $cthd)
+    //     $cthd->SanPham->ChiTietKhuyenMai()->where([['loaikm_id', 'dk1'], ['column', 'dk2']])
     // echo route('loai-khuyen-mai.chi-tiet-khuyen-mai.show', ['loai_khuyen_mai' => 5, 'chi-tiet-khuyen-mai' => 9]);
 
     // var_dump(App\Models\DanhGia::find(4, 2)->toArray());
@@ -54,13 +55,18 @@ Route::group(['prefix'=>'/home'], function () {
 Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
         Route::get('information', 'InfoController@getInfo')->name('acc-info');
         Route::get('level', 'InfoController@getLevel')->name('level');
-        Route::get('changepassword', 'InfoController@changePass')->name('change-pass');
         Route::get('/orderlist', 'InfoController@list_order')->name('order_list');
         Route::get('/cancelorderlist', 'InfoController@list_order_cancel')->name('cancel_order_list');
         Route::get('/details/{id}', 'InfoController@order_detail')->where('id', '[0-9]+')->name('order-detail');
         Route::get('/cancelorderdetails/{id}', 'InfoController@order_detail_cancel')->where('id', '[0-9]+')->name('cancel-order-detail');
         Route::get('/status/{status}', 'InfoController@order_status')->name('order_status');  
         Route::post('/save-edit-user', 'InfoController@save_edit_user')->name('edit-info');  
+
+
+
+        Route::get('/changePassword','HomeController@showChangePasswordForm')->name('change-password');
+        Route::post('/changePassword','HomeController@changePassword')->name('changePassword');
+
         
 });
 Route::group(['prefix' => '/admin'], function (){

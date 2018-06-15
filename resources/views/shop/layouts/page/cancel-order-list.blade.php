@@ -30,6 +30,7 @@
                         </thead>
                         <tbody>
                             @foreach($orders as $order)
+                            @if ($order['huy'] == 1)
                             <tr>
                                 <td><a href="{{ route('cancel-order-detail', ['id' => $order['id']]) }}">{{ $order['id'] }}</a></td>
                                 <td><span class="text-muted"><i class="fa fa-clock-o"></i> {{ date('d-m-Y ', strtotime($order['created_at'])) }}</span> </td>
@@ -38,14 +39,8 @@
                                 <td>{{ $order['mota'] }}</td>
                                 
                                 <td>$45.00</td>
-                                <td>
-                                        @if ($order['tinhtrang'] == 0)
-                                        <div class="label label-table label-danger">Chưa hoàn thành</div>
-                                        @else
-                                            <div class="label label-table label-success">Hoàn thành</div>
-                                        @endif
-                                </td>
-                               
+                                <td><div class="label label-table label-danger">Đã hủy</div></td>
+                            @endif   
                             </tr>
                             @endforeach
                         </tbody>

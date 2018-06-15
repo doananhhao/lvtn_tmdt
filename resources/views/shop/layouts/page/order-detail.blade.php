@@ -5,32 +5,34 @@
 
 @section('content')
 
-<div class="col-sm-12">
+<div class="row">
+    <div class="col-md-12">
         <div class="white-box">
-            <h3 class="box-title m-b-0">Tình trạng đơn hàng</h3>
-            <p class="text-muted m-b-30 font-13"> </p>
-            <div id="exampleBasic2" class="wizard">
-                <ul class="wizard-steps" role="tablist">
-                    <li class="active" role="tab">
-                        <h4><span><i class="ti-user"></i></span>Account</h4>
-                    </li>
-                    <li role="tab">
-                        <h4><span><i class="ti-credit-card"></i></span>Billing</h4>
-                    </li>
-                    <li role="tab">
-                        <h4><span><i class="ti-check"></i></span>Confirmation</h4>
-                    </li>
-                </ul>
-                <div class="wizard-content">
-                    <div class="wizard-pane active" role="tabpanel">mấy cái jquery vs js để ngay dưới file blade này, có gì xóa</div>
-                    <div class="wizard-pane" role="tabpanel">zczxczxc</div>
-                    <div class="wizard-pane" role="tabpanel">gnfgnfgn</div>
+            <h3 class="box-title">Tình trạng đơn hàng</h3>
+            <div class="row line-steps">
+                @foreach($orders as $value)
+                <div class="col-md-4 column-step start">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Duyệt Đơn hàng</div>
+                    <div class="step-info">Đơn hàng của bạn đã được tiếp nhận</div>
                 </div>
+                <div class="col-md-4 column-step <?php echo ($value['ispacked'] == 1) ? "active" : ""; ?>">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Đóng gói</div>
+                    <div class="step-info">Đơn hàng của bạn đang được đóng gói</div>
+                </div>
+                <div class="col-md-4 column-step finish <?php echo ($value['isship'] == 1) ? "active" : ""; ?>">
+                    <div style="<?php echo ($value['isship'] == 1) ? "color: #03a9f3;" : ""; ?>"  class="step-number">3</div>
+                    <div class="step-title">Vận chuyển</div>
+                    <div class="step-info">Đơn hàng của bạn đã được chuyển đi</div>
+                </div>
+                @endforeach
             </div>
         </div>
     </div>
+</div>
 
-
+<div class="row">
 <div class="col-sm-12">
         <div class="white-box">
             <h3 class="box-title">Đơn hàng bao gồm</h3>
@@ -61,7 +63,7 @@
             </div>
         </div>
     </div>
-
+</div>
     <!-- jQuery -->
     <script src="{{ asset('plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap Core JavaScript -->
