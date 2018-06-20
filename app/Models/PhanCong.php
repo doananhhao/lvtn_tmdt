@@ -18,4 +18,8 @@ class PhanCong extends Model
     function NhanVien(){
         return $this->belongsTo('App\Models\NhanVien', 'nhanvien_id', 'nhanvien_id');
     }
+    function scopeHoadon($query, $idhd)
+    {
+        return $query->where('hoadon_id', $idhd);
+    }
 }

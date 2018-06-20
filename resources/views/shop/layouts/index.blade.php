@@ -186,7 +186,7 @@
 				},
 				success: function(data){
 					if (!data.success){
-						alert("Sản phẩm đã có rồi")
+						alert("Sản phẩm đã có rồi hoặc dữ liệu không đúng")
 						return;
 					}
 					$("#totalPrice, #totalPrice2").html(data.totalPrice)

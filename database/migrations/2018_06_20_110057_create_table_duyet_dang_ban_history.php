@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableThanhVien extends Migration
+class CreateTableDuyetDangBanHistory extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateTableThanhVien extends Migration
      */
     public function up()
     {
-        Schema::create('thanhvien', function (Blueprint $table) {
+        Schema::create('duyetdangbanhistory', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('capdo_id')->nullable(); //Cấp độ
-            $table->unsignedInteger('diemtichluy')->default(0); //Điểm tích lũy
+            $table->increments('id');
+            $table->unsignedInteger('dangban_id');
+            $table->string('comment', 1000);
+            $table->boolean('status')->default(FALSE)->comment('TRUE là đăng bán có thể hiển thị hoặc không');
             $table->timestamps();
 
-            $table->primary('user_id');
-            $table->foreign('user_id')
+            $table->foreign('dangban_id')
                 ->references('id')
-                ->on('users')
+                ->on('dangban')
                 ->onUpdate('cascade');
         });
     }
@@ -35,6 +35,6 @@ class CreateTableThanhVien extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('thanhvien');
+        Schema::dropIfExists('duyetdangbanhistory');
     }
 }

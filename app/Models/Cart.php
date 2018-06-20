@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\SanPham;
+use App\Models\DangBan;
 use App\Models\ChiTietKhuyenMai;
 
 class Cart
@@ -87,7 +88,7 @@ class Cart
 			return false;
 		}
 
-		if (SanPham::find($id) == null)
+		if (SanPham::find($id) == null || DangBan::where('sanpham_id', $id)->first() != null)
 			return false;
 		
 		$this->items[$id] = 1;

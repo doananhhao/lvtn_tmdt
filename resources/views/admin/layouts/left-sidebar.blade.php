@@ -56,6 +56,8 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
+
+                @if (Auth::User()->LoaiUser->tenloai == "Quản trị viên")
                 <li class="nav-small-cap m-t-10">--- Quản lý</li>
                 <li>
                     <a href="{{ route('nha-cung-cap.index') }}" class="waves-effect">
@@ -125,26 +127,62 @@
                         </li>
                     </ul>
                 </li>
-
-                <li class="nav-small-cap m-t-10">--- Xử lý Hóa đơn</li>
                 <li>
-                    <a href="{{ route('hoa-don.index') }}" class="waves-effect">
-                        <i data-icon="3" class="linea-icon linea-ecommerce fa-fw"></i>
-                        <span class="hide-menu">Hóa đơn</span>
+                    <a href="{{ route('ql-tai-khoan.index') }}" class="waves-effect">
+                        <i class="linea-icon linea-ecommerce fa-fw" data-icon="P"></i>
+                        <span class="hide-menu"> Tài khoản
+                            <span class="fa arrow"></span>
+                            <span class="label label-rouded label-custom pull-right"></span>
+                        </span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">Hóa đơn mới</a>
+                            <a href="{{ route('ql-tai-khoan.index') }}#">Danh sách</a>
                         </li>
                         <li>
-                            <a href="#">Đã hoàn thành</a>
-                        </li>
-                        <li>
-                            <a href="#">Đã hủy</a>
+                            <a href="{{ route('ql-tai-khoan.create') }}">Thêm mới</a>
                         </li>
                     </ul>
                 </li>
+                @endif
 
+            @if (Auth::User()->NhanVien != null)
+                <li class="nav-small-cap m-t-10">--- Xử lý Hóa đơn</li>
+                @if (Auth::User()->NhanVien->ChucVu->ten == "Trưởng phòng")
+                <li>
+                    <a href="{{ route('hoa-don.index') }}" class="waves-effect">
+                        <i data-icon="3" class="linea-icon linea-ecommerce fa-fw"></i>
+                        <span class="hide-menu">Hóa đơn
+                            <span class="fa arrow"></span>
+                            <span class="label label-rouded label-custom pull-right"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ route('hoa-don.index') }}">Hóa đơn mới</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('hoa-don.daphancong') }}">Đã phân công</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('hoa-don.hdhoanthanhpc') }}" title="Hóa đơn nhân viên đã hoàn tất công việc được giao và chờ trưởng phòng xét">Hoàn thành, chờ duyệt</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('hoa-don.xulylai') }}">Xử lý lại</a>
+                        </li>
+                    </ul>
+                </li>
+                @elseif (Auth::User()->NhanVien->ChucVu->ten == "Nhân viên")
+                <li>
+                    <a href="{{ route('hoa-don.dshd_canlam') }}" class="waves-effect">
+                        <i data-icon="&#xe02e;" class="linea-icon linea-elaborate fa-fw"></i>
+                        <span class="hide-menu">Công việc cần làm</span>
+                    </a>
+                </li>
+                @endif
+            @endif
+
+            @if (Auth::User()->LoaiUser->tenloai == "Moderator")
                 <li class="nav-small-cap m-t-10">--- Xét duyệt</li>
                 <li>
                     <a href="#" class="waves-effect">
@@ -164,6 +202,7 @@
                         <span class="hide-menu">SP đánh giá</span>
                     </a>
                 </li>
+            @endif
                 {{-- NỘI DUNG ADMIN --}}
                 {{-- <li class="nav-small-cap m-t-10">--- Main Menu</li>
                 <li>

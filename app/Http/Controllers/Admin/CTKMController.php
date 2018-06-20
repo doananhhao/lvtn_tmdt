@@ -8,14 +8,28 @@ use Illuminate\Validation\Rule;
 use App\Models\LoaiKhuyenMai;
 use App\Models\ChiTietKhuyenMai;
 use App\Models\SanPham;
+use App\Models\DangBan;
 
 class CTKMController extends Controller
 {
     private $data = [];
+    private $ds_id_dangban = [];
 
     function __construct(){
+        $this->get_id_sp_dangban();
         $this->data['title'] = "Quản lý ";
         $this->data['title2'] = 'Loại khuyến mãi';
+    }
+
+    //sản phẩm đăng bán thì KHÔNG hiển thị trang chủ (sp có khóa ngoại trong dangban là sp dangban)
+    private function get_id_sp_dangban(){
+        $list = DangBan::select('sanpham_id','id')->groupBy('id')->get();
+        $arr_id = [];
+        foreach ($list as $sp){
+            $arr_id[] = $sp->sanpham_id;
+        }
+        $this->ds_id_dangban = $arr_id;
+        return $arr_id;
     }
     /**
      * Display a listing of the resource.
@@ -47,7 +61,7 @@ class CTKMController extends Controller
         $this->data['title'] .= $loaikm->tenkhuyenmai;
         $this->data['title2'] = "Thêm sản phẩm khuyến mãi";
         $this->data['loaikm'] = $loaikm;
-        $this->data['dssp'] = SanPham::whereNotIn('id', $this->getSanPhamThuocLoaiKM($loaikm_id))->get();
+        $this->data['dssp'] = SanPham::whereNotIn('id', $this->getSanPhamThuocLoaiKM($loaikm_id))->whereNotIn('id', $this->ds_id_dangban)->get();
         return view('admin.chi-tiet-khuyen-mai.create', $this->data);
     }
 
@@ -74,11 +88,13 @@ class CTKMController extends Controller
         $loaikm = LoaiKhuyenMai::find($loaikm_id);
         if ($loaikm == null)
             return abort(404);
-
+        $ds_id = $this->ds_id_dangban;
         $this->validate($request, [
             'sanpham_id' => [
                 'required',
-                'exists:sanpham,id',
+                Rule::exists('sanpham', 'id')->where(function ($query) use ($ds_id) {
+                    return $query->whereNotIn('id', $ds_id);
+                }),
                 Rule::unique('chitietkhuyenmai', 'sanpham_id')->where(function ($query) use ($loaikm_id){
                     return $query->where('loaikhuyenmai_id', $loaikm_id);
                 }),
@@ -152,7 +168,7 @@ class CTKMController extends Controller
         $dssp = $this->getSanPhamThuocLoaiKM($loaikm_id);
         //các sản phẩm thuộc $loaikm_id trừ $ctkm
         $dssp = array_diff($dssp, [$ctkm->sanpham_id]);
-        $this->data['dssp'] = SanPham::whereNotIn('id', $dssp)->get();
+        $this->data['dssp'] = SanPham::whereNotIn('id', $dssp)->whereNotIn('id', $this->ds_id_dangban)->get();
         return view('admin.chi-tiet-khuyen-mai.edit', $this->data);
     }
 
@@ -174,10 +190,13 @@ class CTKMController extends Controller
         if ($ctkm->LoaiKhuyenMai->id != $loaikm->id)
             return abort(404);
 
+        $ds_id = $this->ds_id_dangban;
         $this->validate($request, [
             'sanpham_id' => [
                 'required',
-                'exists:sanpham,id',
+                Rule::exists('sanpham', 'id')->where(function ($query) use ($ds_id) {
+                    return $query->whereNotIn('id', $ds_id);
+                }),
                 Rule::unique('chitietkhuyenmai', 'sanpham_id')->where(function ($query) use ($loaikm_id){
                     return $query->where('loaikhuyenmai_id', $loaikm_id);
                 })->ignore($ctkm->id),

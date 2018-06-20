@@ -7,16 +7,39 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use App\Models\SanPham;
+use App\Models\DangBan;
 use App\Models\LoaiSP;
 use App\Models\NhaCungCap;
 class SanPhamController extends Controller
 {
     private $data = [];
+    private $ds_id_dangban = [];
 
     function __construct(){
+        $this->get_id_sp_dangban();
         $this->data['title'] = "Quản lý sản phẩm";
         $this->data['title2'] = 'Sản phẩm';
     }
+
+    //sản phẩm đăng bán thì KHÔNG hiển thị trang chủ (sp có khóa ngoại trong dangban là sp dangban)
+    private function get_id_sp_dangban(){
+        $list = DangBan::select('sanpham_id','id')->groupBy('id')->get();
+        $arr_id = [];
+        foreach ($list as $sp){
+            $arr_id[] = $sp->sanpham_id;
+        }
+        $this->ds_id_dangban = $arr_id;
+        return $arr_id;
+    }
+    
+    private function verify_sanpham_id($id = 0){
+        if (SanPham::find($id) == null)
+            return false;
+        if (SanPham::find($id)->DangBan()->first() != null)
+            return false;
+        return true;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +47,7 @@ class SanPhamController extends Controller
      */
     public function index()
     {
-        $this->data['dssp'] = SanPham::orderBy('id', 'desc')->paginate(15);
+        $this->data['dssp'] = SanPham::orderBy('id', 'desc')->whereNotIn('id', $this->ds_id_dangban)->paginate(15);
         $this->data['title2'] = 'Danh sách sản phẩm';
         return view('admin.sanpham.index', $this->data);
     }
@@ -50,8 +73,15 @@ class SanPhamController extends Controller
      */
     public function store(Request $request)
     {
+        $ds_id = $this->ds_id_dangban;
         $this->validate($request, [
-            'tensanpham' => 'required|between:3,191|unique:sanpham,tensanpham',
+            'tensanpham' => [
+                'required',
+                'between:3,191',
+                Rule::unique('sanpham', 'tensanpham')->where(function ($query) use ($ds_id) {
+                    return $query->whereNotIn('id', $ds_id);
+                })
+            ],
             'gia' => 'required|integer|min:0',
             'soluong' => 'required|numeric|min:0',
             'loaisp' => 'required|exists:loaisp,id',
@@ -80,6 +110,8 @@ class SanPhamController extends Controller
      */
     public function show($id)
     {
+        if (!$this->verify_sanpham_id($id))
+            return abort(404);
         return redirect()->route('chitietsanpham', ['tensp' => $id]);
     }
 
@@ -91,7 +123,7 @@ class SanPhamController extends Controller
      */
     public function edit($id)
     {
-        if (SanPham::find($id) == null)
+        if (!$this->verify_sanpham_id($id))
             return abort(404);
 
         $this->data['loaisp'] = LoaiSP::all();
@@ -110,14 +142,17 @@ class SanPhamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (SanPham::find($id) == null)
+        if (!$this->verify_sanpham_id($id))
             return abort(404);
 
+        $ds_id = $this->ds_id_dangban;
         $this->validate($request, [
             'tensanpham' => [
                 'required',
                 'between:3,191',
-                Rule::unique('sanpham', 'tensanpham')->ignore($id),
+                Rule::unique('sanpham', 'tensanpham')->where(function ($query) use ($ds_id) {
+                    return $query->whereNotIn('id', $ds_id);
+                }),
             ],
             'gia' => 'required|integer|min:0',
             'soluong' => 'required|numeric|min:0',
@@ -125,6 +160,7 @@ class SanPhamController extends Controller
             'ncc' => 'required|exists:nhacungcap,id',
             'mota' => 'max:10000',
         ]);
+        // Rule::unique('sanpham', 'tensanpham')->ignore($id),
 
         $sanpham = SanPham::find($id);
         $sanpham->tensanpham = $request->tensanpham;
@@ -146,8 +182,9 @@ class SanPhamController extends Controller
      */
     public function destroy($id)
     {
-        if (SanPham::find($id) == null)
+        if (!$this->verify_sanpham_id($id))
             return abort(404);
+
         $sp = SanPham::find($id);
         $ten = $sp->tensanpham;
         if (count($sp->ChiTietHoaDon) != 0)
@@ -160,16 +197,18 @@ class SanPhamController extends Controller
      * Other
      */
     function showImage($id){
-        if (SanPham::find($id) == null)
+        if (!$this->verify_sanpham_id($id))
             return abort(404);
+
         $this->data['sp'] = SanPham::find($id);
         $this->data['title2'] = 'Sản phẩm: '.SanPham::find($id)->tensanpham;
         return view('admin.sanpham.create_image', $this->data);
     }
 
     function createImage(Request $request, $id){
-        if (SanPham::find($id) == null)
+        if (!$this->verify_sanpham_id($id))
             return abort(404);
+
         $this->validate($request, [
             'img1' => 'image|dimensions:min_width=195,min_height=243',
             'img2' => 'image|dimensions:min_width=100,min_height=120',

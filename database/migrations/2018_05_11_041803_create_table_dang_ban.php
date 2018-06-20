@@ -20,7 +20,7 @@ class CreateTableDangBan extends Migration
             $table->unsignedInteger('sanpham_id');
             $table->string('mota', 10000);
             $table->dateTime('ngayhethan'); //ngày hết hạn đăng bán
-            $table->boolean('tinhtrang')->default(FALSE); //TRUE: đã duyệt, FALSE: đang chờ duyệt
+            $table->boolean('canduyet')->default(TRUE); //TRUE: yêu cầu duyệt, FALSE: chưa yêu cầu OR cần edit lại để yêu cầu duyệt
             $table->boolean('ngungban')->default(FALSE)->comment('Do người bán chủ động chọn ngừng hiển thị trang chủ');
             $table->timestamps();
 
