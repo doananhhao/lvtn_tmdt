@@ -8,6 +8,10 @@ class DangBan extends Model
 {
     protected $table = "dangban";
 
+    protected $fillable = [
+        'thanhvien_id', 'sanpham_id','mota', 'ngayhethan', 'canduyet','ngungban'
+    ];
+
     function ThanhVien(){
         return $this->belongsTo('App\Models\ThanhVien', 'thanhvien_id');
     }

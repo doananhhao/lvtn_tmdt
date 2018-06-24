@@ -12,6 +12,10 @@ use App\Models\ChiTietHoaDon;
 use App\Models\SanPham;
 use App\Models\ThanhVien;
 use App\Models\CapDo;
+use App\Models\LoaiSP;
+use App\Models\NhaCungCap;
+use App\Models\DangBan;
+use App\Models\DuyetDangBanHistory;
 use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
@@ -141,7 +145,7 @@ class InfoController extends Controller
         $this->data['orders'] = $order; 
 
         
-        $orders_detail = SanPham::join('ChiTietHoaDon','SanPham.id','sanpham_id')->where('hoadon_id', $id)->get()->toArray();;
+        $orders_detail = SanPham::join('ChiTietHoaDon','SanPham.id','sanpham_id')->where('hoadon_id', $id)->get()->toArray();
         
         
         $this->data['orders_detail'] = $orders_detail;
@@ -162,46 +166,166 @@ class InfoController extends Controller
         if ($status == 'all')
             $order_list = HoaDon::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get()->toArray();
         else if ($status == 'complete')
-            $order_list = HoaDon::where('user_id',Auth::user()->id)->where('tinhtrang', 1)->orderBy('id', 'desc')->get()->toArray();
+            $order_list = HoaDon::where('user_id',Auth::user()->id)->where('isship', 1)->orderBy('id', 'desc')->get()->toArray();
         else
-            $order_list = HoaDon::where('user_id',Auth::user()->id)->where('tinhtrang', 0)->orderBy('id', 'desc')->get()->toArray();
+            $order_list = HoaDon::where('user_id',Auth::user()->id)->where('isship', 0)->orderBy('id', 'desc')->get()->toArray();
             
         $this->data['orders'] = $order_list; 
         
         return view('shop.layouts.page.order-list', $this->data);
     }
 
-    public function set_order_complete($id){
-        $order = Orders::find($id);
-        $order_list = Order_detail::where('order_id', $id)->get()->toArray();
+    public function list_sell(){
+        $this->data['dangban'] = DangBan::join('SanPham','SanPham.id','sanpham_id')->join('LoaiSP','LoaiSP.id','SanPham.loaisp_id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
 
-        if ($order == null || $order->delivered == 1)
+
+        return view('shop.layouts.page.sell-list',$this->data);
+    }
+
+    public function dangban_status($status){
+        $status = strtolower($status);
+        $list_status = ['all', 'complete', 'ongoing'];
+        if (!in_array($status, $list_status))
             return abort(404);
-        if (count($order_list) == 0)
-            exit('Chưa có sản phẩm nào trong đơn hàng');
+
+        $this->data['status'] = $status;
         
-        $order->delivered = 1;
-        $order->save();
-        return redirect()->route('order_list');
+
+        if ($status == 'all')
+            $sell_list = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+        else if ($status == 'complete')
+            $sell_list = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('status', 1)->orderBy('DangBan.id', 'desc')->get()->toArray();
+        else
+            $sell_list = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('status', 0)->orderBy('DangBan.id', 'desc')->get()->toArray();
+            
+        $this->data['dangban'] = $sell_list; 
+
+        return view('shop.layouts.page.sell-list', $this->data);
     }
 
-    public function set_order_ongoing($id){
-        $order = Orders::find($id);
-        if ($order == null)
+    public function sell(){
+        $this->data['loaisp'] = LoaiSP::all();
+        $this->data['ncc'] = NhaCungCap::all();
+
+        return view('shop.layouts.page.sell',$this->data);
+    }
+
+    public function sellinfo($id){
+        if (SanPham::find($id) == null)
             return abort(404);
+        $sanphamdb = SanPham::where('id',$id)->first();
+        $history=array();
+        $historya = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.sanpham_id',$id)->get();
+        
+        foreach($historya as $ht)
+        {
+            
+            if($ht->isfix == 0){
+                $history=$ht;
+            }
+        }
 
-        $order->delivered = 0;
-        $order->save();
-        return redirect()->route('order_list');
+        return view('shop.layouts.page.sell-info',compact('sanphamdb','history'));
+    }
+
+    public function sell_product(Request $request){
+        $this->validate($request, [
+            'tensanpham' => 'required|between:3,191',
+            'gia' => 'required|integer|min:0',
+            'soluong' => 'required|numeric|min:0',
+            'loaisp' => 'required|exists:loaisp,id',
+            'ncc' => 'required|exists:nhacungcap,id',
+            'mota' => 'max:10000',
+        ]);
+
+        $spdb=SanPham::create([
+            'tensanpham' => $request->tensanpham,
+            'gia' => $request->gia,
+            'soluong' => $request->soluong,
+            'loaisp_id' => $request->loaisp,
+            'nhacungcap_id' => $request->ncc,
+            'mota' => $request->mota,
+            'hinhanh' => 'abc.jpg'
+        ]);
+        $spdb->save();
+        $tvdb = ThanhVien::where('user_id',Auth::user()->id)->first();
+        $iddangban=DangBan::create([
+            'thanhvien_id' => $tvdb->user_id,
+            'sanpham_id' => $spdb->id,
+            // 'ngayhethan' => date('Y-m-d H:i:s'),
+            'canduyet' => 1,
+            'ngungban' => 0
+        ]);
+
+        DuyetDangBanHistory::create([
+            'dangban_id' => $iddangban->id,
+            'status' => 0,
+            'ischeck' => 0,
+            'isfix' => 0
+        ]);
+
+        return back()->with('success', 'Bạn đã đăng bán sản phẩm thành công, sản phẩm sẽ được cập nhật sau khi người kiểm duyệt thông qua.'.$request->tensanpham)->withInput();
     }
 
     
 
-    
+    public function sell_edit($id){
+        $this->data['loaisp'] = LoaiSP::all();
+        $this->data['ncc'] = NhaCungCap::all();
+        $this->data['sanphamdangban'] = SanPham::where('id',$id)->first();
 
-    
+        return view('shop.layouts.page.sell-edit',$this->data);
+    }
 
-    
+    public function save_edit_sell(Request $request,$id){
+
+		$this->validate($request, [
+            'tensanpham' => 'required|between:3,191',
+            'gia' => 'required|integer|min:0',
+            'soluong' => 'required|numeric|min:0',
+            'loaisp' => 'required|exists:loaisp,id',
+            'ncc' => 'required|exists:nhacungcap,id',
+            'mota' => 'max:10000',
+        ]);
+
+        $sanpham = SanPham::find($id);
+        
+        $sanpham->tensanpham = $request->tensanpham;
+        $sanpham->gia = $request->gia;
+        $sanpham->soluong = $request->soluong;
+        $sanpham->loaisp_id = $request->loaisp;
+        $sanpham->nhacungcap_id = $request->ncc;
+        $sanpham->mota = $request->mota;
+        $sanpham->save();
+
+
+        
+        $iddangbana = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.sanpham_id',$id)->where('DuyetDangBanHistory.isfix','0')->get();
+        
+
+        $iddangban=array();
+        foreach($iddangbana as $vl)
+        {
+            
+            if($vl->isfix == 0){
+                $iddangban=$vl;
+            }
+        }
+        
+        $setisfix = DuyetDangBanHistory::where('dangban_id',$iddangban['dangban_id'])->where('isfix','0')->first();
+        
+        $setisfix->isfix = 1;
+        $setisfix->save();
+        //dd($setisfix);
+        DuyetDangBanHistory::create([
+            'dangban_id' => $iddangban['dangban_id'],
+            'status' => 0,
+            'ischeck' => 0,
+            'isfix' => 0
+        ]);
+        
+        return back()->with('success', 'Bạn đã cập nhật thành công '.$request->tensanpham)->withInput();
+    }
 
     
 }
