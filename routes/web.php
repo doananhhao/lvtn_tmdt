@@ -14,8 +14,7 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-    echo "<pre>";
-    var_dump(App\Models\DanhGia::where('sanpham_id', 2)->orderBy('created_at', 'desc')->paginate(15));
+    dd(App\Models\DangBan::find(null));
     // foreach ($users as $user)
     // var_dump($user);
     // foreach (App\Models\HoaDon::find(1)->ChiTietHoaDon as $cthd)
@@ -46,6 +45,7 @@ Route::group(['prefix'=>'/home'], function () {
         Route::post('/cart-plus', 'Shop\ShoppingCart@cartPlus')->name('cart_plus');
         Route::post('/add-to-cart', 'Shop\ShoppingCart@add_to_cart')->name('add-to-cart');
         Route::post('/remove', 'Shop\ShoppingCart@remove')->name('remove');
+        Route::post('muahang', 'Shop\ShoppingCart@muahang')->name('muahang');
     });
 
     Route::get('loai-san-pham/{type}',['as'=>'loaisanpham','uses'=>'PageController@getLoaiSp']);
@@ -75,32 +75,57 @@ Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
 
         
 });
-Route::group(['prefix' => '/admin'], function (){
+Route::group(['prefix' => '/admin', 'middleware' => ['m_admin']], function (){
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
 
-    Route::get('san-pham/{id}/image', 'Admin\SanPhamController@showImage')->name('san-pham.images');
-    Route::post('san-pham/{id}/image', 'Admin\SanPhamController@createImage')->name('san-pham.create_images');
-    Route::resources([
-        'nha-cung-cap' => 'Admin\NhaCungCapController',
-        'loai-san-pham' => 'Admin\LoaiSPController',
-        'san-pham' => 'Admin\SanPhamController',
-        'loai-khuyen-mai' => 'Admin\LoaiKhuyenMaiController',
-        'loai-khuyen-mai.chi-tiet-khuyen-mai' => 'Admin\CTKMController',
-        'dang-ban' => 'Admin\Duyet\DangBanController',
-    ]);
-    Route::group(['prefix' => '/danh-gia', 'as' => 'danh-gia.'], function (){
-        Route::get('/', 'Admin\Duyet\DanhGiaController@index')->name('index');
-        Route::get('/{id_tv}-{id_sp}', 'Admin\Duyet\DanhGiaController@show')->name('show');
-        Route::post('/tinhtrang', 'Admin\Duyet\DanhGiaController@changeTinhTrang')->name('tinhtrang');
+    Route::group(['middleware' => ['taikhoan:Quản trị viên']], function(){
+        Route::get('san-pham/{id}/image', 'Admin\SanPhamController@showImage')->name('san-pham.images');
+        Route::post('san-pham/{id}/image', 'Admin\SanPhamController@createImage')->name('san-pham.create_images');
+        Route::resources([
+            'nha-cung-cap' => 'Admin\NhaCungCapController',
+            'loai-san-pham' => 'Admin\LoaiSPController',
+            'san-pham' => 'Admin\SanPhamController',
+            'loai-khuyen-mai' => 'Admin\LoaiKhuyenMaiController',
+            'loai-khuyen-mai.chi-tiet-khuyen-mai' => 'Admin\CTKMController',
+            'ql-tai-khoan' => 'Admin\QLDSTaiKhoanController'
+        ]);
     });
-    Route::group(['prefix' => '/dang-ban'], function (){
-        Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
+
+    Route::group(['middleware' => ['taikhoan:Moderator']], function(){
+        Route::group(['prefix' => '/danh-gia', 'as' => 'danh-gia.'], function (){
+            Route::get('/', 'Admin\Duyet\DanhGiaController@index')->name('index');
+            Route::get('/{id_tv}-{id_sp}', 'Admin\Duyet\DanhGiaController@show')->name('show');
+            Route::post('/tinhtrang', 'Admin\Duyet\DanhGiaController@changeTinhTrang')->name('tinhtrang');
+        });
+        //đăng bán
+        Route::resources([
+            'dang-ban' => 'Admin\Duyet\DangBanController',
+        ]);
+        Route::group(['prefix' => '/dang-ban', 'as' => 'dang-ban.'], function (){
+            Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
+        });
     });
+    
     Route::group(['prefix' => '/binh-luan'], function (){
-        Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
+        // Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
     });
-    Route::group(['prefix' => '/hoa-don', 'as' => 'hoa-don.'], function (){
-        Route::get('/', 'Admin\Duyet\HoaDonController@index')->name('index');
+    Route::group(['prefix' => '/hoa-don', 'as' => 'hoa-don.', 'middleware' => ['taikhoan:Nhân viên']], function (){
+        Route::group(['middleware' => ['chucvu:Trưởng phòng']], function(){
+            Route::get('/moi_dat', 'Admin\XLHoaDon\KTHoaDonController@index')->name('index');
+            Route::get('/xu_ly_lai', 'Admin\XLHoaDon\KTHoaDonController@index2')->name('xulylai');
+            Route::get('/da_phan_cong', 'Admin\XLHoaDon\KTHoaDonController@index3')->name('daphancong');
+            Route::get('/htphancong', 'Admin\XLHoaDon\KTHoaDonController@index4')->name('hdhoanthanhpc');
+            Route::get('/xu_ly_lai/rework', 'Admin\XLHoaDon\KTHoaDonController@xllHoaDon')->name('rework');
+            Route::get('/ds_nhanvien_phancong', 'Admin\XLHoaDon\KTHoaDonController@getPCNV')->name('dsnvpc');
+            Route::post('/nhanvien_phancong', 'Admin\XLHoaDon\KTHoaDonController@setPCNV')->name('phancongnv');
+            Route::get('/huy_hoa_don', 'Admin\XLHoaDon\KTHoaDonController@huyHoaDon')->name('huy');
+            Route::get('/hoan_thanh', 'Admin\XLHoaDon\KTHoaDonController@hoanthanhCongDoanHoaDon')->name('htcdhd');
+        });
+        Route::group(['middleware' => ['chucvu:Nhân viên']], function(){
+            Route::get('/', 'Admin\XLHoaDon\ThucHienHoaDonController@index')->name('dshd_canlam');
+            Route::get('/chitietpc', 'Admin\XLHoaDon\ThucHienHoaDonController@getPC')->name('chitietpc');
+            Route::post('/baocaocv', 'Admin\XLHoaDon\ThucHienHoaDonController@setStatusPC')->name('baocaocv');
+        });
     });
 });
 
@@ -110,3 +135,7 @@ Route::get('/admin', function(){
 Route::get('/', function(){
     return redirect()->route('home');
 });
+Route::post('/logout', function(){
+    auth()->logout();
+    return redirect()->route('home');
+})->name('logout');

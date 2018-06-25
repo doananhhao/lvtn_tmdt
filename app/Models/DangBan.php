@@ -11,12 +11,16 @@ class DangBan extends Model
     protected $fillable = [
         'thanhvien_id', 'sanpham_id','mota', 'ngayhethan', 'canduyet','ngungban'
     ];
-
+    
     function ThanhVien(){
         return $this->belongsTo('App\Models\ThanhVien', 'thanhvien_id');
     }
     
     function SanPham(){
         return $this->belongsTo('App\Models\SanPham', 'sanpham_id');
+    }
+
+    function DuyetDangBanHistory(){
+        return $this->hasMany('App\Models\DuyetDangBanHistory', 'dangban_id');
     }
 }

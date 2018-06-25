@@ -45,7 +45,7 @@
     
                
     
-                @include('shop.layouts.section.new-arrivals')
+                {{-- @include('shop.layouts.section.new-arrivals') --}}
 
             </div><!-- /.homebanner-holder -->
             <!-- ============================================== CONTENT : END ============================================== -->

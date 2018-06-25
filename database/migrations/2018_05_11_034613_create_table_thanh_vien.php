@@ -16,8 +16,8 @@ class CreateTableThanhVien extends Migration
         Schema::create('thanhvien', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->unsignedInteger('user_id');
-            $table->integer('diemtichluy')->default(0); //Điểm tích lũy
-            $table->integer('capdo')->default(0); //Cấp độ
+            $table->unsignedInteger('capdo_id')->nullable(); //Cấp độ
+            $table->unsignedInteger('diemtichluy')->default(0); //Điểm tích lũy
             $table->timestamps();
 
             $table->primary('user_id');

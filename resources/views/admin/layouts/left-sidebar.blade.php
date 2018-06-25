@@ -7,11 +7,11 @@
                         <img src="{{ asset('plugins/images/users/varun.jpg') }}" alt="user-img" class="img-circle">
                     </div>
                     <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
-                        aria-expanded="false">Steave Gection
+                        aria-expanded="false">{{ Auth::User()->name }}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu animated flipInY">
-                        <li>
+                        {{-- <li>
                             <a href="#">
                                 <i class="ti-user"></i> My Profile</a>
                         </li>
@@ -28,10 +28,15 @@
                             <a href="#">
                                 <i class="ti-settings"></i> Account Setting</a>
                         </li>
-                        <li role="separator" class="divider"></li>
+                        <li role="separator" class="divider"></li> --}}
                         <li>
-                            <a href="login.php">
-                                <i class="fa fa-power-off"></i> Logout</a>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                                <i class="fa fa-power-off"></i> &nbsp; Đăng xuất
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -52,10 +57,12 @@
                 {{-- NỘI DUNG ADMIN --}}
                 <li>
                     <a href="{{ route('dashboard') }}" class="waves-effect">
-                        <i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
-                        <span class="hide-menu">Dashboard</span>
+                        <i class="linea-icon linea-basic fa-fw" data-icon="G"></i>
+                        <span class="hide-menu">Tài khoản</span>
                     </a>
                 </li>
+
+                @if (Auth::User()->LoaiUser->tenloai == "Quản trị viên")
                 <li class="nav-small-cap m-t-10">--- Quản lý</li>
                 <li>
                     <a href="{{ route('nha-cung-cap.index') }}" class="waves-effect">
@@ -125,15 +132,63 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="{{ route('ql-tai-khoan.index') }}" class="waves-effect">
+                        <i class="linea-icon linea-ecommerce fa-fw" data-icon="P"></i>
+                        <span class="hide-menu"> Tài khoản
+                            <span class="fa arrow"></span>
+                            <span class="label label-rouded label-custom pull-right"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ route('ql-tai-khoan.index') }}#">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ql-tai-khoan.create') }}">Thêm mới</a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
 
-
-                <li class="nav-small-cap m-t-10">--- Xét duyệt</li>
+            @if (Auth::User()->NhanVien != null)
+                <li class="nav-small-cap m-t-10">--- Xử lý Hóa đơn</li>
+                @if (Auth::User()->NhanVien->ChucVu->ten == "Trưởng phòng")
                 <li>
                     <a href="{{ route('hoa-don.index') }}" class="waves-effect">
                         <i data-icon="3" class="linea-icon linea-ecommerce fa-fw"></i>
-                        <span class="hide-menu">Hóa đơn</span>
+                        <span class="hide-menu">Hóa đơn
+                            <span class="fa arrow"></span>
+                            <span class="label label-rouded label-custom pull-right"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ route('hoa-don.index') }}">Hóa đơn mới</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('hoa-don.daphancong') }}">Đã phân công</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('hoa-don.hdhoanthanhpc') }}" title="Hóa đơn nhân viên đã hoàn tất công việc được giao và chờ trưởng phòng xét">Hoàn thành, chờ duyệt</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('hoa-don.xulylai') }}">Xử lý lại</a>
+                        </li>
+                    </ul>
+                </li>
+                @elseif (Auth::User()->NhanVien->ChucVu->ten == "Nhân viên")
+                <li>
+                    <a href="{{ route('hoa-don.dshd_canlam') }}" class="waves-effect">
+                        <i data-icon="&#xe02e;" class="linea-icon linea-elaborate fa-fw"></i>
+                        <span class="hide-menu">Công việc cần làm</span>
                     </a>
                 </li>
+                @endif
+            @endif
+
+            @if (Auth::User()->LoaiUser->tenloai == "Moderator")
+                <li class="nav-small-cap m-t-10">--- Xét duyệt</li>
                 <li>
                     <a href="#" class="waves-effect">
                         <i data-icon="&#xe00c;" class="linea-icon linea-elaborate fa-fw"></i>
@@ -152,6 +207,7 @@
                         <span class="hide-menu">SP đánh giá</span>
                     </a>
                 </li>
+            @endif
                 {{-- NỘI DUNG ADMIN --}}
                 {{-- <li class="nav-small-cap m-t-10">--- Main Menu</li>
                 <li>

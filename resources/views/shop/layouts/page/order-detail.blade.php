@@ -201,4 +201,13 @@
     </script>
     <!--Style Switcher -->
     <script src="{{ asset('plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
+    <!-- Sweet-Alert  -->
+    <link href="{{ asset('plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ asset('plugins/bower_components/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
+    <script>
+        @if (session('success'))
+        swal("Chúc mừng", "{{ session('success') }}", "success")
+        @endif
+    </script>
 @endsection

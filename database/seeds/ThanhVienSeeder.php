@@ -16,8 +16,7 @@ class ThanhVienSeeder extends Seeder
 
         foreach ($users as $user){
             $user->ThanhVien()->create([
-                'diemtichluy' => 0,
-                'capdo' => 0
+                'diemtichluy' => 0
             ]);
         }
     }

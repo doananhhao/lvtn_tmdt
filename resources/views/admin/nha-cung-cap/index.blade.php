@@ -35,7 +35,7 @@
                                     @method('DELETE')
                                 </form>
                                 <a href="{{ route('nha-cung-cap.edit', ['id' => $v->id]) }}" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                <a href="{{ route('nha-cung-cap.destroy', ['id' =>$v->id]) }}" id='orm{{ $v->id }}' class='deleteWarning' data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                                <a href="{{ route('nha-cung-cap.destroy', ['id' =>$v->id]) }}" id='orm{{ $v->id }}' class='deleteWarning' data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
                             </td>
                         </tr>
                         @endforeach

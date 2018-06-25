@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('sdt', 14)->unique()->nullable();
             $table->boolean('nam')->default(TRUE); //true: nam; false: nu
-            $table->string('diachi')->nullable();
+            $table->string('diachi', 500)->nullable();
             $table->string('avatar')->nullable(); //tên avt.jpg
             $table->boolean('trangthai')->default(TRUE); //true: hoat động; false: bị khóa
             $table->rememberToken();

@@ -35,7 +35,9 @@
                         @foreach($loaisp as $v)
                         <optgroup label="{{ $v->tenloai }}">
                             @foreach($v->SanPham as $sp)
+                            @if ($sp->DangBan()->first() == null)
                             <option value="{{ $sp->id }}"{{ request()->get('sanpham') == $sp->id ? " selected" : "" }}>{{ $sp->tensanpham }}</option>
+                            @endif
                             @endforeach
                         </optgroup>
                         @endforeach
@@ -46,6 +48,13 @@
         </div>
     </div>
 
+    @if ($dg->isEmpty())
+    <div class="col-md-6 offset-md-3 col-sm-12">
+        <div class="white-box text-center">
+            <div class="alert alert-danger m-b-0">Không có dữ liệu cần tìm</div>
+        </div>
+    </div>
+    @else
     <div class="col-sm-12">
         <div class="white-box">
             <h3 class="box-title"></h3>
@@ -91,6 +100,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 

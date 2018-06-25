@@ -12,11 +12,11 @@ class UserSeeder extends Seeder
     public function run()
     {
         $loai = App\Models\LoaiUser::all();
-        $sl = 0;
+        $sl = 1;
         foreach ($loai as $v){
             for ($i = 0; $i <= $sl; $i++)
                 $v->User()->save(factory(App\User::class)->make());
-            $sl++;
+            $sl = $sl*2 + 2;
         }
     }
 }

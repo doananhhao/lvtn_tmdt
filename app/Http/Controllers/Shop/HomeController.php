@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\SanPham;
+use App\Models\DangBan;
 use App\Models\ChiTietHoaDon;
 use App\Models\HoaDon;
 use App\Models\LoaiSP;
@@ -16,8 +17,10 @@ use App\Models\ChiTietKhuyenMai;
 class HomeController extends Controller
 {
     protected $data = [];
+    private $ds_id_dangban = [];
 
     function __construct(){
+        $this->get_id_sp_dangban();
         //New Product của trang chủ
         //Layouts: content -> product-slider -> product-item
         //
@@ -60,6 +63,7 @@ class HomeController extends Controller
     }
 
     function test(){
+        dd($this->get_id_sp_dangban());
         echo "<pre>";
 
         // var_dump(ChiTietKhuyenMai::where([
@@ -74,6 +78,16 @@ class HomeController extends Controller
         // var_dump(Session::has('cart'));
     }
 
+    //sản phẩm đăng bán thì KHÔNG hiển thị trang chủ (sp có khóa ngoại trong dangban là sp dangban)
+    private function get_id_sp_dangban(){
+        $list = DangBan::select('sanpham_id','id')->groupBy('id')->get();
+        $arr_id = [];
+        foreach ($list as $sp){
+            $arr_id[] = $sp->sanpham_id;
+        }
+        $this->ds_id_dangban = $arr_id;
+        return $arr_id;
+    }
     //---Khuyến mãi đặc biệt---//
     private function getSPKMdacbiet(){
         $list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
@@ -131,7 +145,7 @@ class HomeController extends Controller
     //New Product
     function getSPmoiTheoLoaiSP(){
         //6 sp mới nhất
-        $sp_moi = SanPham::orderBy('id', 'desc')->limit(6)->get();
+        $sp_moi = SanPham::whereNotIn('id', $this->ds_id_dangban)->orderBy('id', 'desc')->limit(6)->get();
         return $sp_moi;
     }
     function getLoaiSPmoi(){
@@ -205,9 +219,11 @@ class HomeController extends Controller
             foreach ($list as $v)
                 $notin[] = $v->id;
             while (count($list) < 6){
-                $sp = SanPham::whereNotIn('id', $notin)->inRandomOrder()->first();
+                $sp = SanPham::whereNotIn('id', $notin)->whereNotIn('id', $this->ds_id_dangban)->inRandomOrder()->first();
                 $list[] = $sp;
-                $notin[] = $sp->id;
+                //edited
+                if ($sp != null)
+                    $notin[] = $sp->id;
             }
         }
 
@@ -260,7 +276,7 @@ class HomeController extends Controller
             ->groupBy('sanpham_id')
             ->orderBy('soluong', 'desc')
             ->get();
-        $ds_id_sp = [];
+        $ds_id_sp = []; //danh sách các sản phẩm ng dùng (tất cả mọi ng) đã mua, KO PHẢI SẢN PHẨM MỚI CHƯA AI MUA
         foreach ($list as $v){
             $ds_id_sp[] = $v->sanpham_id;
             if (!isset($array[$v->sanpham_id])){
@@ -294,9 +310,11 @@ class HomeController extends Controller
         asort($loaisp_muanhieu2);
         
         $arr_sp = [];
+        $arr_sp_pop = [];
         foreach ($loaisp_muanhieu as $key=>$soluong){
             $sanpham_goiy = [];
             $i = 0;
+            //array3: sp ng dùng này chưa mua nhưng vẫn có ng khác đã mua
             foreach ($array3 as $k=>$v){
                 if ($v['loaisp_id'] == $key){
                     $a = [
@@ -311,7 +329,7 @@ class HomeController extends Controller
             }
             shuffle($sanpham_goiy);
             while ($i >= 3){
-                array_pop($sanpham_goiy);
+                $arr_sp_pop[] = array_pop($sanpham_goiy);
                 $i--;
             }
             foreach ($sanpham_goiy as $v)
@@ -327,7 +345,16 @@ class HomeController extends Controller
         
         while (count($return) < 6){
             shuffle($list);
+            if (count($list) == 0)
+                break;
             $return[] = SanPham::find(array_pop($list)['id']);
+        }
+        
+        while (count($return) < 6){
+            shuffle($arr_sp_pop);
+            if (count($arr_sp_pop) == 0)
+                break;
+            $return[] = SanPham::find(array_pop($arr_sp_pop)['sanpham_id']);
         }
 
         return $return;

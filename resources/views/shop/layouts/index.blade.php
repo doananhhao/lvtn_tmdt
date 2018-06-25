@@ -139,7 +139,7 @@
 			//row2 += '<div class="price">' + gia + 'đ</div>';
 			row2 += '<h3 class="name"><a href="' + data.product_URL + '">' + data.product_name + '</a></h3>';
 			row2 += '<div class="price">' + data.price + '</div>';
-			row2 += '<div>x 1</div></div>';
+			row2 += '<div>x <span id="count_' + data.id + '">1</span></div></div>';
 			
 			product.innerHTML += row2;
 			
@@ -186,7 +186,7 @@
 				},
 				success: function(data){
 					if (!data.success){
-						alert("Sản phẩm đã có rồi")
+						alert("Sản phẩm đã có rồi hoặc dữ liệu không đúng")
 						return;
 					}
 					$("#totalPrice, #totalPrice2").html(data.totalPrice)

@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\SanPham;
+use App\Models\DangBan;
 use App\Models\ChiTietKhuyenMai;
 
 class Cart
@@ -33,6 +34,19 @@ class Cart
 			$total += $price * $soluong;
 		}
 		return $total;
+	}
+
+	function getLoaiKM($id){
+		$ctkm = ChiTietKhuyenMai::where([
+            ['sanpham_id', $id],
+            ['ngayketthuc', '>', date('Y-m-d H:i:s')]
+		])->orWhere([
+			['sanpham_id', $id],
+			['ngayketthuc', null]
+		])->orderBy('giamgia', 'desc')->first();
+		if ($ctkm != null)
+			return $ctkm->loaikhuyenmai_id;
+		return NULL;
 	}
 
 	function SoLuong($id){
@@ -74,7 +88,7 @@ class Cart
 			return false;
 		}
 
-		if (SanPham::find($id) == null)
+		if (SanPham::find($id) == null || DangBan::where('sanpham_id', $id)->first() != null)
 			return false;
 		
 		$this->items[$id] = 1;

@@ -14,6 +14,4 @@ class DuyetDangBanHistory extends Model
     function DangBan(){
         return $this->belongsTo('App\Models\DangBan', 'dangban_id');
     }
-    
-    
 }

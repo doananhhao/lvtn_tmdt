@@ -116,6 +116,8 @@ $miniProducts = array(
 							@for ($j = ($i*3)-3; $j <= ($i*3)-1; $j++)
 							<?php
 								$sp = $goi_y[$j];
+								if ($sp == null)
+									break;
 								$km = $sp->ChiTietKhuyenMai->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))->first();
 								$dg = $sp->DanhGia;
 								if ($dg->isEmpty())

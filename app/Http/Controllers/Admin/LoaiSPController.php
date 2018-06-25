@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use App\Models\LoaiSP;
 use App\Models\SanPham;
+use App\Models\DangBan;
 
 class LoaiSPController extends Controller
 {
@@ -69,8 +70,12 @@ class LoaiSPController extends Controller
     {
         if (LoaiSP::find($id) == null)
             return abort(404);
-        $loaisp = LoaiSP::find($id);
-        $this->data['dssp'] = $loaisp->SanPham()->orderBy('id', 'desc')->paginate(15);
+        $ds_id_db = [];
+        foreach (DangBan::select('sanpham_id','id')->groupBy('id')->get() as $db)
+            $ds_id_db[] = $db->sanpham_id;
+        // $loaisp = LoaiSP::find($id);
+        // $this->data['dssp'] = $loaisp->SanPham()->orderBy('id', 'desc')->paginate(15);
+        $this->data['dssp'] = SanPham::where('loaisp_id', $id)->whereNotIn('id', $ds_id_db)->orderBy('id', 'desc')->paginate(15);
         $this->data['title2'] = $loaisp->tenloai;
         return view('admin.sanpham.index', $this->data);
     }

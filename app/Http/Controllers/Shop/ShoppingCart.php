@@ -6,11 +6,55 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\SanPham;
+use App\Models\HoaDon;
+use Illuminate\Support\Facades\Auth;
 
 class ShoppingCart extends Controller
 {
     private $data = [];
     
+    private function createHD($request){
+        return Auth::User()->HoaDon()->create([
+            'diachi' => $request->diachi,
+            'sdt' => $request->sdt,
+            'mota' => $request->mota
+        ]);
+    }
+
+    private function createCTHD($hd, $listsp = array()){
+        $cart = new Cart();
+        foreach ($listsp as $idsp=>$sl){
+            $hd->ChiTietHoaDon()->create([
+                'sanpham_id' => $idsp,
+                'loaikhuyenmai_id' => $cart->getLoaiKM($idsp),
+                'soluong' => $sl,
+                'gia' => SanPham::find($idsp)->gia
+            ]);
+        }
+    }
+
+    function muahang(Request $request){
+        if (!Auth::check())
+            return redirect()->route('login');
+
+        $cart = new Cart();
+        if (count($cart->getAll()) < 0){
+            return redirect()->route('cart');
+        }
+
+        //validate
+        $this->validate($request, [
+            'diachi' => 'required|between:3,500',
+            'sdt' => 'required|between:7,14',
+        ]);
+
+        //tính tiền
+        $hd = $this->createHD($request);
+        $this->createCTHD($hd, $cart->getAll());
+        
+        return redirect()->route('order-detail', ['id' => $hd->id])->with('success', 'Bạn đã đặt hàng thành công');
+    }
+
     function remove(Request $request){
         if ($request->id == null || SanPham::find($request->id) == null)
             return abort(404);
@@ -64,6 +108,8 @@ class ShoppingCart extends Controller
         $totalPrice = $cart->getTotalPrice();
 
         $return = [
+            "soluong" => $cart->SoLuong($request->id),
+            "count" => count($cart->getAll()),
             "totalPrice" => number_format($totalPrice,0,',','.'), //tổng giá tất cả sp
             "price" => number_format($price,0,',','.'), //giá sp * số lượng * khuyến mãi
             "success" => true, //trạng thái của hàm (id có sai hay ko || id có trong vỏ hàng hay ko)
@@ -89,6 +135,8 @@ class ShoppingCart extends Controller
         $totalPrice = $cart->getTotalPrice();
 
         $return = [
+            "soluong" => $cart->SoLuong($request->id),
+            "count" => count($cart->getAll()),
             "totalPrice" => number_format($totalPrice,0,',','.'), //tổng giá tất cả sp
             "price" => number_format($price,0,',','.'), //giá sp * số lượng * khuyến mãi
             "success" => true, //trạng thái của hàm (id có sai hay ko || id có trong vỏ hàng hay ko)

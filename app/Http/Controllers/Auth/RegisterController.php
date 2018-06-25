@@ -66,11 +66,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $loaiuser = LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'loaiuser_id' => $loaiuser->id,
         ]);
+        $user->ThanhVien()->create();
+        return $user;
     }
 }
