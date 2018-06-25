@@ -5,18 +5,18 @@
                 <i class="ti-menu"></i>
             </a>
             <div class="top-left-part">
-                <a class="logo" href="index.php">
+                <a class="logo" href="#">
                     <b>
                         <!--This is dark logo icon-->
-                        <img src="{{ asset('plugins/images/eliteadmin-logo.png') }}" alt="home" class="dark-logo" />
+                        <img src="{{ asset('plugins/images/eliteadmin-logo.png') }}" class="dark-logo" />
                         <!--This is light logo icon-->
-                        <img src="{{ asset('plugins/images/eliteadmin-logo-dark.png') }}" alt="home" class="light-logo" />
+                        <img src="{{ asset('plugins/images/eliteadmin-logo-dark.png') }}" class="light-logo" />
                     </b>
                     <span class="hidden-xs">
                         <!--This is dark logo text-->
-                        <img src="{{ asset('plugins/images/eliteadmin-text.png') }}" alt="home" class="dark-logo" />
+                        <img src="{{ asset('plugins/images/eliteadmin-text.png') }}" class="dark-logo" />
                         <!--This is light logo text-->
-                        <img src="{{ asset('plugins/images/eliteadmin-text-dark.png') }}" alt="home" class="light-logo" />
+                        <img src="{{ asset('plugins/images/eliteadmin-text-dark.png') }}" class="light-logo" />
                     </span>
                 </a>
             </div>
@@ -43,7 +43,7 @@
                 @endif
             </ul>
             <ul class="nav navbar-top-links navbar-right pull-right">
-                <li class="dropdown">
+                {{-- <li class="dropdown">
                     <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#">
                         <i class="icon-envelope"></i>
                         <div class="notify">
@@ -197,7 +197,7 @@
                         </li>
                     </ul>
                     <!-- /.dropdown-tasks -->
-                </li>
+                </li> --}}
                 <!-- /.dropdown -->
                 
                 <li class="right-side-toggle">

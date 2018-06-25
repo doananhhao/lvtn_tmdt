@@ -35,7 +35,9 @@
                         @foreach($loaisp as $v)
                         <optgroup label="{{ $v->tenloai }}">
                             @foreach($v->SanPham as $sp)
+                            @if ($sp->DangBan()->first() == null)
                             <option value="{{ $sp->id }}"{{ request()->get('sanpham') == $sp->id ? " selected" : "" }}>{{ $sp->tensanpham }}</option>
+                            @endif
                             @endforeach
                         </optgroup>
                         @endforeach

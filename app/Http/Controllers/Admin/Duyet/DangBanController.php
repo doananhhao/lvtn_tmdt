@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin\Duyet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DangBan;
+use App\Models\DuyetDangBanHistory;
 use App\Models\SanPham;
 use App\Models\LoaiSP;
+use DB;
 
 class DangBanController extends Controller
 {
@@ -31,29 +33,59 @@ class DangBanController extends Controller
          * 0:    hiển thị chưa duyệt
          * 1:    hiển thị đã duyệt
          */
-        $tinhtrang = null;
-        $sanpham_id = null;
-        if ($request->has('tinhtrang'))
-            $tinhtrang = $request->get('tinhtrang');
-        if ($request->has('sanpham'))
-            $sanpham_id = $request->get('sanpham');
+        $dangban_status = null;
+        $loaisp_id = null;
+        if ($request->has('dangban'))
+            $dangban_status = $request->get('dangban');
+        if ($request->has('loaisp'))
+            $loaisp_id = $request->get('loaisp');
         // if (($sanpham_id != null && DangBan::where('sanpham_id', $sanpham_id)->first() == null) || ($tinhtrang != null && DangBan::where('tinhtrang', $tinhtrang)->first() == null))
-        if ($sanpham_id != null && SanPham::find($sanpham_id) == null)
+        if ($loaisp_id != null && LoaiSP::find($loaisp_id) == null)
             return abort(404);
 
-        if ($tinhtrang == null){
-            if ($sanpham_id == null)
+        if ($dangban_status == null){
+            if ($loaisp_id == null)
                 $dangban = DangBan::orderBy('created_at', 'desc')->paginate($this->paginate_set);
-            else $dangban = DangBan::where('sanpham_id', $sanpham_id)->orderBy('created_at', 'desc')->paginate($this->paginate_set);
-        }else{
-            if ($sanpham_id == null)
-                $dangban = DangBan::where('tinhtrang', $tinhtrang)->orderBy('created_at', 'desc')->paginate($this->paginate_set);
-            else $dangban = DangBan::where([['tinhtrang', $tinhtrang], ['sanpham_id', $sanpham_id]])->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+            else $dangban = DangBan::whereIn('sanpham_id', $this->getDS_id_sp_loaisp($loaisp_id))->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+        }else if(strtolower($dangban_status) == "moi"){
+            if ($loaisp_id == null)
+                $dangban = DangBan::where('canduyet', 1)->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+            else $dangban = DangBan::where('canduyet', 1)
+                                    ->whereIn('sanpham_id', $this->getDS_id_sp_loaisp($loaisp_id))
+                                    ->orderBy('created_at', 'desc')->paginate($this->paginate_set);
+            // dd($this->getDS_id_sp_loaisp($loaisp_id));
+        }else if (strtolower($dangban_status) == "daduyet"){
+            //daduyet = DuyetDangBanHistory (status, true: được phép hiển thị)
+            $dangban_latest_history = DuyetDangBanHistory::select(DB::raw('dangban_id, MAX(id) as id'))->groupBy('dangban_id')->get();
+            $ds_id = [];
+            foreach ($dangban_latest_history as $v)
+                $ds_id[] = $v->id; //id của dangbanhistory
+            //để lấy dangban nào dc phép hiển thị
+            $dangbandaduyet = DuyetDangBanHistory::where("status", 1)->whereIn('id', $ds_id)->get();
+            $ds_id = [];
+            if (!$dangbandaduyet->isEmpty()){
+                foreach ($dangbandaduyet as $v)
+                    $ds_id[] = $v->dangban_id;  //id của dangban
+            }
+            $dangban = DangBan::whereIn('id', $ds_id)->paginate($this->paginate_set);
         }
+
         $dangban->appends(request()->query());
         $this->data['dangban'] = $dangban;
         $this->data['loaisp'] = LoaiSP::all();
         return view('admin.dang-ban.index', $this->data);
+    }
+
+    private function getDS_id_sp_loaisp($loaisp_id = null){
+        if ($loaisp_id == null)
+            return [];
+        $loaisp = LoaiSP::find($loaisp_id);
+        if ($loaisp == null)
+            return [];
+        $ds_id = [];
+        foreach ($loaisp->SanPham as $sp)
+            $ds_id[] = $sp->id;
+        return $ds_id;
     }
 
     /**
@@ -94,15 +126,15 @@ class DangBanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        if (DangBan::find($id) == null)
-            return abort(404);
-        $dangban = DangBan::find($id);
-        $this->data['dangban'] = $dangban;
-        $this->data['title2'] = 'Chi tiết thông tin mô tả';
-        return view('admin.dang-ban.edit', $this->data);
-    }
+    // public function edit($id)
+    // {
+    //     if (DangBan::find($id) == null)
+    //         return abort(404);
+    //     $dangban = DangBan::find($id);
+    //     $this->data['dangban'] = $dangban;
+    //     $this->data['title2'] = 'Chi tiết thông tin mô tả';
+    //     return view('admin.dang-ban.edit', $this->data);
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -111,24 +143,24 @@ class DangBanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        if (DangBan::find($id) == null)
-            return abort(404);
+    // public function update(Request $request, $id)
+    // {
+    //     if (DangBan::find($id) == null)
+    //         return abort(404);
         
-        $this->validate($request, [
-            'mota' => 'required|max:10000',
-        ]);
+    //     $this->validate($request, [
+    //         'mota' => 'required|max:10000',
+    //     ]);
 
-        $duyet = $request->duyet == 1 ? 1 : 0;
+    //     $duyet = $request->duyet == 1 ? 1 : 0;
 
-        $dangban = DangBan::find($id);
-        $dangban->mota = $request->mota;
-        $dangban->tinhtrang = $duyet;
-        $dangban->save();
+    //     $dangban = DangBan::find($id);
+    //     $dangban->mota = $request->mota;
+    //     $dangban->tinhtrang = $duyet;
+    //     $dangban->save();
         
-        return back()->with('success', 'Bạn đã cập nhật thành công')->withInput();
-    }
+    //     return back()->with('success', 'Bạn đã cập nhật thành công')->withInput();
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -145,21 +177,45 @@ class DangBanController extends Controller
      * ajax
      */
     function changeTinhTrang(Request $request){
-        if (!$request->ajax() || $request->id == null)
-            return response()->json(['success' => false]);
+        if (!$request->ajax() || $request->dangban_id == null || $request->action == null)
+            return response()->json([
+                'success' => false,
+                'message' => "Không có dữ liệu gửi đi"
+            ]);
         
-        $dangban = DangBan::find($request->id);
-        $tt = $request->tinhtrang == 1 ? 1 : 0;
+        $dangban = DangBan::find($request->dangban_id);
+        if (!in_array($request->action, ['allow', 'deny']))
+            return response()->json([
+                'success' => false,
+                'message' => "Hành động cần thực hiện không đúng [action]"
+            ]);
+        
+        $action = $request->action == 'allow' ? 1 : 0;
+        $comment = $request->comment;
         if ($dangban == null)
-            return response()->json(['success' => false]);
-        if ($tt == $dangban->tinhtrang)
-            return response()->json(['success' => false]);
+            return response()->json([
+                'success' => false,
+                'message' => "Dữ liệu yêu cầu không hợp lệ [ID]"
+            ]);
         
-        $dangban->tinhtrang = $tt;
+        $latest_history = $dangban->DuyetDangBanHistory->sortByDesc('id')->first();
+        if ($latest_history != null)
+            if ($latest_history->status == 1 && $latest_history->status == $action)
+                return response()->json([
+                    'success' => false,
+                    'message' => "Đăng bán [".$dangban->id."] này đã được [cho phép] thực hiện từ trước"
+                ]);
+        
+        $dangban->DuyetDangBanHistory()->create([
+            'comment' => $comment == null ? "" : $comment,
+            'status' => $action
+        ]);
+        $dangban->canduyet = 0;
         $dangban->save();
+        
         $return = [
             'success' => true,
-            'checked' => $tt == 1 ? true : false
+            'message' => "[".$action == 1 ? "Cho phép" : "Từ chối"."] yêu cầu đăng bán thành công"
         ];
         return response()->json($return);
     }

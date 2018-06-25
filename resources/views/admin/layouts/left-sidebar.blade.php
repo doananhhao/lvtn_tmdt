@@ -7,11 +7,11 @@
                         <img src="{{ asset('plugins/images/users/varun.jpg') }}" alt="user-img" class="img-circle">
                     </div>
                     <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
-                        aria-expanded="false">Steave Gection
+                        aria-expanded="false">{{ Auth::User()->name }}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu animated flipInY">
-                        <li>
+                        {{-- <li>
                             <a href="#">
                                 <i class="ti-user"></i> My Profile</a>
                         </li>
@@ -28,10 +28,15 @@
                             <a href="#">
                                 <i class="ti-settings"></i> Account Setting</a>
                         </li>
-                        <li role="separator" class="divider"></li>
+                        <li role="separator" class="divider"></li> --}}
                         <li>
-                            <a href="login.php">
-                                <i class="fa fa-power-off"></i> Logout</a>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                                <i class="fa fa-power-off"></i> &nbsp; Đăng xuất
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -52,8 +57,8 @@
                 {{-- NỘI DUNG ADMIN --}}
                 <li>
                     <a href="{{ route('dashboard') }}" class="waves-effect">
-                        <i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
-                        <span class="hide-menu">Dashboard</span>
+                        <i class="linea-icon linea-basic fa-fw" data-icon="G"></i>
+                        <span class="hide-menu">Tài khoản</span>
                     </a>
                 </li>
 

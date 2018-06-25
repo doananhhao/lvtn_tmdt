@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-md-5 col-sm-12">
                         <p>Điểm: <span class="text-warning">{{ $dg->ThanhVien->diemtichluy }}</span></p>
-                        <p>Cấp độ: <span class="text-warning">{{ $dg->ThanhVien->capdo }}</span></p>
+                        <p>Cấp độ: <span class="text-warning">{{ $dg->ThanhVien->CapDo != null ? $dg->ThanhVien->CapDo->capdo : "" }}</span></p>
                     </div>
                     <div class="clearfix"></div>
                 </div>

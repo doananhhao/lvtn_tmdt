@@ -14,7 +14,7 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-    dd(App\Models\DangBan::select('sanpham_id','id')->groupBy('id')->get());
+    dd(App\Models\DangBan::find(null));
     // foreach ($users as $user)
     // var_dump($user);
 
@@ -89,7 +89,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['m_admin']], function (){
         Route::resources([
             'dang-ban' => 'Admin\Duyet\DangBanController',
         ]);
-        Route::group(['prefix' => '/dang-ban'], function (){
+        Route::group(['prefix' => '/dang-ban', 'as' => 'dang-ban.'], function (){
             Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
         });
     });

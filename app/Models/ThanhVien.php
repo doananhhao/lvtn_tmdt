@@ -25,4 +25,8 @@ class ThanhVien extends Model
     function DaiLy(){
         return $this->hasOne('App\Models\DaiLy', 'thanhvien_id', 'user_id');
     }
+
+    function CapDo(){
+        return $this->belongsTo('App\Models\CapDo', 'capdo_id', 'id');
+    }
 }
