@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\SanPham;
 use App\Models\HoaDon;
+use App\Models\CongDoan;
 use Illuminate\Support\Facades\Auth;
 
 class ShoppingCart extends Controller
@@ -52,6 +53,12 @@ class ShoppingCart extends Controller
         $hd = $this->createHD($request);
         $this->createCTHD($hd, $cart->getAll());
         
+        //cdhd
+        $hd->CongDoanHoaDon()->create([
+            'congdoan_id' => 1,
+            'truongphong_id' => CongDoan::find(1)->PhongBan->TruongPhong->nhanvien_id,
+        ]);
+        $cart->deleteAll();
         return redirect()->route('order-detail', ['id' => $hd->id])->with('success', 'Bạn đã đặt hàng thành công');
     }
 
