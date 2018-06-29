@@ -15,15 +15,15 @@
                 <div class="progress">
                 
                 @foreach($capdo as $lv) 
-                @if ($value['diemtichluy'] <= $lv['point'])
-                  <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo floor(($value['diemtichluy']-$diemhientai)/($lv['point']-$diemhientai)*100);?>%">
+                @if ($value['diemtichluy'] <= $lv['diem'])
+                  <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo floor(($value['diemtichluy']-$diemhientai)/($lv['diem']-$diemhientai)*100);?>%">
                     <span id="current-progress"></span>
                   </div>
                   @break
                 @endif
-                @if ($value['diemtichluy'] > $lv['point'])
+                @if ($value['diemtichluy'] > $lv['diem'])
                     
-                    @continue($diemhientai=$lv['point'])
+                    @continue($diemhientai=$lv['diem'])
                 @endif  
               @endforeach   
                 </div>
@@ -36,7 +36,7 @@
                                         <tr >
                                             
                                             <th style="text-align: center">Điểm hiện tại</th>
-                                            <th style="text-align: center">Điểm cấp tiếp theo</th>
+                                            <th style="text-align: center">Điểm lên cấp tiếp theo</th>
                                             <th style="text-align: center">Điểm còn thiếu</th>
                                         </tr>
                                     </thead>
@@ -45,22 +45,22 @@
                                             <td>{{ number_format($value['diemtichluy'], 0, ' ', ' ') }}</td>
                                             <td>
                                                 @foreach($capdo as $lv) 
-                                                    @if ($value['diemtichluy'] <= $lv['point'])
-                                                        {{$lv['point']}}
+                                                    @if ($value['diemtichluy'] <= $lv['diem'])
+                                                        {{number_format($lv['diem'], 0, ' ', ' ')}}
                                                         @break
                                                     @endif
-                                                    @if ($value['diemtichluy'] > $lv['point'])
+                                                    @if ($value['diemtichluy'] > $lv['diem'])
                                                         @continue
                                                     @endif  
                                                 @endforeach   
                                             </td>
                                             <td>
                                                 @foreach($capdo as $lv) 
-                                                    @if ($value['diemtichluy'] <= $lv['point'])
-                                                        {{ number_format($lv['point']-$value['diemtichluy'], 0, ' ', ' ') }}
+                                                    @if ($value['diemtichluy'] <= $lv['diem'])
+                                                        {{ number_format($lv['diem']-$value['diemtichluy'], 0, ' ', ' ') }}
                                                         @break
                                                     @endif
-                                                    @if ($value['diemtichluy'] > $lv['point'])
+                                                    @if ($value['diemtichluy'] > $lv['diem'])
                                                         @continue
                                                     @endif  
                                                 @endforeach   
@@ -76,11 +76,40 @@
                             </div>
                         </div>
                     </div>
-                    @if ($value['capdo'] >= 4)
-                <button style="margin: 10px;" class="btn btn-success waves-effect waves-light" type="button"><span class="btn-label"><i class="fa fa-check"></i></span>Làm đại lý</button>
-                    @endif
+                    
+                        @if ($value['capdo'] >= 4)
+                            @if($daily==null)
+                        <form action="{{ route('create-daily', ['id' => $value['user_id']]) }}" method="POST" class="form-horizontal">
+                                @csrf
+                            <button style="margin: 10px;" class="btn btn-success waves-effect waves-light" type="submit"><span class="btn-label"><i class="fa fa-check"></i></span>Làm đại lý</button>
+                        </form>
+                            @endif
+                        @endif
             @endforeach 
         </div>
     </div>
+
+@endsection
+
+@section('custom_plugin')
+    <!-- Sweet-Alert  -->
+    <link href="{{ asset('plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ asset('plugins/bower_components/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
+    <!-- Summernote -->
+    <link href="{{ asset('plugins/bower_components/summernote-master/dist/summernote-bs4.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ asset('plugins/bower_components/summernote-master/dist/summernote-bs4.js') }}"></script>
+    <script src="{{ asset('plugins/bower_components/summernote-master/lang/summernote-vi-VN.js') }}"></script>
+
+    <script>
+        $('.summernote').summernote({
+            tabsize: 2,
+            height: 100,
+            lang: 'vi-VN'
+        });
+    @if (session('success'))
+        swal("Chúc mừng", "{{ session('success') }}", "success")
+    @endif
+    </script>
 
 @endsection

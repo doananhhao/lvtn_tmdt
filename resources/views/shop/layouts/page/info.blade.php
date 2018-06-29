@@ -62,6 +62,8 @@
                         
                     </ul>
                 </li>
+                @if(Auth::user()->ThanhVien != null)
+                    @if(Auth::user()->ThanhVien->DaiLy != null)
                 <li class="nav-small-cap">--- Đại lý bán hàng</li>
                 <li><a href="#" class="waves-effect"><i data-icon=")" class="linea-icon ti-pin2 fa-fw"></i> <span class="hide-menu">Quản lý Đăng bán<span class="fa arrow"></span></span></a>
                     <ul class="nav nav-second-level">
@@ -69,6 +71,8 @@
                         <li><a href="{{ route('sell') }}">Đăng bán</a></li>
                     </ul>
                 </li>
+                @endif
+                @endif
                 </ul>
                 
         </div>

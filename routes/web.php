@@ -54,13 +54,16 @@ Route::group(['prefix'=>'/home'], function () {
 });
 Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
         Route::get('information', 'InfoController@getInfo')->name('acc-info');
+        Route::post('/save-edit-user', 'InfoController@save_edit_user')->name('edit-info');  
         Route::get('level', 'InfoController@getLevel')->name('level');
+
         Route::get('/orderlist', 'InfoController@list_order')->name('order_list');
         Route::get('/cancelorderlist', 'InfoController@list_order_cancel')->name('cancel_order_list');
         Route::get('/details/{id}', 'InfoController@order_detail')->where('id', '[0-9]+')->name('order-detail');
-        Route::get('/cancelorderdetails/{id}', 'InfoController@order_detail_cancel')->where('id', '[0-9]+')->name('cancel-order-detail');
-        Route::get('/orderlist/status/{status}', 'InfoController@order_status')->name('order_status');  
-        Route::post('/save-edit-user', 'InfoController@save_edit_user')->name('edit-info');  
+        Route::get('/orderlist/status/{status}', 'InfoController@order_status')->name('order_status'); 
+        
+        Route::get('/cancelorderdetails/{id}', 'InfoController@order_detail_cancel')->where('id', '[0-9]+')->name('cancel-order-detail');        
+        
         Route::get('/selllist', 'InfoController@list_sell')->name('sell_list');
         Route::get('/sell', 'InfoController@sell')->name('sell'); 
         Route::post('/sell', 'InfoController@sell_product')->name('sell-product');  
@@ -69,6 +72,8 @@ Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
         
         Route::get('/selledit/{id}', 'InfoController@sell_edit')->name('sell-edit');
         Route::post('/selledit/{id}', 'InfoController@save_edit_sell')->name('edit-sell');  
+
+        Route::post('/create-daily/{id}', 'InfoController@create_daily')->name('create-daily');  
         
         Route::get('/changePassword','HomeController@showChangePasswordForm')->name('change-password');
         Route::post('/changePassword','HomeController@changePassword')->name('changePassword');

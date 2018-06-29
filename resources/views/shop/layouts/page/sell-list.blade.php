@@ -35,6 +35,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                    <th>#</th>
                                     <th>Loại sản phẩm</th>
                                     <th>Sản phẩm</th>
                                     <th>Số lượng</th>
@@ -49,6 +50,7 @@
                             @foreach($dangban as $db)
                             
                             <tr>
+                                <td>{{ $db['id'] }}</td>
                                 <td>{{ $db['tenloai'] }}</td>
                                 <td><a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" >{{ $db['tensanpham'] }}</a></td>
                                 <td>{{ $db['soluong'] }}</td>
@@ -57,11 +59,21 @@
                                 
                                 <td>
                                     @if($db['ngungban']==0)
-                                        @if ($db['canduyet'] == 0)
-                                            <div class="label label-table label-success">Đã đăng bán</div>
-                                            
-                                        @else
+                                        @if ($db['canduyet'] == 1)
                                             <div class="label label-table label-info">Đang chờ duyệt</div>
+                                            
+                                        @elseif ($db['canduyet'] == 0)
+                                            @foreach($statusdb as $sttdb)
+                                                @if($db['id'] == $sttdb['dangban_id'])
+                                                    @if($sttdb['status']==1)
+                                                        <div class="label label-table label-success">Đã đăng bán</div>
+                                                    @else
+                                                        <div class="label label-table label-info">Đang chờ duyệt</div>
+                                                    @endif
+                                                {{--  @else
+                                                    <div class="label label-table label-info">Đang chờ duyệt</div>  --}}
+                                                @endif
+                                            @endforeach
                                         @endif
                                     @else
                                         <div class="label label-table label-danger">Đã ngưng bán</div>

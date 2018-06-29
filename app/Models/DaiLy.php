@@ -10,6 +10,10 @@ class DaiLy extends Model
     protected $primaryKey = "thanhvien_id";
     public $incrementing = 'false';
 
+    protected $fillable = [
+        'thanhvien_id', 'hash', 'chietkhau'
+    ];
+
     function ThanhVien(){
         return $this->belongsTo('App\Models\ThanhVien', 'thanhvien_id', 'user_id');
     }

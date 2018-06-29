@@ -13,6 +13,7 @@ use App\Models\SanPham;
 use App\Models\ThanhVien;
 use App\Models\CapDo;
 use App\Models\LoaiSP;
+use App\Models\DaiLy;
 use App\Models\NhaCungCap;
 use App\Models\DangBan;
 use App\Models\DuyetDangBanHistory;
@@ -62,6 +63,25 @@ class InfoController extends Controller
     
     
 
+    
+
+
+
+    //Hiện menu Đại lý nếu có
+    public function getNavBar(){
+        $daily = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->join('DaiLy','ThanhVien.user_id','DaiLy.thanhvien_id')->where('user_id',Auth::user()->id)->first();
+        //$this->data['daily'] = $daily; 
+        return view('shop.layouts.page.info', compact('daily'));
+    }
+
+   
+    //Thông tin tài khoản
+   public function getInfo(){
+       
+        return view('shop.layouts.page.acc-info');
+    }
+    
+    //Edit thông tin tài khoản
     public function save_edit_user(Request $request){
 
 		$this->validate($request, [
@@ -82,28 +102,31 @@ class InfoController extends Controller
         return back()->with('success', 'Bạn đã cập nhật thành công '.$request->tensanpham)->withInput();
     }
 
-    
-
-   
-
-   public function getInfo(){
-       
-        return view('shop.layouts.page.acc-info');
-    }
-    
-
     public function getLevel(){
-        $thanhvien = ThanhVien::where('user_id',Auth::user()->id)->get();
+        $thanhvien = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->where('user_id',Auth::user()->id)->get();
         $capdo = CapDo::all();
-        
+        $daily = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->join('DaiLy','ThanhVien.user_id','DaiLy.thanhvien_id')->where('user_id',Auth::user()->id)->first();
+        //dd($thanhvien);
         $diemhientai=null;
 
-        
+        $this->data['daily'] = $daily; 
         $this->data['thanhvien'] = $thanhvien; 
         $this->data['capdo'] = $capdo; 
         $this->data['diemhientai'] = $diemhientai; 
         
         return view('shop.layouts.page.level', $this->data);
+    }
+
+    public function create_daily($id){
+
+		
+        DaiLy::create([
+            'thanhvien_id' => $id,
+            'hash' => 0,
+            'chietkhau' => 0
+        ]);
+        
+        return back()->with('success', 'Bạn đã trở thành Đại lý bán hàng, bạn có thể đăng bán sản phẩm của mình.')->withInput();
     }
 
     public function list_order_cancel(){
@@ -176,8 +199,14 @@ class InfoController extends Controller
     }
 
     public function list_sell(){
-        $this->data['dangban'] = DangBan::join('SanPham','SanPham.id','sanpham_id')->join('LoaiSP','LoaiSP.id','SanPham.loaisp_id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+        
+        $this->data['statusdb'] = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+        
+        $this->data['dangban'] = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+        
+        //$this->data['dangbana'] = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
 
+        //dd($this->data['dangban']);
 
         return view('shop.layouts.page.sell-list',$this->data);
     }
@@ -191,14 +220,45 @@ class InfoController extends Controller
         $this->data['status'] = $status;
         
 
-        if ($status == 'all')
-            $sell_list = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
-        else if ($status == 'complete')
-            $sell_list = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('status', 1)->orderBy('DangBan.id', 'desc')->get()->toArray();
-        else
-            $sell_list = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('status', 0)->orderBy('DangBan.id', 'desc')->get()->toArray();
+        if ($status == 'all'){
+            $sell_list = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+            $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+        }
+        else if ($status == 'complete'){
+            $sell_list = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('DuyetDangBanHistory.status', 1)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+            $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+        }
+        else{
             
+            $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+            $sell_list=array();
+            $all= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+            foreach($all as $a){
+                if($a['canduyet']==1){
+                    array_push($sell_list,$a);
+                }
+                else{
+                    foreach($sell_stt as $s){
+                        if($a['id'] == $s['dangban_id']){
+                            if($s['status'] == 0){
+                                //$x= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('DangBan.id',$s['id'])->get()->toArray();
+
+                                $x= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+                                foreach($x as $x1){
+                                    if($x1['id'] == $s['id']){
+                                        array_push($sell_list,$x1);
+                                    }
+                                }
+                            }
+                        }
+                    
+                    }
+                }
+                
+            }//dd($sell_list);
+        }    
         $this->data['dangban'] = $sell_list; 
+        $this->data['statusdb']=$sell_stt;
 
         return view('shop.layouts.page.sell-list', $this->data);
     }
@@ -252,17 +312,11 @@ class InfoController extends Controller
         $iddangban=DangBan::create([
             'thanhvien_id' => $tvdb->user_id,
             'sanpham_id' => $spdb->id,
-            // 'ngayhethan' => date('Y-m-d H:i:s'),
+            //'ngayhethan' => date('Y-m-d H:i:s'),
             'canduyet' => 1,
             'ngungban' => 0
         ]);
 
-        DuyetDangBanHistory::create([
-            'dangban_id' => $iddangban->id,
-            'status' => 0,
-            'ischeck' => 0,
-            'isfix' => 0
-        ]);
 
         return back()->with('success', 'Bạn đã đăng bán sản phẩm thành công, sản phẩm sẽ được cập nhật sau khi người kiểm duyệt thông qua.'.$request->tensanpham)->withInput();
     }
