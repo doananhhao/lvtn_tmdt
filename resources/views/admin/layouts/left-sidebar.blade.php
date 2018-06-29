@@ -4,7 +4,7 @@
             <div class="user-profile">
                 <div class="dropdown user-pro-body">
                     <div>
-                        <img src="{{ asset('plugins/images/users/varun.jpg') }}" alt="user-img" class="img-circle">
+                        <img src="{{ asset('useravatar/noavatar.png') }}" alt="user-img" class="img-circle">
                     </div>
                     <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true"
                         aria-expanded="false">{{ Auth::User()->name }}
@@ -56,7 +56,7 @@
                 </li> --}}
                 {{-- NỘI DUNG ADMIN --}}
                 <li>
-                    <a href="{{ route('dashboard') }}" class="waves-effect">
+                    <a href="{{ route('thongtintaikhoan') }}" class="waves-effect">
                         <i class="linea-icon linea-basic fa-fw" data-icon="G"></i>
                         <span class="hide-menu">Tài khoản</span>
                     </a>

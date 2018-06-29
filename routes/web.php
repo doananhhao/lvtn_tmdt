@@ -14,7 +14,7 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-    dd(App\Models\DangBan::find(null));
+    dd(App\Models\PhongBan::find(2)->TruongPhong);
     // foreach ($users as $user)
     // var_dump($user);
     // foreach (App\Models\HoaDon::find(1)->ChiTietHoaDon as $cthd)
@@ -81,7 +81,8 @@ Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
         
 });
 Route::group(['prefix' => '/admin', 'middleware' => ['m_admin']], function (){
-    Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
+    // Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
+    Route::get('/thong-tin', 'Admin\TaiKhoanController@index')->name('thongtintaikhoan');
 
     Route::group(['middleware' => ['taikhoan:Quản trị viên']], function(){
         Route::get('san-pham/{id}/image', 'Admin\SanPhamController@showImage')->name('san-pham.images');
@@ -94,6 +95,12 @@ Route::group(['prefix' => '/admin', 'middleware' => ['m_admin']], function (){
             'loai-khuyen-mai.chi-tiet-khuyen-mai' => 'Admin\CTKMController',
             'ql-tai-khoan' => 'Admin\QLDSTaiKhoanController'
         ]);
+
+        Route::group(['as' => 'ql-tai-khoan.'], function (){
+            Route::get('/tinhtrang', 'Admin\QLDSTaiKhoanController@change_user_status')->name('change_user_status');
+            Route::get('/doi-thong-tin-nhanvien', 'Admin\QLDSTaiKhoanController@change_nv')->name('change_nv');
+            Route::get('/get-nhanvien', 'Admin\QLDSTaiKhoanController@get_nv')->name('get_nv');
+        });
     });
 
     Route::group(['middleware' => ['taikhoan:Moderator']], function(){
@@ -135,7 +142,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['m_admin']], function (){
 });
 
 Route::get('/admin', function(){
-    return redirect()->route('nha-cung-cap.index');
+    return redirect()->route('thongtintaikhoan');
 });
 Route::get('/', function(){
     return redirect()->route('home');

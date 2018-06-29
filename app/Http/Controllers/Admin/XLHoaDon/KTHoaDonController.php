@@ -11,6 +11,7 @@ use App\Models\CongDoanHoaDon;
 use App\Models\CongDoan;
 use App\Models\HoaDon;
 use App\Models\PhanCong;
+use App\User;
 use DB;
 
 class KTHoaDonController extends Controller
@@ -376,5 +377,17 @@ class KTHoaDonController extends Controller
         $this->chucvu = Auth::User()->NhanVien->ChucVu;
         $chucvunv = ChucVu::where('ten', 'LIKE', '%Nhân viên%')->first();
         $this->dsnv = NhanVien::where('phongban_id', $this->pb->id)->where('chucvu_id', $chucvunv->id)->get();
+        
+        $ds_id = [];
+        foreach ($this->dsnv as $nv){
+            $ds_id[] = $nv->nhanvien_id;
+        }
+        $users_active = User::whereIn('id', $ds_id)->where('trangthai', 1)->get();
+        $ds_id = [];
+        foreach ($users_active as $user){
+            $ds_id[] = $user->id;
+        }
+
+        $this->dsnv = NhanVien::whereIn('nhanvien_id', $ds_id)->get();
     }
 }
