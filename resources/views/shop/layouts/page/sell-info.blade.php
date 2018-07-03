@@ -30,6 +30,10 @@
                                 <td style="border-left: 1px solid #cdd0d4;">{{ $sanphamdb['soluong'] }}</td>
                             </tr>
                             <tr>
+                                <td>Ngày hết hạn</td>
+                                <td style="border-left: 1px solid #cdd0d4;">{{date('d-m-Y',strtotime($dangban['ngayhethan']))}}</td>
+                            </tr>
+                            <tr>
                                 <td>Mô tả</td>
                                 <td style="border-left: 1px solid #cdd0d4;">{{ $sanphamdb['mota'] }}</td>
                             </tr>
@@ -40,14 +44,54 @@
                             
                     </tbody>
                 </table>
+                @if($dangban['ngungban']==0)
+                    @if($dangban['canduyet']==0)
+                        @if($history['status'] == 1 )
+                        <form action="{{ route('stop-sell',['id' => $dangban['id']]) }}" method="POST" class="form-horizontal">
+                            @csrf
+                            <button style="float: right" type="submit" class="btn btn-danger">Ngưng bán sản phẩm</button>
+                        </form>
+                        @endif
+                    @endif
+                @else
+                <form action="{{ route('cont-sell',['id' => $dangban['id']]) }}" method="POST" class="form-horizontal">
+                    @csrf
+                    <button style="float: right" type="submit" class="btn btn-success">Tiếp tục bán sản phẩm</button>
+                </form>
+                @endif
             </div>
         </div>
     </div>
 
     <div class="col-sm-12">
-        @if($history['ngungban']==0)
-            @if($history['status'] == 0 && $history['ischeck'] == 0)
-            <div class="panel panel-info"  style="text-align: center">
+        @if($dangban['ngungban']==0)
+            @if($dangban['canduyet']==0)
+                @if($history['status'] == 0 )
+                    <div class="panel panel-warning"  style="text-align: center">
+                            <div class="panel-heading"> Cần cập nhật lại thông tin
+                                <div class="pull-right"> </div>
+                            </div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    <p>{{ $history['comment'] }}. (Bấm vào <a href="{{ route('sell-edit',['id' => $sanphamdb['id']]) }}">đây</a> để điều chỉnh lại thông tin sản phẩm)</p>
+                                </div>
+                            </div>
+                        </div>
+   
+                @else
+                    <div class="panel panel-success"  style="text-align: center">
+                            <div class="panel-heading"> Đã được chấp nhận
+                                <div class="pull-right"> </div>
+                            </div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    <p>Sản phẩm của bạn đã được chấp nhận.</p>
+                                </div>
+                            </div>
+                        </div>
+                @endif
+            @else
+                <div class="panel panel-info"  style="text-align: center">
                     <div class="panel-heading"> Chưa được duyệt
                         <div class="pull-right"> </div>
                     </div>
@@ -56,43 +100,22 @@
                             <p>Sản phẩm của bạn đang chờ được người kiểm duyệt tiếp nhận.</p>
                         </div>
                     </div>
-                </div>
-            @elseif($history['status'] == 0 && $history['ischeck'] == 1)
-                <div class="panel panel-warning"  style="text-align: center">
-                    <div class="panel-heading"> Cần cập nhật lại thông tin
-                        <div class="pull-right"> </div>
-                    </div>
-                    <div class="panel-wrapper collapse in" aria-expanded="true">
-                        <div class="panel-body">
-                            <p>{{ $history['comment'] }}. Bấm vào <a href="{{ route('sell-edit',['id' => $sanphamdb['id']]) }}">đây</a> để điều chỉnh lại thông tin sản phẩm.</p>
-                        </div>
-                    </div>
-                </div>
-            @else
-                <div class="panel panel-success"  style="text-align: center">
-                        <div class="panel-heading"> Đã được chấp nhận
-                            <div class="pull-right"> </div>
-                        </div>
-                        <div class="panel-wrapper collapse in" aria-expanded="true">
-                            <div class="panel-body">
-                                <p>Sản phẩm của bạn đã được chấp nhận.</p>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-            @else
-                    <div class="panel panel-danger"  style="text-align: center">
-                            <div class="panel-heading"> Đã hủy bán sán phẩm
-                                <div class="pull-right"> </div>
-                            </div>
-                            <div class="panel-wrapper collapse in" aria-expanded="true">
-                                <div class="panel-body">
-                                    <p>Bạn đã hủy bán sản phẩm này.</p>
-                                </div>
-                            </div>
-                        </div>
+                </div>   
             @endif
+        @else
+            <div class="panel panel-danger"  style="text-align: center">
+                <div class="panel-heading"> Đã hủy bán sán phẩm
+                    <div class="pull-right"> </div>
+                </div>
+                <div class="panel-wrapper collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <p>Bạn đã hủy bán sản phẩm này.</p>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
+    
             
 
 

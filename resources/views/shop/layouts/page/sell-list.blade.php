@@ -70,8 +70,7 @@
                                                     @else
                                                         <div class="label label-table label-info">Đang chờ duyệt</div>
                                                     @endif
-                                                {{--  @else
-                                                    <div class="label label-table label-info">Đang chờ duyệt</div>  --}}
+                                                
                                                 @endif
                                             @endforeach
                                         @endif
@@ -79,7 +78,7 @@
                                         <div class="label label-table label-danger">Đã ngưng bán</div>
                                     @endif
                                 </td>
-                            
+                                
                             </tr>
                             @endforeach
                         </tbody>

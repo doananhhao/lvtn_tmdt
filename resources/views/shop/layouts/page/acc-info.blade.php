@@ -49,12 +49,7 @@
                 
                 
                 
-                <div class="form-group row">
-                    <label for="example-date-input" class="col-2 col-form-label">Ngày sinh</label>
-                    <div class="col-6">
-                        <input class="form-control" type="date" value="2011-08-19" id="example-date-input" disabled="disabled">
-                    </div>
-                </div>
+                
                 <div class="col-sm-5" style="text-align: right;">
                 <button type="submit" class="btn btn-success waves-effect waves-light m-r-6" >Cập nhật</button>
                 </div>

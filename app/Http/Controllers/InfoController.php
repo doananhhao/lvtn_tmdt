@@ -68,11 +68,11 @@ class InfoController extends Controller
 
 
     //Hiện menu Đại lý nếu có
-    public function getNavBar(){
-        $daily = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->join('DaiLy','ThanhVien.user_id','DaiLy.thanhvien_id')->where('user_id',Auth::user()->id)->first();
-        //$this->data['daily'] = $daily; 
-        return view('shop.layouts.page.info', compact('daily'));
-    }
+    // public function getNavBar(){
+    //     $daily = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->join('DaiLy','ThanhVien.user_id','DaiLy.thanhvien_id')->where('user_id',Auth::user()->id)->first();
+    //     //$this->data['daily'] = $daily; 
+    //     return view('shop.layouts.page.info', compact('daily'));
+    // }
 
    
     //Thông tin tài khoản
@@ -122,8 +122,7 @@ class InfoController extends Controller
 		
         DaiLy::create([
             'thanhvien_id' => $id,
-            'hash' => 0,
-            'chietkhau' => 0
+            'hash' => 0
         ]);
         
         return back()->with('success', 'Bạn đã trở thành Đại lý bán hàng, bạn có thể đăng bán sản phẩm của mình.')->withInput();
@@ -241,7 +240,6 @@ class InfoController extends Controller
                     foreach($sell_stt as $s){
                         if($a['id'] == $s['dangban_id']){
                             if($s['status'] == 0){
-                                //$x= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('DangBan.id',$s['id'])->get()->toArray();
 
                                 $x= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
                                 foreach($x as $x1){
@@ -255,7 +253,7 @@ class InfoController extends Controller
                     }
                 }
                 
-            }//dd($sell_list);
+            }
         }    
         $this->data['dangban'] = $sell_list; 
         $this->data['statusdb']=$sell_stt;
@@ -274,20 +272,13 @@ class InfoController extends Controller
         if (SanPham::find($id) == null)
             return abort(404);
         $sanphamdb = SanPham::where('id',$id)->first();
-        $history=array();
-        $historya = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.sanpham_id',$id)->get();
+        $dangban = DangBan::where('sanpham_id',$id)->first();
         
-        foreach($historya as $ht)
-        {
-            
-            if($ht->isfix == 0){
-                $history=$ht;
-            }
-        }
-
-        return view('shop.layouts.page.sell-info',compact('sanphamdb','history'));
+        $history = DangBan::find($dangban->id)->DuyetDangBanHistory->first();
+        //dd($dangban);
+        return view('shop.layouts.page.sell-info',compact('sanphamdb','dangban','history'));
     }
-
+    
     public function sell_product(Request $request){
         $this->validate($request, [
             'tensanpham' => 'required|between:3,191',
@@ -312,7 +303,7 @@ class InfoController extends Controller
         $iddangban=DangBan::create([
             'thanhvien_id' => $tvdb->user_id,
             'sanpham_id' => $spdb->id,
-            //'ngayhethan' => date('Y-m-d H:i:s'),
+            'ngayhethan' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s').'+ 30 days')),
             'canduyet' => 1,
             'ngungban' => 0
         ]);
@@ -354,31 +345,44 @@ class InfoController extends Controller
 
 
         
-        $iddangbana = DangBan::join('DuyetDangBanHistory','DangBan.id','dangban_id')->join('SanPham','SanPham.id','sanpham_id')->where('DangBan.sanpham_id',$id)->where('DuyetDangBanHistory.isfix','0')->get();
+        $dangban = DangBan::where('sanpham_id',$id)->first();
+        $dangban->canduyet = 1;
+        $dangban->save();
         
-
-        $iddangban=array();
-        foreach($iddangbana as $vl)
-        {
-            
-            if($vl->isfix == 0){
-                $iddangban=$vl;
-            }
-        }
-        
-        $setisfix = DuyetDangBanHistory::where('dangban_id',$iddangban['dangban_id'])->where('isfix','0')->first();
-        
-        $setisfix->isfix = 1;
-        $setisfix->save();
-        //dd($setisfix);
-        DuyetDangBanHistory::create([
-            'dangban_id' => $iddangban['dangban_id'],
-            'status' => 0,
-            'ischeck' => 0,
-            'isfix' => 0
-        ]);
         
         return back()->with('success', 'Bạn đã cập nhật thành công '.$request->tensanpham)->withInput();
+    }
+
+    public function save_stop_sell(Request $request,$id){
+
+        
+        $dangban = DangBan::where('id',$id)->first();
+        $dangban->ngungban = 1;
+        $dangban->save();
+
+        $history=DuyetDangBanHistory::create([
+            'dangban_id' => $dangban->id,
+            'comment' => 'Đại lý ngừng bán',
+            'status' => 0
+        ]);
+
+        
+        
+        return back()->with('success', 'Bạn đã ngừng bán sản phẩm này'.$request->tensanpham)->withInput();
+    }
+
+    public function save_cont_sell(Request $request,$id){
+
+        
+        $dangban = DangBan::where('id',$id)->first();
+        $dangban->ngungban = 0;
+        $dangban->canduyet = 1;
+        $dangban->save();
+
+        
+        
+        
+        return back()->with('success', 'Bạn vui lòng đợi phản hồi từ người kiểm duyệt cho sản phẩm này'.$request->tensanpham)->withInput();
     }
 
     

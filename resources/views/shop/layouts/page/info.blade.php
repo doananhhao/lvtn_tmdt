@@ -24,13 +24,16 @@
                     <div><img src="{{asset('plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"></div>
                     <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu animated flipInY">
-                        <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                        <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                        <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-power-off"></i> Logout</a></li>
+                        
+                        <li>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                                <i class="fa fa-power-off"></i> &nbsp; Đăng xuất
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -49,7 +52,7 @@
                     <ul class="nav nav-second-level">
                         <li> <a href="{{ route('acc-info') }}">Thông tin cá nhân </a> </li>
                         <li> <a href="{{ route('change-password') }}">Đổi mật khẩu</a> </li>
-                        <li> <a href="index3.html">Mã giảm giá</a> </li>
+                       
                         <li> <a href="{{ route('level') }}">Thành viên</a> </li>
                     </ul>
                 </li>
@@ -83,15 +86,11 @@
         <div class="container-fluid">
             <div class="row bg-title">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title">Basic Table</h4>
+                    <h4 class="page-title">Xin chào, {{Auth::user()->name}}</h4>
                 </div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                    <a href="https://themeforest.net/item/elite-admin-responsive-dashboard-web-app-kit-/16750820" target="_blank" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Buy Now</a>
-                    <ol class="breadcrumb">
-                        <li><a href="#">Dashboard</a></li>
-                        <li><a href="#">Table</a></li>
-                        <li class="active">Basic Table</li>
-                    </ol>
+                    <a href="{{ route('home') }}"  class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Trang chủ</a>
+                    
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

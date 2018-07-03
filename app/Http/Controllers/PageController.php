@@ -14,6 +14,8 @@ use App\Models\BinhLuan;
 use App\Models\DanhGia;
 use App\Models\ThanhVien;
 
+use Illuminate\Support\Facades\Auth;
+
 
 
 
@@ -30,7 +32,7 @@ class PageController extends Controller
     public function getLoaiSp($type){
         $sidemenu = LoaiSP::all();
         $sp_theoloai = LoaiSP::all();
-        $loaisp = SanPham::where('loaisp_id',$type)->get();
+        $loaisp = SanPham::where('loaisp_id',$type)->paginate(12);;
        
         return view('shop.layouts.page.loaisanpham',compact('sidemenu', 'sp_theoloai','loaisp'));
     }
@@ -57,6 +59,20 @@ class PageController extends Controller
         
     	return view('shop.layouts.page.chitietsanpham',compact('sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia'));
     } 
+
+    public function comment(Request $request,$id){
+
+        $tvdb = ThanhVien::where('user_id',Auth::user()->id)->first();
+        $comment=BinhLuan::create([
+            'user_id' => $tvdb->user_id,
+            'sanpham_id' => $id,
+            'noidung' => $request->bl
+        ]);
+        
+        
+        
+        return back()->with('success', 'Cám ơn bạn đã bình luận cho sản phẩm này'.$request->tensanpham)->withInput();
+    }
 
     public function getInfo(){
         return view('shop.layouts.page.info');

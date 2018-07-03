@@ -22,162 +22,11 @@
 			<div class='col-md-3 sidebar'>
 				<div class="sidebar-module-container">
 					<!-- ==============================================CATEGORY============================================== -->
-<div class="sidebar-widget outer-bottom-xs wow fadeInUp">
-	<h3 class="section-title">Category</h3>
-	<div class="sidebar-widget-body m-t-10">
-		<div class="accordion">
-	    	<div class="accordion-group">
-	            <div class="accordion-heading">
-	                <a href="#collapseOne" data-toggle="collapse" class="accordion-toggle collapsed">
-	                   Camera
-	                </a>
-	            </div><!-- /.accordion-heading -->
-	            <div class="accordion-body collapse" id="collapseOne" style="height: 0px;">
-	                <div class="accordion-inner">
-	                    <ul>
-	                        <li><a href="#">gaming</a></li>
-	                        <li><a href="#">office</a></li>
-	                        <li><a href="#">kids</a></li>
-	                        <li><a href="#">for women</a></li>
-	                    </ul>
-	                </div><!-- /.accordion-inner -->
-	            </div><!-- /.accordion-body -->
-	        </div><!-- /.accordion-group -->
 
-	        <div class="accordion-group">
-	            <div class="accordion-heading">
-	                <a href="#collapseTwo" data-toggle="collapse" class="accordion-toggle collapsed">
-	                  Desktops
-	                </a>
-	            </div><!-- /.accordion-heading -->
-	            <div class="accordion-body collapse" id="collapseTwo" style="height: 0px;">
-	                <div class="accordion-inner">
-	                    <ul>
-	                        <li><a href="#">gaming</a></li>
-	                        <li><a href="#">office</a></li>
-	                        <li><a href="#">kids</a></li>
-	                        <li><a href="#">for women</a></li>
-	                    </ul>
-	                </div><!-- /.accordion-inner -->
-	            </div><!-- /.accordion-body -->
-	        </div><!-- /.accordion-group -->
-
-	        <div class="accordion-group">
-	            <div class="accordion-heading">
-	                <a href="#collapseThree" data-toggle="collapse" class="accordion-toggle collapsed">
-	                   Pants
-	                </a>
-	            </div><!-- /.accordion-heading -->
-	            <div class="accordion-body collapse" id="collapseThree" style="height: 0px;">
-	                <div class="accordion-inner">
-	                    <ul>
-	                        <li><a href="#">gaming</a></li>
-	                        <li><a href="#">office</a></li>
-	                        <li><a href="#">kids</a></li>
-	                        <li><a href="#">for women</a></li>
-	                    </ul>
-	                </div><!-- /.accordion-inner -->
-	            </div><!-- /.accordion-body -->
-	        </div><!-- /.accordion-group -->
-
-	        <div class="accordion-group">
-	            <div class="accordion-heading">
-	                <a href="#collapseFour" data-toggle="collapse" class="accordion-toggle collapsed">
-	                   Bags
-	                </a>
-	            </div><!-- /.accordion-heading -->
-	            <div class="accordion-body collapse" id="collapseFour" style="height: 0px;">
-	                <div class="accordion-inner">
-	                    <ul>
-	                        <li><a href="#">gaming</a></li>
-	                        <li><a href="#">office</a></li>
-	                        <li><a href="#">kids</a></li>
-	                        <li><a href="#">for women</a></li>
-	                    </ul>
-	                </div><!-- /.accordion-inner -->
-	            </div><!-- /.accordion-body -->
-	        </div><!-- /.accordion-group -->
-
-	        <div class="accordion-group">
-	            <div class="accordion-heading">
-	                <a href="#collapseFive" data-toggle="collapse" class="accordion-toggle collapsed">
-	                  Hats
-	                </a>
-	            </div><!-- /.accordion-heading -->
-	            <div class="accordion-body collapse" id="collapseFive" style="height: 0px;">
-	                <div class="accordion-inner">
-	                    <ul>
-	                        <li><a href="#">gaming</a></li>
-	                        <li><a href="#">office</a></li>
-	                        <li><a href="#">kids</a></li>
-	                        <li><a href="#">for women</a></li>
-	                    </ul>
-	                </div><!-- /.accordion-inner -->
-	            </div><!-- /.accordion-body -->
-	        </div><!-- /.accordion-group -->
-
-	        <div class="accordion-group">
-	            <div class="accordion-heading">
-	                <a href="#collapseSix" data-toggle="collapse" class="accordion-toggle collapsed">
-	                 Accessories
-	                </a>
-	            </div><!-- /.accordion-heading -->
-	            <div class="accordion-body collapse" id="collapseSix" style="height: 0px;">
-	                <div class="accordion-inner">
-	                    <ul>
-	                        <li><a href="#">gaming</a></li>
-	                        <li><a href="#">office</a></li>
-	                        <li><a href="#">kids</a></li>
-	                        <li><a href="#">for women</a></li>
-	                    </ul>
-	                </div><!-- /.accordion-inner -->
-	            </div><!-- /.accordion-body -->
-	        </div><!-- /.accordion-group -->
-
-	    </div><!-- /.accordion -->
-	</div><!-- /.sidebar-widget-body -->
-</div><!-- /.sidebar-widget -->
 	<!-- ============================================== CATEGORY : END ============================================== -->					<!-- ============================================== HOT DEALS ============================================== -->
 @include('shop.layouts.widgets.sidebar.hot-deals')
 <!-- ============================================== HOT DEALS: END ============================================== -->					<!-- ============================================== COLOR============================================== -->
-<div class="sidebar-widget  wow fadeInUp outer-top-vs ">
-	<div id="advertisement" class="advertisement">
-        <div class="item bg-color">
-            <div class="container-fluid">
-                <div class="caption vertical-top text-left">
-                    <div class="big-text">
-                        Save<span class="big">50%</span>
-                    </div>
-                        
 
-                    <div class="excerpt">
-                        on selected items
-                    </div>
-                </div><!-- /.caption -->
-            </div><!-- /.container-fluid -->
-        </div><!-- /.item -->
-
-        <div class="item" style="background-image: url('assets/images/advertisement/1.jpg');">
-            
-        </div><!-- /.item -->
-
-        <div class="item bg-color">
-            <div class="container-fluid">
-                <div class="caption vertical-top text-left">
-                    <div class="big-text">
-                        Save<span class="big">50%</span>
-                    </div>
-                        
-
-                    <div class="excerpt fadeInDown-2">
-                        on selected items
-                    </div>
-                </div><!-- /.caption -->
-            </div><!-- /.container-fluid -->
-        </div><!-- /.item -->
-
-    </div><!-- /.owl-carousel -->
-</div>
     
 <!-- ============================================== COLOR: END ============================================== -->
 				</div>
@@ -393,7 +242,8 @@
 									</div>
 
 									<div class="col-sm-7">
-										<a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> Thêm Vào Giỏ Hàng</a>
+										
+										<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $sanpham->id }})">Add to cart</button>
 									</div>
 
 									
@@ -401,16 +251,7 @@
 							</div><!-- /.quantity-container -->
 
 							<div class="product-social-link m-t-20 text-right">
-								<span class="social-label">Share :</span>
-								<div class="social-icons">
-						            <ul class="list-inline">
-						                <li><a class="fa fa-facebook" href="http://facebook.com/transvelo"></a></li>
-						                <li><a class="fa fa-twitter" href="#"></a></li>
-						                <li><a class="fa fa-linkedin" href="#"></a></li>
-						                <li><a class="fa fa-rss" href="#"></a></li>
-						                <li><a class="fa fa-pinterest" href="#"></a></li>
-						            </ul><!-- /.social-icons -->
-						        </div>
+								
 							</div>
 
 							
@@ -635,21 +476,21 @@
 							?>
 									<div class="review-form">
 												<div class="form-container">
-													<form role="form" class="cnt-form">
-
+													<form action="{{ route('comment',['id' => $sanpham['id']]) }}" method="POST" role="form" class="cnt-form" >
+														@csrf
 														<div class="row">
 															
 
 															<div class="col-md-12">
 																<div class="form-group">
 																	<h4 class="title-review-comments">Viết bình luận <span class="astk">*</span></h4>
-																	<textarea class="form-control txt txt-review" id="exampleInputReview" rows="3" placeholder=""></textarea>
+																	<textarea class="form-control txt txt-review" id="bl" name="bl" rows="3" placeholder=""></textarea>
 																</div><!-- /.form-group -->
 															</div>
 														</div><!-- /.row -->
 
 														<div class="action text-right">
-															<button class="btn btn-primary btn-upper">Bình luận</button>
+															<button type="submit" class="btn btn-primary btn-upper">Bình luận</button>
 														</div><!-- /.action -->
 
 													</form><!-- /.cnt-form -->
@@ -1096,72 +937,7 @@
 			<div class="clearfix"></div>
 		</div><!-- /.row -->
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
-<div id="brands-carousel" class="logo-slider wow fadeInUp">
-
-		<h3 class="section-title">Our Brands</h3>
-		<div class="logo-slider-inner">	
-			<div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
-				<div class="item m-t-15">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand1.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item m-t-10">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand2.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand3.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand4.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand5.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand6.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand2.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand4.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand1.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-
-				<div class="item">
-					<a href="#" class="image">
-						<img data-echo="assets/images/brands/brand5.png" src="assets/images/blank.gif" alt="">
-					</a>	
-				</div><!--/.item-->
-		    </div><!-- /.owl-carousel #logo-slider -->
-		</div><!-- /.logo-slider-inner -->
+		@include('shop.layouts.brands-carousel')
 	
 </div><!-- /.logo-slider -->
 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->

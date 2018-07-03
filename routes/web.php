@@ -14,7 +14,8 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-    dd(App\Models\PhongBan::find(2)->TruongPhong);
+    dd(App\Models\DangBan::find(4)->DuyetDangBanHistory);
+    dd(App\Models\PhongBan::join('NhanVien','PhongBan.truongphong_id','NhanVien.nhanvien_id')->where('PhongBan.id','1')->get());
     // foreach ($users as $user)
     // var_dump($user);
     // foreach (App\Models\HoaDon::find(1)->ChiTietHoaDon as $cthd)
@@ -49,7 +50,8 @@ Route::group(['prefix'=>'/home'], function () {
     });
 
     Route::get('loai-san-pham/{type}',['as'=>'loaisanpham','uses'=>'PageController@getLoaiSp']);
-	Route::get('chi-tiet-san-pham/{tensp}',['as'=>'chitietsanpham','uses'=>'PageController@getChitiet']);
+    Route::get('chi-tiet-san-pham/{tensp}',['as'=>'chitietsanpham','uses'=>'PageController@getChitiet']);
+    Route::post('/comment/{id}', 'PageController@comment')->name('comment'); 
 	
 });
 Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
@@ -70,6 +72,8 @@ Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
         Route::get('/sellinfo/{id}', 'InfoController@sellinfo')->name('sell-show'); 
         Route::get('/selllist/status/{status}', 'InfoController@dangban_status')->name('dangban_status');  
         
+        Route::post('/stopsell/{id}', 'InfoController@save_stop_sell')->name('stop-sell');  
+        Route::post('/contsell/{id}', 'InfoController@save_cont_sell')->name('cont-sell'); 
         Route::get('/selledit/{id}', 'InfoController@sell_edit')->name('sell-edit');
         Route::post('/selledit/{id}', 'InfoController@save_edit_sell')->name('edit-sell');  
 
