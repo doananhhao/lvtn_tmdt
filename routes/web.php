@@ -14,7 +14,8 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-    dd(App\Models\BinhLuan::find(19)->status == 0);
+    $a = [1,2,3];
+    dd(isset($a[3]));
     // foreach ($users as $user)
     // var_dump($user);
     // foreach (App\Models\HoaDon::find(1)->ChiTietHoaDon as $cthd)

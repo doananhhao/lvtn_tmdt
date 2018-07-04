@@ -11,6 +11,7 @@ use App\Models\CongDoanHoaDon;
 use App\Models\CongDoan;
 use App\Models\HoaDon;
 use App\Models\PhanCong;
+use App\Models\CapDo;
 use App\User;
 use DB;
 
@@ -140,6 +141,29 @@ class KTHoaDonController extends Controller
                 'congdoan_id' => $cd_sau->id,
                 'truongphong_id' => $cd_sau->PhongBan->truongphong_id
             ]);
+        }else{
+            /**
+             * Thêm điểm cho người mua nếu là NGƯỜI DÙNG
+             */
+            if ($hd->User->ThanhVien != null){
+                $thanhvien = $hd->User->ThanhVien;
+                $tongtien = 0;
+                foreach ($hd->ChiTietHoaDon as $cthd){
+                    $tongtien = $tongtien + ($cthd->gia * $cthd->soluong);
+                }
+                $diem = $thanhvien->diemtichluy + $tongtien;
+                $thanhvien->diemtichluy = $diem;
+                $thanhvien->save();
+
+                $capdaily1 = CapDo::where('capdo', 'LIKE', '%Đại lý%')->orderBy('id', 'asc')->first();
+                $capdo_cothelen = CapDo::where('diem', '<=', $diem)->orderBy('id', 'desc')->first();
+
+                if ($capdo_cothelen->id == ($thanhvien->capdo_id + 1) && $capdaily1->id != $capdo_cothelen->id){
+                    $thanhvien->capdo_id = $capdo_cothelen->id;
+                    $thanhvien->save();
+                }
+            }
+            //end
         }
         return response()->json([
             'success' => true,

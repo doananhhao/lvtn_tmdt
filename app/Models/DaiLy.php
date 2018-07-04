@@ -11,7 +11,7 @@ class DaiLy extends Model
     public $incrementing = 'false';
 
     protected $fillable = [
-        'thanhvien_id', 'hash', 'chietkhau'
+        'thanhvien_id', 'hash'
     ];
 
     function ThanhVien(){
