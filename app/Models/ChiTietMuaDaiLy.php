@@ -10,6 +10,8 @@ class ChiTietMuaDaiLy extends Model
     protected $primaryKey = "chitiethoadon_id";
     public $incrementing = 'false';
 
+    protected $fillable = ['daily_id', 'chitiethoadon_id', 'chietkhau'];
+
     function DaiLy(){
         return $this->belongsTo('App\Models\DaiLy', 'daily_id', 'thanhvien_id');
     }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 use App\Models\LoaiUser;
+use App\Models\CapDo;
 
 class RegisterController extends Controller
 {
@@ -72,7 +73,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'loaiuser_id' => $loaiuser->id,
         ]);
-        $user->ThanhVien()->create();
+        $user->ThanhVien()->create([
+            'capdo_id' => CapDo::first()->id
+        ]);
         return $user;
     }
 }

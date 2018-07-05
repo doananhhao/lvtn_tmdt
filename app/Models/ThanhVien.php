@@ -10,6 +10,8 @@ class ThanhVien extends Model
     protected $primaryKey = "user_id";
     public $incrementing = 'false';
 
+    protected $fillable = ['capdo_id'];
+    
     function User(){
         return $this->belongsTo('App\User');
     }

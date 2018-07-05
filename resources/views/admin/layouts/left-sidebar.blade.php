@@ -190,7 +190,7 @@
             @if (Auth::User()->LoaiUser->tenloai == "Moderator")
                 <li class="nav-small-cap m-t-10">--- Xét duyệt</li>
                 <li>
-                    <a href="#" class="waves-effect">
+                    <a href="{{ route('binh-luan.index') }}" class="waves-effect">
                         <i data-icon="&#xe00c;" class="linea-icon linea-elaborate fa-fw"></i>
                         <span class="hide-menu">Bình luận</span>
                     </a>

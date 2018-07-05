@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Duyet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DanhGia;
+use App\Models\HoaDon;
 use App\Models\DangBan;
 use App\Models\SanPham;
 use App\Models\ThanhVien;
@@ -152,7 +153,7 @@ class DanhGiaController extends Controller
         if (!$request->ajax() || $request->id_tv == null || $request->id_sp == null)
             return response()->json(['success' => false]);
         
-        if (!$this->validate_id_tv_sp($request->id_tv, $$request->id_sp))
+        if (!$this->validate_id_tv_sp($request->id_tv, $request->id_sp))
             return response()->json(['success' => false]);
 
         $dg = DanhGia::find($request->id_tv, $request->id_sp);
@@ -176,6 +177,11 @@ class DanhGiaController extends Controller
             return false;
         if (ThanhVien::find($id_tv) == null || in_array($id_sp, $this->ds_id_dangban))
             return false;
-        return true;
+        foreach (HoaDon::where('user_id', $id_tv)->get() as $hd){
+            foreach ($hd->ChiTietHoaDon as $cthd)
+                if ($cthd->sanpham_id == $id_sp)
+                    return true;
+        }
+        return false;
     }
 }

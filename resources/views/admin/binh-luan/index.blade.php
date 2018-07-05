@@ -12,12 +12,12 @@
                     <select class="selectpicker" data-style="form-control" id="getList">
                         @if (request()->has('tinhtrang'))
                         <option value="2">Tất cả</option>
-                        <option value="0"{{ request()->get('tinhtrang') == 0 ? " selected" : "" }}>Chưa duyệt</option>
-                        <option value="1"{{ request()->get('tinhtrang') == 1 ? " selected" : "" }}>Đã duyệt</option>
+                        <option value="1"{{ request()->get('tinhtrang') == 1 ? " selected" : "" }}>Cho phép hiển thị</option>
+                        <option value="0"{{ request()->get('tinhtrang') == 0 ? " selected" : "" }}>Không được hiển thị</option>
                         @else
                         <option value="2" selected>Tất cả</option>
-                        <option value="0">Chưa duyệt</option>
-                        <option value="1">Đã duyệt</option>
+                        <option value="1">Cho phép hiển thị</option>
+                        <option value="0">Không được hiển thị</option>
                         @endif
                     </select>
                 </div>
@@ -47,8 +47,8 @@
             </div>
         </div>
     </div>
-
-    @if ($dg->isEmpty())
+    
+    @if ($binhluan->isEmpty())
     <div class="col-md-6 offset-md-3 col-sm-12">
         <div class="white-box text-center">
             <div class="alert alert-danger m-b-0">Không có dữ liệu cần tìm</div>
@@ -61,48 +61,58 @@
             <p class="text-muted"></p>
             <div class="table-responsive">
                 <table class="table color-table success-table">
+                    <col width="40px">
+                    <col width="30%">
                     <thead>
                         <tr>
-                            <th>Email</th>
+                            <th>#</th>
+                            <th>Nội dung</th>
                             <th>Sản phẩm</th>
-                            <th>Số sao</th>
-                            <th>Ngày đánh giá</th>
-                            <th class="text-center">Đã duyệt</th>
-                            <th>Hành động</th>
+                            <th>Tài khoản đăng</th>
+                            <th>Tài khoản</th>
+                            <th>Hiển thị</th>
+                            <th>Ngày đăng</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($dg as $v)
-                        <tr>
-                            <td>{{ $v->ThanhVien->User->email }}</td>
-                            <td><a href="{{ route('chitietsanpham', ['tensp' => $v->SanPham->id]) }}" target="_blank">{{ $v->SanPham->tensanpham }}</td>
+                        @php
+                        $styleLoaiUser = [
+                            1 => 'label label-primary',
+                            2 => 'label label-warning',
+                            3 => 'label label-success',
+                            4 => 'label label-default',
+                        ]
+                        @endphp
+                        @foreach ($binhluan as $v)
+                        <tr id="{{ $v->id }}">
+                            <td style="vertical-align: middle;">{{ $v->id }}</td>
+                            <td style="overflow:auto">{{ $v->noidung }}</td>
+                            <td>{{ $v->SanPham->tensanpham }}</td>
+                            <td>{{ $v->User->email }}</td>
                             <td>
-                                <div class="rateit" data-rateit-value="{{ $v->votes / 2 }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                                <span class="{{ $styleLoaiUser[$v->User->LoaiUser->id] }}">{{ $v->User->LoaiUser->tenloai }}</span>
                             </td>
-                            <td>{{ date('d-m-Y H:i:s', strtotime($v->created_at)) }}</td>
                             <td class="text-center">
                                 <label class="custom-control custom-checkbox">
-                                    <input type="checkbox"{{ $v->tinhtrang == 1 ? " checked" : "" }} value="{{ $v->thanhvien_id.'-'.$v->sanpham_id }}" class="custom-control-input">
+                                    <input type="checkbox"{{ $v->status == 1 ? " checked" : "" }} class="custom-control-input">
                                     <span class="custom-control-indicator"></span>
                                 </label>
                             </td>
-                            <td>
-                                <a href="{{ route('danh-gia.show', ['id_tv' => $v->thanhvien_id, 'id_sp' => $v->sanpham_id]) }}" target="_blank" data-toggle="tooltip" data-original-title="Xem đánh giá"> <i class="fa fa-eye text-inverse m-l-10"></i> </a>
-                            </td>
+                            <td>{{ date('d-m-Y', strtotime($v->created_at)) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
                 
                 <div class="pull-right">
-                    {{ $dg->links() }}
+                    {{ $binhluan->links() }}
                 </div>
+
             </div>
         </div>
     </div>
     @endif
 </div>
-
 
 @endsection
 
@@ -113,25 +123,16 @@
     <script src="{{ asset('plugins/bower_components/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
 
-    <!-- Rateit -->
-    <link rel="stylesheet" href="{{ asset('') }}shop/css/rateit.css">
-    <script src="{{ asset('') }}shop/js/jquery.rateit.min.js"></script>
-
     <!-- Select -->
-
-    {{-- <link href="{{ asset('plugins/bower_components/custom-select/custom-select.css') }}" rel="stylesheet" type="text/css" /> --}}
-    {{-- <link href="{{ asset('plugins/bower_components/switchery/dist/switchery.min.css') }}" rel="stylesheet" /> --}}
     <link href="{{ asset('plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
-    {{-- <link href="{{ asset('plugins/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" /> --}}
-    {{-- <link href="{{ asset('plugins/bower_components/multiselect/css/multi-select.css" rel="stylesheet') }}" type="text/css" /> --}}
-    {{-- <script src="{{ asset('plugins/bower_components/switchery/dist/switchery.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script> --}}
     <script src="{{ asset('plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
-    {{-- <script src="{{ asset('plugins/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script> --}}
-    {{-- <script type="text/javascript" src="{{ asset('plugins/bower_components/multiselect/js/jquery.multi-select.js') }}"></script> --}}
-
+    
+    <!-- toast CSS -->
+    <link href="{{ asset('plugins/bower_components/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/bower_components/toast-master/js/jquery.toast.js') }}"></script>
 
     <script>
+
     $('.selectpicker').selectpicker();
     $('select').on('change', function(){
         var getList = $('#getList')
@@ -139,56 +140,71 @@
 
         if (getList.val() == '2'){
             if (getListSP.val() == 0)
-                window.location.href = "{{ route('danh-gia.index') }}"
+                window.location.href = "{{ route('binh-luan.index') }}"
             else{
-                window.location.href = "{{ route('danh-gia.index') }}?sanpham=" + getListSP.val()
+                window.location.href = "{{ route('binh-luan.index') }}?sanpham=" + getListSP.val()
             }
         }else{
             if (getListSP.val() == 0)
-                window.location.href = "{{ route('danh-gia.index') }}?tinhtrang=" + getList.val()
+                window.location.href = "{{ route('binh-luan.index') }}?tinhtrang=" + getList.val()
             else{
-                window.location.href = "{{ route('danh-gia.index') }}?tinhtrang=" + getList.val() + "&sanpham=" + getListSP.val()
+                window.location.href = "{{ route('binh-luan.index') }}?tinhtrang=" + getList.val() + "&sanpham=" + getListSP.val()
             }
         }
     })
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $(':checkbox').on('click', function(e){
         e.preventDefault()
         var input = $(this)
-        var arr = $(this).val().split('-')
         var obj = {
-				"id_tv": arr[0],
-				"id_sp": arr[1],
-                "tinhtrang": $(this).prop("checked") ? 1 : 0
-			};
+            'id': input.parent().parent().parent().attr('id'),
+            'status': input.prop("checked") ? 1 : 0 //sẽ trả về giá trị đổi sau khi click checkbox
+        }
         console.log(obj)
-        $.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-        //tinhtrang: tình trạng SẼ SỬA ĐỔI
-        $.ajax({
-            url: "{{ route('danh-gia.tinhtrang') }}",
-			type: "POST",
-			dataType: "json",
-			data: obj,
-			success: function(data){
-                if (data.success){
-                    swal({
-                        title: "Thay đổi trạng thái thành công",   
-                        text: "Tình trạng: " + (data.checked == 1 ? "Đã duyệt" : "Chưa duyệt"),   
-                        timer: 1000,
-                        allowOutsideClick: true
-                    })
-                    input.prop("checked", data.checked)
-                }else{
-                    swal("Lỗi", "Đã có người khác thay đổi hoặc thông tin không đúng")
+        swal({   
+            title: 'Xác nhận thay đổi trạng thái bình luận [#' + input.parent().parent().parent().attr('id') + '] ?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes"
+        }, function(confirmed){
+            if (!confirmed)
+                return;
+
+            $.ajax({
+                url: "{{ route('binh-luan.tinhtrang') }}",
+                type: "GET",
+                dataType: "json",
+                data: obj,
+                success: function(data){
+                    if (data.success){
+                        $.toast({
+                            heading: 'Thay đổi trạng thái thành công',
+                            text: data.message,
+                            position: 'top-right',
+                            bgColor:'#2ba55c',
+                            icon: 'success',
+                            hideAfter: 4000, 
+                            stack: 6
+                        });
+                        input.prop("checked", data.checked)
+                    }else{
+                        swal("Lỗi", data.message)
+                    }
+                },
+                error: function (data) {
+                    swal("Lỗi", "Không thực hiện được do phát sinh lỗi")
+                    console.log('Error:', data);
                 }
-			},
-			error: function (data) {
-				console.log('Error:', data);
-			}
+            })
         })
     })
+    
     </script>
 @endsection

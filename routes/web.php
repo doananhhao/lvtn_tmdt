@@ -14,8 +14,10 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
+
     dd(App\Models\DangBan::find(4)->DuyetDangBanHistory);
     dd(App\Models\PhongBan::join('NhanVien','PhongBan.truongphong_id','NhanVien.nhanvien_id')->where('PhongBan.id','1')->get());
+
     // foreach ($users as $user)
     // var_dump($user);
     // foreach (App\Models\HoaDon::find(1)->ChiTietHoaDon as $cthd)
@@ -121,11 +123,13 @@ Route::group(['prefix' => '/admin', 'middleware' => ['m_admin']], function (){
         Route::group(['prefix' => '/dang-ban', 'as' => 'dang-ban.'], function (){
             Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
         });
+        //bình luận
+        Route::group(['prefix' => '/binh-luan', 'as' => 'binh-luan.'], function (){
+            Route::get('/', 'Admin\Duyet\BinhLuanController@index')->name('index');
+            Route::get('/tinhtrang', 'Admin\Duyet\BinhLuanController@changeTinhTrang')->name('tinhtrang');
+        });
     });
-    
-    Route::group(['prefix' => '/binh-luan'], function (){
-        // Route::post('/tinhtrang', 'Admin\Duyet\DangBanController@changeTinhTrang')->name('tinhtrang');
-    });
+
     Route::group(['prefix' => '/hoa-don', 'as' => 'hoa-don.', 'middleware' => ['taikhoan:Nhân viên']], function (){
         Route::group(['middleware' => ['chucvu:Trưởng phòng']], function(){
             Route::get('/moi_dat', 'Admin\XLHoaDon\KTHoaDonController@index')->name('index');

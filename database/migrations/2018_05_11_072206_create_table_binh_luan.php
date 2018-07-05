@@ -18,6 +18,7 @@ class CreateTableBinhLuan extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('sanpham_id');
+            $table->boolean('status')->default(TRUE);
             $table->string('noidung', 1500);
             $table->timestamps();
 

@@ -25,7 +25,7 @@ class CongDoanSeeder extends Seeder
         $cd_1->save();
 
         $pb_vc = App\Models\PhongBan::where('ten', 'like', '%vận chuyển%')->first();
-        $cd_3 = $pb_dg->CongDoan()->create([
+        $cd_3 = $pb_vc->CongDoan()->create([
             'FK_congdoantruoc' => $cd_2->id,
             'mota' => 'Vận chuyển đơn đặt hàng cho người đặt mua',
         ]);

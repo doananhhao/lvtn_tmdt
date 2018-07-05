@@ -17,7 +17,7 @@ class CreateTableDaiLy extends Migration
             $table->engine = 'InnoDB';
             $table->unsignedInteger('thanhvien_id');
             $table->string('hash')->comment('chữ ký điện tử mã hóa (md5, sha1)'); //chữ ký điện tử
-            $table->float('chietkhau')->comment('Chiết khấu mặc định của đại lý'); //vd: 0.1 hoặc 0.05
+            // $table->float('chietkhau')->comment('Chiết khấu mặc định của đại lý'); //vd: 0.1 hoặc 0.05
             $table->timestamps();
 
             $table->primary('thanhvien_id');

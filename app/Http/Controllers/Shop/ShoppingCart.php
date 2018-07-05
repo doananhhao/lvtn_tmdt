@@ -8,6 +8,8 @@ use App\Models\Cart;
 use App\Models\SanPham;
 use App\Models\HoaDon;
 use App\Models\CongDoan;
+use App\Models\DaiLy;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
 class ShoppingCart extends Controller
@@ -24,14 +26,34 @@ class ShoppingCart extends Controller
 
     private function createCTHD($hd, $listsp = array()){
         $cart = new Cart();
+
+        $daily = [];
+        if (Session::has('daily'))
+            $daily = Session::get('daily');
+
         foreach ($listsp as $idsp=>$sl){
-            $hd->ChiTietHoaDon()->create([
+            $cthd = $hd->ChiTietHoaDon()->create([
                 'sanpham_id' => $idsp,
                 'loaikhuyenmai_id' => $cart->getLoaiKM($idsp),
                 'soluong' => $sl,
                 'gia' => SanPham::find($idsp)->gia
             ]);
+
+            if (isset($daily[$idsp])){
+                $hash = $daily[$idsp];
+                $daily_thanhvien = DaiLy::where('hash', $hash)->first();
+                if ($daily_thanhvien != null){
+                    $daily_thanhvien->ChiTietMuaDaiLy()->create([
+                        'chitiethoadon_id' => $cthd->id,
+                        'chietkhau' => $daily_thanhvien->ThanhVien->CapDo->chietkhau
+                    ]);
+                    unset($daily[$idsp]);
+                }
+            }
+
         }
+
+        Session::put('daily', $daily);
     }
 
     function muahang(Request $request){
@@ -49,7 +71,7 @@ class ShoppingCart extends Controller
             'sdt' => 'required|between:7,14',
         ]);
 
-        //tính tiền
+        //tạo hóa đơn + cthd
         $hd = $this->createHD($request);
         $this->createCTHD($hd, $cart->getAll());
         

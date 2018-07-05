@@ -18,6 +18,7 @@ class CreateTableCapDo extends Migration
             $table->increments('id');
             $table->string('capdo');
             $table->unsignedInteger('diem');
+            $table->float('chietkhau')->default(0)->comment('Chiết khấu dành cho đại lý');
             $table->timestamps();
         });
     }
