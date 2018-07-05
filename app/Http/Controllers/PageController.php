@@ -34,33 +34,9 @@ class PageController extends Controller
         $sidemenu = LoaiSP::all();
         $sp_theoloai = LoaiSP::all();
         
-        $loaisp = SanPham::where('loaisp_id',$type)->paginate(12); 
+        $loaisp = SanPham::where('loaisp_id',$type)->paginate(12);
         $db=DangBan::all();
-        // $spdb=array();
-        // foreach($loaisp as $a){
-        //     foreach($db as $s){ 
-        //         if($a['id'] != $s['sanpham_id']){ 
-        //             continue;
-        //         }
-        //         else{
-        //             array_push($spdb,$a);
-        //             break;
-        //         }
-        //     }
-        // }
-        // $sp=array();
-        // foreach($loaisp as $a){
-        //     foreach($spdb as $s){ 
-        //         if($a['id'] != $s['id']){ 
-        //             continue;
-        //         }
-        //         else{
-        //             array_push($spdb,$a);
-        //             break;
-        //         }
-        //     }
-        // }
-        // dd($sp); 
+        
         //$loaisp = SanPham::where('loaisp_id',$type)->where('SanPham.id','!=','DangBan.sanpham_id')->paginate(12);
         //$loaispa = $loaisp->DangBan->where('sanpham_id','!=',$loaisp)->paginate(12);
         

@@ -138,7 +138,8 @@
 						<div class="tab-pane active " id="grid-container">
 							<div class="category-product  inner-top-vs">
 								<div class="row">									
-			@foreach($loaisp as $sp)								
+			@foreach($loaisp as $sp)
+			@if ($sp->DangBan()->first() == null)							
 		<div class="col-sm-6 col-md-4 wow fadeInUp">
 			<div class="products">
 				
@@ -186,7 +187,7 @@
 			</div><!-- /.products -->
 		</div><!-- /.item -->
 	
-		
+		@endif
 				@endforeach
 										</div><!-- /.row -->
 							</div><!-- /.category-product -->
