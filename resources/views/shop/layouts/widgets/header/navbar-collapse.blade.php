@@ -32,7 +32,7 @@
 			</li>
 
 			<li class="dropdown hidden-sm">
-				<a href="#">Smart Phone</a>
+				<a href="{{route('sanphamdaily')}}">Sản phẩm của Đại lý</a>
 			</li>
 
 			<li class="dropdown">
