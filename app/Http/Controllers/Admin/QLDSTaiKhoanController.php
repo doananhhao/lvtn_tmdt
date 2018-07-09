@@ -12,6 +12,9 @@ use App\Models\LoaiUser;
 use App\Models\PhongBan;
 use App\Models\NhanVien;
 use App\Models\ChucVu;
+use App\Models\PhanCong;
+use App\Models\HoaDon;
+use DB;
 
 class QLDSTaiKhoanController extends Controller
 {
@@ -286,12 +289,19 @@ class QLDSTaiKhoanController extends Controller
                 'message' => 'Không được thực hiện trên tài khoản [TẠM KHÓA]',
             ]);
 
+        if ($this->hasPC($nhanvien->nhanvien_id))
+            return response()->json([
+                'success' => false,
+                'message' => 'Nhân viên có CÔNG VIỆC PHÂN CÔNG chưa hoàn thành',
+            ]);
+
         if ($nhanvien->PhongBan->id == $phongban->id){
             //đổi chức vụ thành tp
             if ($chucvu->id != $nhanvien->ChucVu->id){
                 $old_tp = $this->doi_tp_id_pb($phongban, $nhanvien, $chucvu, false);
             }
         }else{  //đổi sang pb khác
+            $changePb = true;
             //đổi chức vụ thành tp
             if ($chucvu->id != $nhanvien->ChucVu->id){
                 $old_tp = $this->doi_tp_id_pb($phongban, $nhanvien, $chucvu, true);
@@ -318,7 +328,35 @@ class QLDSTaiKhoanController extends Controller
             if ($old_tp != null){
                 $return['old_tp'] = $old_tp->nhanvien_id;
             }
+        if (isset($changePb))
+            $return['changePb'] = true;
         return response()->json($return);
+    }
+
+    private function hasPC($nhanvien_id = 0){
+        if ($nhanvien_id == 0)
+            return false;
+
+        $dspc = PhanCong::select(DB::raw('hoadon_id, MAX(id) as id'))->groupBy('hoadon_id')->get();
+        $ds_id_pc = [];
+        foreach($dspc as $pc)
+            if (HoaDon::find($pc->hoadon_id)->dahuy == 0)
+                $ds_id_pc[] = $pc->id;
+
+        $dspc = PhanCong::where('nhanvien_id', $nhanvien_id)
+                        ->where('status', 0)
+                        ->whereIn('id', $ds_id_pc)->get();
+
+        $ds_id_pc = [];
+        foreach ($dspc as $pc){
+            $cdhd = $pc->HoaDon->CongDoanHoaDon->sortByDesc('id')->first();
+            if ($cdhd->congdoan_id == $pc->NhanVien->PhongBan->CongDoan->sortByDesc('id')->first()->id)
+                $ds_id_pc[] = $pc->id;
+        }
+        
+        if (count($ds_id_pc) > 0)
+            return true;
+        return false;
     }
 
     private function doi_tp_id_pb($phongban, $nhanvien, $chucvu, $doipb = false){

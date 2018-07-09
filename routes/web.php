@@ -14,8 +14,8 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-
-    dd(App\Models\DangBan::find(4)->DuyetDangBanHistory);
+    $tencapdo_daily = "Đại lý";
+    dd(App\Models\CapDo::where('capdo', 'LIKE', '%'.$tencapdo_daily.'%')->orderBy('id', 'asc')->first());
     dd(App\Models\PhongBan::join('NhanVien','PhongBan.truongphong_id','NhanVien.nhanvien_id')->where('PhongBan.id','1')->get());
 
     // foreach ($users as $user)
@@ -147,6 +147,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['m_admin']], function (){
             Route::get('/chitietpc', 'Admin\XLHoaDon\ThucHienHoaDonController@getPC')->name('chitietpc');
             Route::post('/baocaocv', 'Admin\XLHoaDon\ThucHienHoaDonController@setStatusPC')->name('baocaocv');
         });
+
+        Route::get('/hoa-don-da-lam', 'Admin\XLHoaDon\DSHoaDonController@index')->name('dshd_dalam');
     });
 });
 

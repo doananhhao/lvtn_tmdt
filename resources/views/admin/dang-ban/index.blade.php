@@ -147,7 +147,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-danger waves-effect waves-light" id="savechanges">Phân công</button>
+                                <button type="button" class="btn btn-danger waves-effect waves-light" id="savechanges">Thực Hiện</button>
                             </div>
                         </div>
                     </div>

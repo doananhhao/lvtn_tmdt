@@ -30,6 +30,12 @@
                         </li>
                         <li role="separator" class="divider"></li> --}}
                         <li>
+                            <a href="{{ route('home') }}">
+                                <i class="ti-home"></i> &nbsp; Trang chủ
+                            </a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                                 <i class="fa fa-power-off"></i> &nbsp; Đăng xuất
@@ -152,8 +158,8 @@
                 @endif
 
             @if (Auth::User()->NhanVien != null)
-                <li class="nav-small-cap m-t-10">--- Xử lý Hóa đơn</li>
                 @if (Auth::User()->NhanVien->ChucVu->ten == "Trưởng phòng")
+                <li class="nav-small-cap m-t-10">--- Xử lý Hóa đơn</li>
                 <li>
                     <a href="{{ route('hoa-don.index') }}" class="waves-effect">
                         <i data-icon="3" class="linea-icon linea-ecommerce fa-fw"></i>
@@ -177,11 +183,24 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="{{ route('hoa-don.dshd_dalam') }}" class="waves-effect">
+                        <i data-icon="&#xe026;" class="linea-icon linea-elaborate fa-fw"></i>
+                        <span class="hide-menu">Phòng ban đã làm</span>
+                    </a>
+                </li>
                 @elseif (Auth::User()->NhanVien->ChucVu->ten == "Nhân viên")
+                <li class="nav-small-cap m-t-10">--- Thực hiện Hóa đơn</li>
                 <li>
                     <a href="{{ route('hoa-don.dshd_canlam') }}" class="waves-effect">
                         <i data-icon="&#xe02e;" class="linea-icon linea-elaborate fa-fw"></i>
                         <span class="hide-menu">Công việc cần làm</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('hoa-don.dshd_dalam') }}" class="waves-effect">
+                        <i data-icon="&#xe026;" class="linea-icon linea-elaborate fa-fw"></i>
+                        <span class="hide-menu">Nhân viên đã làm</span>
                     </a>
                 </li>
                 @endif

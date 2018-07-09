@@ -4,16 +4,15 @@
 		<div class="header-top-inner">
 			<div class="cnt-account">
 				<ul class="list-unstyled">
-						<?php
-						if (Auth::check()){ // có đăng nhập
-							?><li><a href="{{ route('acc-info') }}"><i class="icon fa fa-user"></i>Thông tin tài khoản</a></li>
-				            <?php
-				        }else{              // không đăng nhập
-				        	?><li><a href="{{ route('login') }}"><i class="icon fa fa-user"></i>Tài khoản của tôi</a></li>
-				            <?php
-				        } 
-				        ?>
-					<li><a href="#"><i class="icon fa fa-heart"></i>Yêu thích</a></li>
+						@if (Auth::check())
+						{{-- có đăng nhập --}}
+							<li><a href="{{ route('acc-info') }}"><i class="icon fa fa-user"></i>Thông tin tài khoản</a></li>
+							@if (Auth::User()->LoaiUser->tenloai != "Người dùng")
+								<li><a href="{{ route('thongtintaikhoan') }}"><i class="icon fa fa-tachometer"></i>Trang quản lý website</a></li>
+							@endif
+				        @endif
+					{{-- <li><a href="#"><i class="icon fa fa-heart"></i>Yêu thích</a></li> --}}
+					
 					<li><a href="{{ route('cart') }}"><i class="icon fa fa-shopping-cart"></i>Giỏ hàng</a></li>
 					@if (!Auth::check())
 					<li><a href="{{ route('login') }}"><i class="icon fa fa-sign-in"></i>Đăng nhập</a></li>

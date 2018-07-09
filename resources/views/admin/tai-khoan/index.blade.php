@@ -247,6 +247,9 @@
                     if (data.old_tp){
                         $('#' + data.old_tp).find('td:nth-child(4)').find('span').removeClass().addClass(data.class_nv).html(element.find('td:nth-child(4)').find('span').html())
                     }
+                    if (data.changePb){
+                        element.remove()
+                    }
                     element.find('td:nth-child(4)').find('span').removeClass().addClass(data.current_cv == "Trưởng phòng" ? data.class_tp : data.class_nv).html(data.current_cv)
                     element.find('td:nth-child(5)').html(data.current_pb)
 

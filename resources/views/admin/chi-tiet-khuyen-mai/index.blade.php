@@ -86,7 +86,7 @@
                                     @method('DELETE')
                                 </form>
                                 <a href="{{ route('loai-khuyen-mai.chi-tiet-khuyen-mai.edit', ['loai_khuyen_mai' => $loaikm->id, 'chi-tiet-khuyen-mai' => $v->id]) }}" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                <a href="{{ route('loai-khuyen-mai.chi-tiet-khuyen-mai.destroy', ['loai_khuyen_mai' => $loaikm->id, 'chi-tiet-khuyen-mai' => $v->id]) }}" id='orm{{ $v->id }}' class='deleteWarning' data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                                <a href="{{ route('loai-khuyen-mai.chi-tiet-khuyen-mai.destroy', ['loai_khuyen_mai' => $loaikm->id, 'chi-tiet-khuyen-mai' => $v->id]) }}" id='orm{{ $v->id }}' class='deleteWarning' data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
                             </td>
                         </tr>
                         @endforeach
