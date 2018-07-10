@@ -114,7 +114,10 @@ $sellerProducts = array(
 							@for ($j = $i - 1; $j <= $i; $j++)
 							<?php
 								$sp = $sp_mua_nhieu[$j];
-								$km = $sp->ChiTietKhuyenMai->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))->first();
+								$km = $sp->ChiTietKhuyenMai()->where([
+									['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+									['ngaybd', '<=', date('Y-m-d H:i:s')]
+								])->first();
 								$dg = $sp->DanhGia;
 								if ($dg->isEmpty())
 									$score = 5;

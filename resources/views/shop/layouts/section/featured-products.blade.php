@@ -5,7 +5,10 @@
 	    {{-- @include('shop.layouts.product.product-item') --}}
 		@foreach($mua_nhieu_trong_thang as $sp)
 		<?php
-			$km = $sp->ChiTietKhuyenMai->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))->first();
+			$km = $sp->ChiTietKhuyenMai()->where([
+				['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+				['ngaybd', '<=', date('Y-m-d H:i:s')]
+			])->first();
             $dg = $sp->DanhGia;
             if ($dg->isEmpty())
                 $score = 5;

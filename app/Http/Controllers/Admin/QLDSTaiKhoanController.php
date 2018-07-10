@@ -221,13 +221,21 @@ class QLDSTaiKhoanController extends Controller
                 'message' => 'Mã tài khoản không đúng',
             ]);
         
-        if ($user->NhanVien != null)
+        if ($user->NhanVien != null){
             if ($user->NhanVien->ChucVu->ten == "Trưởng phòng")
                 return response()->json([
                     'success' => false,
                     'message' => 'Không thể thay đổi trạng thái của tài khoản [TRƯỞNG PHÒNG]',
                 ]);
+                
+            if ($this->hasPC($user_id))
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Không thể đổi trạng thái nhân viên có CÔNG VIỆC PHÂN CÔNG chưa hoàn thành',
+                ]);
+        }
         
+
         if ($user->trangthai == 0)
             $user->trangthai = 1;
         else $user->trangthai = 0;

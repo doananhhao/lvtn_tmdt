@@ -22,7 +22,10 @@
 					{{-- @include('shop.layouts.product.product-item') --}}
 					@foreach($sp_moi['sp'] as $sp)
 					<?php
-						$km = $sp->ChiTietKhuyenMai->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))->first();
+						$km = $sp->ChiTietKhuyenMai()->where([
+									['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+									['ngaybd', '<=', date('Y-m-d H:i:s')]
+								])->first();
 						$dg = $sp->DanhGia;
 						if ($dg->isEmpty())
 							$score = 5;
@@ -54,7 +57,10 @@
 					@foreach($sp_moi['sp'] as $sp)
 					@if($sp->loaisp_id == $v->id)
 					<?php
-						$km = $sp->ChiTietKhuyenMai->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))->first();
+						$km = $sp->ChiTietKhuyenMai()->where([
+									['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+									['ngaybd', '<=', date('Y-m-d H:i:s')]
+								])->first();
 						$dg = $sp->DanhGia;
 						if ($dg->isEmpty())
 							$score = 5;

@@ -118,7 +118,10 @@ $miniProducts = array(
 								$sp = $goi_y[$j];
 								if ($sp == null)
 									break;
-								$km = $sp->ChiTietKhuyenMai->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))->first();
+								$km = $sp->ChiTietKhuyenMai()->where([
+									['ngayketthuc', '>=', date('Y-m-d H:i:s')], 
+									['ngaybd', '<=', date('Y-m-d H:i:s')]
+								])->first();
 								$dg = $sp->DanhGia;
 								if ($dg->isEmpty())
 									$score = 5;

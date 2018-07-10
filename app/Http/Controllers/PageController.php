@@ -45,8 +45,14 @@ class PageController extends Controller
     public function getChitiet($id){
         $sanpham = SanPham::where('id',$id)->first();
     	$list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
-                ->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))
-                ->orWhere('ngayketthuc', null)
+                ->where([
+                    ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+                    ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                ])
+                ->orWhere([
+                    ['ngayketthuc', null],
+                    ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                ])
                 ->groupBy('sanpham_id')
                 ->orderBy('giamgia', 'desc')
                 ->limit(3)

@@ -91,8 +91,14 @@ class HomeController extends Controller
     //---Khuyến mãi đặc biệt---//
     private function getSPKMdacbiet(){
         $list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
-                ->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))
-                ->orWhere('ngayketthuc', null)
+                ->where([
+                    ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+                    ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                ])
+                ->orWhere([
+                    ['ngayketthuc', null],
+                    ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                ])
                 ->groupBy('sanpham_id')
                 ->orderBy('giamgia', 'desc')
                 ->limit(3)
@@ -124,8 +130,14 @@ class HomeController extends Controller
     //---Khuyến mãi---//
     private function getAllSaleProduct(){
         $list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
-                ->where('ngayketthuc', '>=', date('Y-m-d H:i:s'))
-                ->orWhere('ngayketthuc', null)
+                ->where([
+                    ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+                    ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                ])
+                ->orWhere([
+                    ['ngayketthuc', null],
+                    ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                ])
                 ->groupBy('sanpham_id')
                 ->get();
         $list2 = [];

@@ -14,6 +14,7 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
+    dd(App\Models\ChiTietHoaDon::find(81)->LoaiKhuyenMai->ChiTietKhuyenMai()->where('sanpham_id', 19)->first());
     $tencapdo_daily = "Đại lý";
     dd(App\Models\CapDo::where('capdo', 'LIKE', '%'.$tencapdo_daily.'%')->orderBy('id', 'asc')->first());
     dd(App\Models\PhongBan::join('NhanVien','PhongBan.truongphong_id','NhanVien.nhanvien_id')->where('PhongBan.id','1')->get());

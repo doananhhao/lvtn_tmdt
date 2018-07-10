@@ -150,7 +150,12 @@ class KTHoaDonController extends Controller
                 $thanhvien = $hd->User->ThanhVien;
                 $tongtien = 0;
                 foreach ($hd->ChiTietHoaDon as $cthd){
-                    $tongtien = $tongtien + ($cthd->gia * $cthd->soluong);
+                    if ($cthd->LoaiKhuyenMai != null){
+                        $ctkm = $cthd->LoaiKhuyenMai->ChiTietKhuyenMai()->where('sanpham_id', $cthd->sanpham_id)->first();
+                        $tongtien = $tongtien + ($cthd->gia * $cthd->soluong * (1 - $ctkm->giamgia));
+                    }else{
+                        $tongtien = $tongtien + ($cthd->gia * $cthd->soluong);
+                    }
                 }
                 $diem = $thanhvien->diemtichluy + $tongtien;
                 $thanhvien->diemtichluy = $diem;

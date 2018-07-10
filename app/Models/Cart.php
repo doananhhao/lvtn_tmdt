@@ -39,10 +39,12 @@ class Cart
 	function getLoaiKM($id){
 		$ctkm = ChiTietKhuyenMai::where([
             ['sanpham_id', $id],
-            ['ngayketthuc', '>', date('Y-m-d H:i:s')]
+			['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+			['ngaybd', '<=', date('Y-m-d H:i:s')]
 		])->orWhere([
 			['sanpham_id', $id],
-			['ngayketthuc', null]
+			['ngayketthuc', null],
+			['ngaybd', '<=', date('Y-m-d H:i:s')]
 		])->orderBy('giamgia', 'desc')->first();
 		if ($ctkm != null)
 			return $ctkm->loaikhuyenmai_id;
@@ -141,10 +143,12 @@ class Cart
 		$sanpham = SanPham::find($id);
 		$ctkm = ChiTietKhuyenMai::where([
             ['sanpham_id', $id],
-            ['ngayketthuc', '>', date('Y-m-d H:i:s')]
+            ['ngayketthuc', '>', date('Y-m-d H:i:s')],
+			['ngaybd', '<=', date('Y-m-d H:i:s')]
 		])->orWhere([
 			['sanpham_id', $id],
-			['ngayketthuc', null]
+			['ngayketthuc', null],
+			['ngaybd', '<=', date('Y-m-d H:i:s')]
 		])->orderBy('giamgia', 'desc')->first();
 		$price = $sanpham->gia;
 		if ($ctkm != null)
