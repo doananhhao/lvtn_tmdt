@@ -1,10 +1,11 @@
 <!-- ============================================================= LATEST TWEET============================================================= -->
 <div class="latest-tweet">
 	<div class="module-heading">
-		<h4 class="module-title">latest tweet</h4>
+		<h4 class="module-title">Tin tức</h4>
 	</div><!-- /.module-heading -->
 
 	<div class="module-body outer-top-xs">
+
        <div class="re-twitter">
             <div class="comment media">
                 <div class='pull-left'>
@@ -38,6 +39,6 @@
                 </div>
             </div>
         </div>
-    </div><!-- /.module-body -->
+    </div><!-- /.module-body --> 
 </div><!-- /.contact-timing -->
 <!-- ============================================================= LATEST TWEET : END ============================================================= -->

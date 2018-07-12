@@ -25,4 +25,8 @@ class CongDoan extends Model
     function PhongBan(){
         return $this->belongsTo('App\Models\PhongBan', 'phongban_id');
     }
+
+    function PhanCong(){
+        return $this->hasMany('App\Models\PhanCong', 'congdoan_id');
+    }
 }

@@ -321,6 +321,7 @@ class KTHoaDonController extends Controller
             }
             $hd->PhanCong()->create([
                 'nhanvien_id' => $nhanvien_id,
+                'congdoan_id' => $this->pb->CongDoan()->first()->id,
                 'comments' => $comments ? $comments : "",
                 'status' => 0
             ]);

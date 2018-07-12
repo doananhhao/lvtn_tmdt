@@ -22,8 +22,8 @@ class DSHoaDonController extends Controller
     private $chucvunv = null;
 
     function __construct(){
-        $this->data['title'] = "Danh sách hóa đơn đã làm";
-        $this->data['title2'] = 'Hoá đơn đã làm ';
+        $this->data['title'] = "Danh sách hóa đơn đã xử lý thành công";
+        $this->data['title2'] = 'Hoá đơn đã xử lý thành công ';
     }
 //
     function index(){
@@ -31,12 +31,12 @@ class DSHoaDonController extends Controller
         $ds_id_cdhd = [];
         if ($this->chucvu->id == $this->chucvunv->id){
             $ds_id_cdpc = $this->getHD_NV();
-            $this->data['title2'] .= '['.$this->pb->ten.']';
+            $name = Auth::User()->name;
+            $this->data['title2'] .= 'bởi nhân viên ['.$name.']';
             $ds_cd_pc_hd = PhanCong::whereIn('id', $ds_id_cdpc)->orderBy('id', 'desc')->paginate($this->paginate_set);
         }else{
             $ds_id_cdhd = $this->getHD_PB();
-            $name = Auth::User()->name;
-            $this->data['title2'] .= 'bởi nhân viên ['.$name.']';
+            $this->data['title2'] .= '['.$this->pb->ten.']';
             $ds_cd_pc_hd = CongDoanHoaDon::whereIn('id', $ds_id_cdhd)->orderBy('id', 'desc')->paginate($this->paginate_set);
         }
         
@@ -47,14 +47,21 @@ class DSHoaDonController extends Controller
     //hoá đơn do nhân viên làm
     private function getHD_NV(){
         //chỉ lấy CD đã hoàn thành
-        $dspc = PhanCong::select(DB::raw('hoadon_id, MAX(id) as id'))
-                    ->where(['status', 1])
-                    ->groupBy('hoadon_id')->get();
+        $dspc = PhanCong::select(DB::raw('hoadon_id, MAX(id) as id'))->groupBy('hoadon_id')->get();
         $ds_id_pc = [];
         foreach($dspc as $pc)
             if (HoaDon::find($pc->hoadon_id)->dahuy == 0)
                 $ds_id_pc[] = $pc->id;
-        return $ds_id_pc;
+        $dspc = PhanCong::whereIn([
+            ['id', $ds_id_pc],
+            ['status', 1],
+            ['nhanvien_id', Auth::User()->id]
+        ])->get();
+
+        $ds_id = [];
+        foreach($dspc as $pc)
+            $ds_id[] = $pc->id;
+        return $ds_id;
     }
     //hoá đơn do phòng ban làm
     private function getHD_PB(){

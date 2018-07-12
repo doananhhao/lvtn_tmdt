@@ -22,7 +22,7 @@
       </div><!-- /.container -->
   </div><!-- /.links-social -->
 
-  <div class="footer-bottom inner-bottom-sm">
+  {{-- <div class="footer-bottom inner-bottom-sm">
       <div class="container">
           <div class="row">
               <div class="col-xs-12 col-sm-6 col-md-3">
@@ -90,14 +90,14 @@
               </div>
           </div>
       </div>
-  </div>
+  </div> --}}
 
   <div class="copyright-bar">
       <div class="container">
           <div class="col-xs-12 col-sm-6 no-padding">
               <div class="copyright">
                  Copyright © 2014
-                  <a href="index.php?page=home">Unicase Shop.</a>
+                <a href="{{ route('home') }}">Unicase Shop.</a>
                   - All rights Reserved
               </div>
           </div>

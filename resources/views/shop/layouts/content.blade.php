@@ -16,7 +16,7 @@
                 @include('shop.layouts.widgets.sidebar.special-deals')
                 {{-- Khuyến mãi --}}
 
-                @include('shop.layouts.widgets.sidebar.newsletter')
+                {{-- @include('shop.layouts.widgets.sidebar.newsletter') --}}
 
                 @include('shop.layouts.widgets.sidebar.hot-deals')
                 {{-- giá đặc biệt --}}
@@ -50,7 +50,7 @@
             </div><!-- /.homebanner-holder -->
             <!-- ============================================== CONTENT : END ============================================== -->
         </div><!-- /.row -->
-        @include('shop.layouts.brands-carousel')
+        {{-- @include('shop.layouts.brands-carousel') --}}
     
         </div><!-- /.container -->
     </div><!-- /#top-banner-and-menu -->

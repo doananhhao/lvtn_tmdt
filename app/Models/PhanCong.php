@@ -9,7 +9,7 @@ class PhanCong extends Model
     protected $table = "phancong";
 
     protected $fillable = [
-        'hoadon_id', 'nhanvien_id', 'comments'
+        'hoadon_id', 'nhanvien_id', 'congdoan_id', 'comments'
     ];
 
     function HoaDon(){
@@ -17,6 +17,9 @@ class PhanCong extends Model
     }
     function NhanVien(){
         return $this->belongsTo('App\Models\NhanVien', 'nhanvien_id', 'nhanvien_id');
+    }
+    function CongDoan(){
+        return $this->belongsTo('App\Models\CongDoan', 'congdoan_id');
     }
     function scopeHoadon($query, $idhd)
     {

@@ -41,7 +41,7 @@
                             @endif
                             <td>
                                 @foreach ($pc->HoaDon->ChiTietHoaDon as $cthd)
-                                {{ $cthd->SanPham->tensanpham}}<small class="p-l-10 text-primary"> x {{$cthd->SanPham->soluong }}</small>
+                                {{ $cthd->SanPham->tensanpham}}<small class="p-l-10 text-primary"> x {{$cthd->soluong }}</small>
                                 <br>
                                 @endforeach
                             </td>

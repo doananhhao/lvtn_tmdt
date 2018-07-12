@@ -12,11 +12,11 @@
     </div><!-- /.footer-logo -->
 
      <div class="module-body m-t-20">
-        <p class="about-us"> Nam libero tempore, cum soluta nobis est ses  eligendi optio cumque cum soluta nobis est ses  eligendi optio cumque.</p>
+        <p class="about-us"> Cửa hàng trực tuyến kinh doanh đa dạng về nhiều loại sản phẩm, cùng với các hình thức khuyến mãi phong phú, và hoàn toàn miễn phí vận chuyển.</p>
     
         <div class="social-icons">
             
-        <a href="http://facebook.com/transvelo" class='active'><i class="icon fa fa-facebook"></i></a>
+        <a href="#" class='active'><i class="icon fa fa-facebook"></i></a>
         <a href="#"><i class="icon fa fa-twitter"></i></a>
         <a href="#"><i class="icon fa fa-linkedin"></i></a>
         <a href="#"><i class="icon fa fa-rss"></i></a>

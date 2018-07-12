@@ -1,11 +1,11 @@
 <!-- ============================================================= INFORMATION============================================================= -->
 <div class="contact-information">
 	<div class="module-heading">
-		<h4 class="module-title">information</h4>
+		<h4 class="module-title">thông tin</h4>
 	</div><!-- /.module-heading -->
 
 	<div class="module-body outer-top-xs">
-        <ul class="toggle-footer" style="">
+        <ul class="toggle-footer">
             <li class="media">
                 <div class="pull-left">
                      <span class="icon fa-stack fa-lg">
@@ -14,7 +14,7 @@
                     </span>
                 </div>
                 <div class="media-body">
-                    <p>868 Any Stress,Burala Casi,Picasa USA.</p>
+                    <p>180 Cao Lỗ, Phường 4, Quận 8, Tp. Hồ Chí Minh.</p>
                 </div>
             </li>
 
@@ -26,7 +26,7 @@
                     </span>
                 </div>
                 <div class="media-body">
-                    <p>(400) 0888 888 888<br>(400) 888 888 888</p>
+                    <p>(+84) 938 863 567<br>(000) 000 000 000</p>
                 </div>
             </li>
 
@@ -38,8 +38,8 @@
                     </span>
                 </div>
                 <div class="media-body">
-                    <span><a href="#">Contact @Unicase.com</a></span><br>
-                    <span><a href="#">Sale @Unicase.com</a></span>
+                    <span><a href="mailto:doananhhao01@gmail.com">Đoàn Anh Hào</a></span><br>
+                    <span><a href="#">Huỳnh Phạm Minh Quân</a></span>
                 </div>
             </li>
               
