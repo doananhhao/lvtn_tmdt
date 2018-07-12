@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                             @foreach($orders as $order)
-                            @if ($order['huy'] == 0)
+                            @if ($order['dahuy'] == 0)
                             <tr>
                                 <td><a href="{{ route('order-detail', ['id' => $order['id']]) }}">{{ $order['id'] }}</a></td>
                                 <td><span class="text-muted"><i class="fa fa-clock-o"></i> {{ date('d-m-Y ', strtotime($order['created_at'])) }}</span> </td>
@@ -56,10 +56,12 @@
                                 
                                 <td>$45.00</td>
                                 <td>
-                                        @if ($order['isship'] == 0)
-                                        <div class="label label-table label-danger">Đang tiến hành</div>
+                                       
+                                        @if ($order['congdoan_id'] == 3 && $order['status'] == 1)
+                                        <div class="label label-table label-success">Hoàn thành</div>
+                                        
                                         @else
-                                            <div class="label label-table label-success">Hoàn thành</div>
+                                        <div class="label label-table label-danger">Đang tiến hành</div>
                                         @endif
                                 </td>
                                 @endif   

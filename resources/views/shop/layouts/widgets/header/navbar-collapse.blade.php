@@ -26,6 +26,10 @@
 			</li>
 
 			<li class="dropdown">
+				<a href="{{route('sanphamdaily')}}">Sản phẩm của Đại lý</a>
+			</li>
+
+			<li class="dropdown">
 				<a href="#">
 					Chính sách bán hàng
 				</a>
