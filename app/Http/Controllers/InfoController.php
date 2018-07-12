@@ -17,6 +17,7 @@ use App\Models\DaiLy;
 use App\Models\NhaCungCap;
 use App\Models\DangBan;
 use App\Models\DuyetDangBanHistory;
+use App\Models\CongDoanHoaDon;
 use Illuminate\Support\Facades\Auth;
 
 class InfoController extends Controller
@@ -156,16 +157,16 @@ class InfoController extends Controller
         // }
         // $this->data['total_price'] = $total_price;
 
-        $order_list = HoaDon::where('user_id',Auth::user()->id)->get()->toArray();
+        //$order_list = HoaDon::where('user_id',Auth::user()->id)->get()->toArray();
+        $order_list = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->get()->toArray();
         $this->data['orders'] = $order_list; 
         
         return view('shop.layouts.page.order-list', $this->data);
     }
 
     public function order_detail($id){
-        $order = HoaDon::where('id',$id)->get();
+        $order = CongDoanHoaDon::where('hoadon_id',$id)->orderBy('id','desc')->first();
         $this->data['orders'] = $order; 
-
         
         $orders_detail = SanPham::join('ChiTietHoaDon','SanPham.id','sanpham_id')->where('hoadon_id', $id)->get()->toArray();
         
@@ -173,7 +174,7 @@ class InfoController extends Controller
         $this->data['orders_detail'] = $orders_detail;
        
 
-        return view('shop.layouts.page.order-detail', $this->data);
+        return view('shop.layouts.page.order-detail', $this->data,compact('order'));
     }
 
     public function order_status($status){

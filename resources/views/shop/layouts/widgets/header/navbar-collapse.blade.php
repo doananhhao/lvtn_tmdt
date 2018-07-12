@@ -31,7 +31,7 @@
 				</a>
 			</li>
 
-			<li class="dropdown hidden-sm">
+			<li class="dropdown">
 				<a href="{{route('sanphamdaily')}}">Sản phẩm của Đại lý</a>
 			</li>
 

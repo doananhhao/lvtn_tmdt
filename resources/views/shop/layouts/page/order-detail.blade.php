@@ -10,23 +10,23 @@
         <div class="white-box">
             <h3 class="box-title">Tình trạng đơn hàng</h3>
             <div class="row line-steps">
-                @foreach($orders as $value)
+              
                 <div class="col-md-4 column-step start">
                     <div class="step-number">1</div>
                     <div class="step-title">Duyệt Đơn hàng</div>
                     <div class="step-info">Đơn hàng của bạn đã được tiếp nhận</div>
                 </div>
-                <div class="col-md-4 column-step <?php echo ($value['ispacked'] == 1) ? "active" : ""; ?>">
+                <div class="col-md-4 column-step <?php echo ($order['congdoan_id'] >= 2) ? "active" : ""; ?>">
                     <div class="step-number">2</div>
                     <div class="step-title">Đóng gói</div>
                     <div class="step-info">Đơn hàng của bạn đang được đóng gói</div>
                 </div>
-                <div class="col-md-4 column-step finish <?php echo ($value['isship'] == 1) ? "active" : ""; ?>">
-                    <div style="<?php echo ($value['isship'] == 1) ? "color: #03a9f3;" : ""; ?>"  class="step-number">3</div>
+                <div class="col-md-4 column-step finish <?php echo ($order['congdoan_id'] == 3) ? "active" : ""; ?>">
+                    <div style="<?php echo ($order['congdoan_id'] == 3) ? "color: #03a9f3;" : "" ?>"  class="step-number">3</div>
                     <div class="step-title">Vận chuyển</div>
                     <div class="step-info">Đơn hàng của bạn đã được chuyển đi</div>
                 </div>
-                @endforeach
+                
             </div>
         </div>
     </div>
