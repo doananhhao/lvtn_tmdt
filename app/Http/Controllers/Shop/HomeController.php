@@ -150,7 +150,7 @@ class HomeController extends Controller
 
     //---sidemenu---//
     private function getSideMenu(){
-        return LoaiSP::all();
+        return LoaiSP::orderBy('id', 'desc')->get();
     }
     //---sidemenu---//
 

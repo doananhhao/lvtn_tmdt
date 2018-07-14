@@ -47,10 +47,14 @@ class LoaiSPSeeder extends Seeder
             [
                 'tenloai' => 'Tạp hóa',
                 'classfaicon' => 'icon fa fa-thumbs-o-up fa-fw',
+            ],
+            [
+                'tenloai' => 'Khác',
+                'classfaicon' => 'icon fa fa-navicon fa-fw',
             ]
         ];
-
-        foreach ($data as $v){
+        $data2 = array_reverse($data);
+        foreach ($data2 as $v){
             $loaisp = App\Models\LoaiSP::create($v);
         }
     }

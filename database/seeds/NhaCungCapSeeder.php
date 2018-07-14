@@ -13,24 +13,9 @@ class NhaCungCapSeeder extends Seeder
     {
         $data = [
             [
-                'ten' => 'Samsung',
-                'diachi' => 'TP HCM',
-                'sdt' => '0123456789'
-            ],
-            [
-                'ten' => 'Apple',
-                'diachi' => 'TP HCM',
-                'sdt' => '0123456789'
-            ],
-            [
-                'ten' => 'Blue Exchange',
-                'diachi' => 'TP HCM',
-                'sdt' => '0123456789'
-            ],
-            [
-                'ten' => 'Nike',
-                'diachi' => 'TP HCM',
-                'sdt' => '0123456789'
+                'ten' => 'Khác',
+                'diachi' => '',
+                'sdt' => ''
             ]
         ];
 

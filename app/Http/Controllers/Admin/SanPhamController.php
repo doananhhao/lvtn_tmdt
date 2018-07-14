@@ -59,8 +59,8 @@ class SanPhamController extends Controller
      */
     public function create()
     {
-        $this->data['loaisp'] = LoaiSP::all();
-        $this->data['ncc'] = NhaCungCap::all();
+        $this->data['loaisp'] = LoaiSP::orderBy('id', 'desc')->get();
+        $this->data['ncc'] = NhaCungCap::orderBy('id', 'desc')->get();
         $this->data['title2'] = 'Thêm sản phẩm';
         return view('admin.sanpham.create', $this->data);
     }
@@ -126,8 +126,8 @@ class SanPhamController extends Controller
         if (!$this->verify_sanpham_id($id))
             return abort(404);
 
-        $this->data['loaisp'] = LoaiSP::all();
-        $this->data['ncc'] = NhaCungCap::all();
+        $this->data['loaisp'] = LoaiSP::orderBy('id', 'desc')->get();
+        $this->data['ncc'] = NhaCungCap::orderBy('id', 'desc')->get();
         $this->data['sp'] = SanPham::find($id);
         $this->data['title2'] = 'Sản phẩm: '.SanPham::find($id)->tensanpham;
         return view('admin.sanpham.edit', $this->data);
