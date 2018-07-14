@@ -16,8 +16,8 @@
             <h3 class="box-title"></h3>
             <p class="text-muted"></p>
             <div class="table-responsive">
-
-                @if(Auth::User()->NhanVien->ChucVu->ten == "Trường phòng")
+                
+                @if(Auth::User()->NhanVien->ChucVu->ten == "Trưởng phòng")
                 @include('admin.cdhd.pb')
                 @elseif(Auth::User()->NhanVien->ChucVu->ten == "Nhân viên")
                 @include('admin.cdhd.nv')

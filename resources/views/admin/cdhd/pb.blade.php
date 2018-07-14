@@ -29,7 +29,7 @@
                         $total += $cthd->soluong * $cthd->gia;
                     }
                 }
-                echo $total;
+                echo number_format($total, 0, ',', '.').' VNĐ';
                 @endphp
             </td>
             <td>

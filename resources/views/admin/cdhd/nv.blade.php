@@ -5,6 +5,7 @@
             <th>Hóa đơn #</th>
             <th>Công đoạn</th>
             <th>Sản phẩm</th>
+            <th>Đánh giá CV</th>
         </tr>
     </thead>
 
@@ -33,6 +34,13 @@
                 {{ $cthd->SanPham->tensanpham}}<small class="p-l-10 text-primary"> x {{ $cthd->soluong }}</small>
                 <br>
                 @endforeach
+            </td>
+            <td>
+                @if ($pc->HoaDon->PhanCong()->where('congdoan_id', $pc->congdoan_id)->orderBy('id', 'desc')->first()->id == $pc->id)
+                <span class="label label-rouded label-success">Hoàn thành</span>
+                @else
+                <span class="label label-rouded label-warning">Chưa hợp lệ</span>
+                @endif
             </td>
         </tr>
         @endforeach
