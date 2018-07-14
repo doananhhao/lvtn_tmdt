@@ -107,6 +107,9 @@ $sellerProducts = array(
 
 			<?php $i = 1; ?>
 			@foreach($sp_mua_nhieu as $v)
+				@if($i > (count($sp_mua_nhieu) - 1))
+				@break
+				@endif
 				@if($i%2 == 1)
 
 					<div class="item">

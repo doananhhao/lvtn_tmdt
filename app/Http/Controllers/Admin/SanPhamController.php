@@ -216,36 +216,26 @@ class SanPhamController extends Controller
 
         $sp = SanPham::find($id);
         $filename = $sp->hinhanh != "abc.jpg" ? $sp->hinhanh : changeTitle($sp->tensanpham)."_$id.png";
-
         if ($request->checkbox_img1)
             if ($request->file('img1')->isValid()){
-                if ($sp->hinhanh != "abc.jpg")
-                {
-                    $image_path = "/shop/images/pic/$sp->hinhanh";  // Value is not URL but directory file path
-                    if(File::exists($image_path)) {
-                        File::delete($image_path);
-                    }
-                    $sp->hinhanh = $filename;
-                    $request->file('img1')->move('public/shop/images/pic', $filename);
+                $image_path = "/shop/images/pic/$sp->hinhanh";  // Value is not URL but directory file path
+                if(File::exists($image_path)) {
+                    File::delete($image_path);
                 }
+                $sp->hinhanh = $filename;
+                $request->file('img1')->move('public/shop/images/pic', $filename);
             }
-        
         if ($request->checkbox_img2)
             if ($request->file('img2')->isValid()){
-                if ($sp->hinhanh != "abc.jpg")
-                {
-                    $image_path = "/shop/images/pic/mh_$sp->hinhanh";  // Value is not URL but directory file path
-                    if(File::exists($image_path)) {
-                        File::delete($image_path);
-                    }
-                    $sp->hinhanh = $filename;
-                    $request->file('img2')->move('public/shop/images/pic', 'mh_'.$filename);
+                $image_path = "/shop/images/pic/mh_$sp->hinhanh";  // Value is not URL but directory file path
+                if(File::exists($image_path)) {
+                    File::delete($image_path);
                 }
+                $sp->hinhanh = $filename;
+                $request->file('img2')->move('public/shop/images/pic', 'mh_'.$filename);
             }
     
         $sp->save();
         return back()->with('success', 'Đã thêm hình ảnh thành công');
-
-        return back()->with('fail', 'Thêm thất bại, vui lòng thử lại');
     }
 }

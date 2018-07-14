@@ -192,7 +192,7 @@
                 @elseif (Auth::User()->NhanVien->ChucVu->ten == "Nhân viên")
                 <li class="nav-small-cap m-t-10">--- Thực hiện Hóa đơn</li>
                 <li>
-                    <a href="{{ route('hoa-don.dshd_canlam') }}" class="waves-effect">
+                    <a href="{{ route('hoa-don.dshd_canlam') }}#" class="waves-effect">
                         <i data-icon="&#xe02e;" class="linea-icon linea-elaborate fa-fw"></i>
                         <span class="hide-menu">Công việc cần làm</span>
                     </a>

@@ -47,21 +47,31 @@ class DSHoaDonController extends Controller
     //hoá đơn do nhân viên làm
     private function getHD_NV(){
         //chỉ lấy CD đã hoàn thành
-        $dspc = PhanCong::select(DB::raw('hoadon_id, MAX(id) as id'))->groupBy('hoadon_id')->get();
+        // $dspc = PhanCong::select(DB::raw('hoadon_id, MAX(id) as id'))->groupBy('hoadon_id')->get();
+        // $ds_id_pc = [];
+        // foreach($dspc as $pc)
+        //     if (HoaDon::find($pc->hoadon_id)->dahuy == 0)
+        //         $ds_id_pc[] = $pc->id;
+        // $dspc = PhanCong::where([
+        //     ['status', 1],
+        //     ['nhanvien_id', Auth::User()->id]
+        // ])->whereIn('id', $ds_id_pc)->get();
+        // $ds_id = [];
+        // foreach($dspc as $pc)
+        //     $ds_id[] = $pc->id;
+        // return $ds_id;
+
+        $dspc = PhanCong::select(DB::raw('hoadon_id, MAX(id) as id'))->where([
+                ['status', 1],
+                ['nhanvien_id', Auth::User()->id]
+        ])->groupBy('hoadon_id')->get();
+
         $ds_id_pc = [];
         foreach($dspc as $pc)
             if (HoaDon::find($pc->hoadon_id)->dahuy == 0)
                 $ds_id_pc[] = $pc->id;
-        $dspc = PhanCong::whereIn([
-            ['id', $ds_id_pc],
-            ['status', 1],
-            ['nhanvien_id', Auth::User()->id]
-        ])->get();
 
-        $ds_id = [];
-        foreach($dspc as $pc)
-            $ds_id[] = $pc->id;
-        return $ds_id;
+        return $ds_id_pc;
     }
     //hoá đơn do phòng ban làm
     private function getHD_PB(){
