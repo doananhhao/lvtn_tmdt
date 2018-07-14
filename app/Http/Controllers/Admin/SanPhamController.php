@@ -86,7 +86,7 @@ class SanPhamController extends Controller
             'soluong' => 'required|numeric|min:0',
             'loaisp' => 'required|exists:loaisp,id',
             'ncc' => 'required|exists:nhacungcap,id',
-            'mota' => 'max:10000',
+            'mota' => 'max:15000',
         ]);
 
         SanPham::create([

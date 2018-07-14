@@ -31,7 +31,7 @@ class PageController extends Controller
     }
   
     public function getLoaiSp($type){
-        $sidemenu = LoaiSP::all();
+        $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         $sp_theoloai = LoaiSP::all();
         
         $tenlsp = LoaiSP::where('id',$type)->first();
@@ -92,7 +92,7 @@ class PageController extends Controller
     }
 
     public function getSpDaiLy(){
-        $sidemenu = LoaiSP::all();
+        $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         //$sp_theoloai = LoaiSP::all();
         
         $loaisp = SanPham::join('DangBan','DangBan.sanpham_id','SanPham.id')->where('canduyet',0)->where('ngungban',0)->paginate(12);

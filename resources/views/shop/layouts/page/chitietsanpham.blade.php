@@ -38,8 +38,8 @@
 
         <div id="owl-single-product">
             <div class="single-product-gallery-item" id="slide1">
-                <a data-lightbox="image-1" data-title="Gallery" href="{{ asset('shop/images/pic/hd/hd_'.$sanpham->hinhanh) }}">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="{{ asset('shop/images/pic/hd/hd_'.$sanpham->hinhanh) }}" />
+                <a data-lightbox="image-1" data-title="Gallery" href="{{ asset('shop/images/pic/'.$sanpham->hinhanh) }}">
+                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="{{ asset('shop/images/pic/'.$sanpham->hinhanh) }}" />
                 </a>
             </div><!-- /.single-product-gallery-item -->
 
@@ -191,7 +191,7 @@
 							</div><!-- /.stock-container -->
 
 							<div class="description-container m-t-20">
-								{{$sanpham->mota}}
+								
 							</div><!-- /.description-container -->
 
 							<div class="price-container info-container m-t-20">
@@ -265,7 +265,7 @@
 								
 								<div id="description" class="tab-pane in active">
 									<div class="product-tab">
-										<p class="text">{{$sanpham->mota}}</p>
+										<p class="text">{!!$sanpham->mota!!}</p>
 									</div>	
 								</div><!-- /.tab-pane -->
 

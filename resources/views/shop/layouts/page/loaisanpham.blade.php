@@ -103,7 +103,7 @@
 	<div class="product">		
 		<div class="product-image">
 			<div class="image">
-				<a href="{{route('chitietsanpham',$sp->id)}}"><img  src="{{asset('shop/images/pic/'.$sp->hinhanh)}}"  alt=""></a>
+				<a href="{{route('chitietsanpham',$sp->id)}}"><img src="{{asset('shop/images/pic/'.$sp->hinhanh)}}"  alt=""></a>
 			</div><!-- /.image -->			
 
 			<div class="tag new"><span>new</span></div>                        		   
@@ -153,7 +153,8 @@
 						<div class="tab-pane "  id="list-container">
 							<div class="category-product  inner-top-vs">
 							
-			@foreach($loaisp as $list)							
+			@foreach($loaisp as $list)
+			@if ($list->DangBan()->first() == null)								
 		<div class="category-product-inner wow fadeInUp">
 			<div class="products">				
 	            <div class="product-list product">
@@ -161,7 +162,7 @@
 		<div class="col col-sm-4 col-lg-4">
 			<div class="product-image">
 				<div class="image">
-					<img  src="{{asset('shop/images/pic/'.$sp->hinhanh)}}" alt="">
+					<img  src="{{asset('shop/images/pic/'.$list->hinhanh)}}" alt="">
 				</div>
 			</div><!-- /.product-image -->
 		</div><!-- /.col -->
@@ -175,7 +176,7 @@
 												     <span class="price-before-discount">$ 800</span>
 											
 				</div><!-- /.product-price -->
-				<div class="description m-t-10">{{$list->mota}}</div>
+				<div class="description m-t-10">{{--  {{$list->mota}}  --}}</div>
                 				<div class="cart clearfix animate-effect">
 					<div class="action">
 						<ul class="list-unstyled">
@@ -199,7 +200,7 @@
 			</div><!-- /.products -->
 		</div><!-- /.category-product-inner -->
 		
-	
+	@endif
 		@endforeach
 		
 	
