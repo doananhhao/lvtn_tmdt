@@ -14,7 +14,7 @@ use App\Models\BinhLuan;
 use App\Models\DanhGia;
 use App\Models\ThanhVien;
 use App\Models\DangBan;
-
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -34,16 +34,19 @@ class PageController extends Controller
         $sidemenu = LoaiSP::all();
         $sp_theoloai = LoaiSP::all();
         
+        $tenlsp = LoaiSP::where('id',$type)->first();
         $loaisp = SanPham::where('loaisp_id',$type)->paginate(12);
         $db=DangBan::all();
         
         //$loaisp = SanPham::where('loaisp_id',$type)->where('SanPham.id','!=','DangBan.sanpham_id')->paginate(12);
         //$loaispa = $loaisp->DangBan->where('sanpham_id','!=',$loaisp)->paginate(12);
         
-        return view('shop.layouts.page.loaisanpham',compact('sidemenu', 'sp_theoloai','loaisp'));
+        return view('shop.layouts.page.loaisanpham',compact('sidemenu', 'sp_theoloai','loaisp','tenlsp'));
     }
     public function getChitiet($id){
         $sanpham = SanPham::where('id',$id)->first();
+        $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
+        
     	$list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
                 ->where([
                     ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
@@ -64,12 +67,14 @@ class PageController extends Controller
             $giamgiadb[] = $sp;
         }
         $sobinhluan = BinhLuan::where('sanpham_id',$id)->count();
-        $binhluan = BinhLuan::join('users','user_id','=','users.id')->where('sanpham_id',$id)->paginate(10);
+        $binhluan = BinhLuan::join('users','user_id','=','users.id')->where('sanpham_id',$id)->where('status',1)->paginate(10);
 
-        //$sodanhgia = DanhGia::where('sanpham_id',$id)->count();
+        $sodanhgia = DanhGia::where('sanpham_id',$id)->count();
         //$danhgia = DanhGia::join('thanhvien','thanhvien_id','=','users.id')->join('users','user_id','=','users.id')->where('sanpham_id',$id)->paginate(10);
         
-    	return view('shop.layouts.page.chitietsanpham',compact('sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia'));
+        $spcungloai = SanPham::where('loaisp_id',$sanpham->loaisp_id)->get();
+        //dd($spcungloai);
+    	return view('shop.layouts.page.chitietsanpham',compact('sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
     } 
 
     public function comment(Request $request,$id){
@@ -94,6 +99,43 @@ class PageController extends Controller
         //dd($loaisp);
         return view('shop.layouts.page.sanphamdangban',compact('sidemenu','loaisp'));
     }
+
+
+    public function getChitietSPDL($id){
+        $sanpham = SanPham::where('id',$id)->first();
+        $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
+        
+        $list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
+                ->where([
+                    ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+                    ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                ])
+                ->orWhere([
+                    ['ngayketthuc', null],
+                    ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                ])
+                ->groupBy('sanpham_id')
+                ->orderBy('giamgia', 'desc')
+                ->limit(3)
+                ->get();
+        $giamgiadb = [];
+        foreach ($list as $v){
+            $sp = SanPham::find($v->sanpham_id);
+            $sp->giamgia = $v->giamgia;
+            $giamgiadb[] = $sp;
+        }
+
+        $tvdangban= SanPham::join('DangBan','SanPham.id','DangBan.sanpham_id')->first();
+        $sdttv=User::where('id',$tvdangban->thanhvien_id)->first();
+    	//dd($sdttv);
+        $sobinhluan = BinhLuan::where('sanpham_id',$id)->count();
+        $binhluan = BinhLuan::join('users','user_id','=','users.id')->where('sanpham_id',$id)->where('status',1)->paginate(10);
+
+        
+        $spcungloai = SanPham::where('loaisp_id',$sanpham->loaisp_id)->get();
+        //dd($spcungloai);
+    	return view('shop.layouts.page.chitietspdl',compact('sdttv','sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
+    } 
 
     public function getInfo(){
         return view('shop.layouts.page.info');

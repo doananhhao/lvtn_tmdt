@@ -24,54 +24,10 @@
 	            	
 	            	<div class="sidebar-filter">
 		            	<!-- ============================================== COMPARE============================================== -->
-<div class="sidebar-widget wow fadeInUp">
-    <h3 class="section-title">Compare products</h3>
-	<div class="sidebar-widget-body">
-		<div class="compare-report">
-			<p>You have no <span>item(s)</span> to compare</p>
-		</div><!-- /.compare-report -->
-	</div><!-- /.sidebar-widget-body -->
-</div><!-- /.sidebar-widget -->
+
 <!-- ============================================== COMPARE: END ============================================== -->
 		            			            	<!-- ============================================== COLOR============================================== -->
-<div class="sidebar-widget  wow fadeInUp outer-top-vs ">
-	<div id="advertisement" class="advertisement">
-        <div class="item bg-color">
-            <div class="container-fluid">
-                <div class="caption vertical-top text-left">
-                    <div class="big-text">
-                        Save<span class="big">50%</span>
-                    </div>
-                        
-
-                    <div class="excerpt">
-                        on selected items
-                    </div>
-                </div><!-- /.caption -->
-            </div><!-- /.container-fluid -->
-        </div><!-- /.item -->
-
-        <div class="item" style="background-image: url('assets/images/advertisement/1.jpg');">
-            
-        </div><!-- /.item -->
-
-        <div class="item bg-color">
-            <div class="container-fluid">
-                <div class="caption vertical-top text-left">
-                    <div class="big-text">
-                        Save<span class="big">50%</span>
-                    </div>
-                        
-
-                    <div class="excerpt fadeInDown-2">
-                        on selected items
-                    </div>
-                </div><!-- /.caption -->
-            </div><!-- /.container-fluid -->
-        </div><!-- /.item -->
-
-    </div><!-- /.owl-carousel -->
-</div>
+@include('shop.layouts.widgets.sidebar.sidebar-advertisement')
     
 <!-- ============================================== COLOR: END ============================================== -->
 
@@ -81,25 +37,7 @@
 			<div class='col-md-9'>
 					<!-- ========================================== SECTION – HERO ========================================= -->
 
-	<div id="category" class="category-carousel hidden-xs">
-		<div class="item">	
-			<div class="image">
-				<img src="assets/images/banners/cat-banner-1.jpg" alt="" class="img-responsive">
-			</div>
-			<div class="container-fluid">
-				<div class="caption vertical-top text-left">
-					<div class="big-text">
-						Sale
-					</div>
-
-					<div class="excerpt hidden-sm hidden-md">
-						up to 50% off
-					</div>
-					
-				</div><!-- /.caption -->
-			</div><!-- /.container-fluid -->
-		</div>
-</div>
+	
 
 		
 
@@ -146,7 +84,7 @@
 	<div class="product">		
 		<div class="product-image">
 			<div class="image">
-				<a href="{{route('chitietsanpham',$sp->sanpham_id)}}"><img  src="../shop/images/pic/{{$sp->hinhanh}}"  alt=""></a>
+				<a href="{{route('chitietsanphamdaily',$sp->sanpham_id)}}"><img  src="{{asset('shop/images/pic/dangban/'.$sp->hinhanh)}}"  alt=""></a>
 			</div><!-- /.image -->			
 
 			<div class="tag new"><span>new</span></div>                        		   
@@ -154,7 +92,7 @@
 			
 		
 		<div class="product-info text-left">
-			<h3 class="name"><a href="{{route('chitietsanpham',$sp->sanpham_id)}}">{{$sp->tensanpham}}</a></h3>
+			<h3 class="name"><a href="{{route('chitietsanphamdaily',$sp->sanpham_id)}}">{{$sp->tensanpham}}</a></h3>
 			<div class="rating rateit-small"></div>
 			<div class="description"></div>
 
@@ -204,13 +142,13 @@
 		<div class="col col-sm-4 col-lg-4">
 			<div class="product-image">
 				<div class="image">
-					<a href="{{route('chitietsanpham',$list->sanpham_id)}}"><img  src="../shop/images/pic/{{$list->hinhanh}}"  alt=""></a>
+					<a href="{{route('chitietsanphamdaily',$list->sanpham_id)}}"><img  src="{{asset('shop/images/pic/'.$sp->hinhanh)}}"  alt=""></a>
 				</div>
 			</div><!-- /.product-image -->
 		</div><!-- /.col -->
 		<div class="col col-sm-8 col-lg-8">
 			<div class="product-info">
-				<h3 class="name"><a href="{{route('chitietsanpham',$list->sanpham_id)}}">{{$list->tensanpham}}</a></h3>
+				<h3 class="name"><a href="{{route('chitietsanphamdaily',$list->sanpham_id)}}">{{$list->tensanpham}}</a></h3>
 				<div class="rating rateit-small"></div>
 				<div class="product-price">	
 					<span class="price">
@@ -230,17 +168,7 @@
 														
 							</li>
 		                   
-			                <li class="lnk wishlist">
-								<a class="add-to-cart" href="{{route('chitietsanpham',$list->sanpham_id)}}" title="Wishlist">
-									 <i class="icon fa fa-heart"></i>
-								</a>
-							</li>
-
-							<li class="lnk">
-								<a class="add-to-cart" href="{{route('chitietsanpham',$list->sanpham_id)}}" title="Compare">
-								    <i class="fa fa-retweet"></i>
-								</a>
-							</li>
+			                
 						</ul>
 					</div><!-- /.action -->
 				</div><!-- /.cart -->

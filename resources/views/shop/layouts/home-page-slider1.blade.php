@@ -3,7 +3,7 @@
 <div id="hero">
 	<div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
 		
-		<div class="item" style="background-image: url({{ asset('shop/images/pic/011.jpg') }});">
+		<div class="item" style="background-image: url({{ asset('shop/images/pic/sliders/01.jpg') }});">
 			<div class="container-fluid">
 				<div class="caption bg-color vertical-center text-left">
 					<div class="big-text fadeInDown-1">
@@ -22,7 +22,7 @@
 			</div><!-- /.container-fluid -->
 		</div><!-- /.item -->
 
-		<div class="item" style="background-image: url({{ asset('shop/images/pic/02.jpg') }});">
+		<div class="item" style="background-image: url({{ asset('shop/images/pic/sliders/01.jpg') }});">
 			<div class="container-fluid">
 				<div class="caption bg-color vertical-center text-left">
 					<div class="big-text fadeInDown-1">

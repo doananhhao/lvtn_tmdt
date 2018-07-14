@@ -8,8 +8,8 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="#">Home</a></li>
-				<li class='active'>Smart Phone</li>
+				<li style="width: 20%"><a href="{{ route('home') }}">Trang chủ</a></li>
+				<li class='active'>{{$tenlsp->tenloai}}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -24,54 +24,10 @@
 	            	
 	            	<div class="sidebar-filter">
 		            	<!-- ============================================== COMPARE============================================== -->
-<div class="sidebar-widget wow fadeInUp">
-    <h3 class="section-title">Compare products</h3>
-	<div class="sidebar-widget-body">
-		<div class="compare-report">
-			<p>You have no <span>item(s)</span> to compare</p>
-		</div><!-- /.compare-report -->
-	</div><!-- /.sidebar-widget-body -->
-</div><!-- /.sidebar-widget -->
+
 <!-- ============================================== COMPARE: END ============================================== -->
 		            			            	<!-- ============================================== COLOR============================================== -->
-<div class="sidebar-widget  wow fadeInUp outer-top-vs ">
-	<div id="advertisement" class="advertisement">
-        <div class="item bg-color">
-            <div class="container-fluid">
-                <div class="caption vertical-top text-left">
-                    <div class="big-text">
-                        Save<span class="big">50%</span>
-                    </div>
-                        
-
-                    <div class="excerpt">
-                        on selected items
-                    </div>
-                </div><!-- /.caption -->
-            </div><!-- /.container-fluid -->
-        </div><!-- /.item -->
-
-        <div class="item" style="background-image: url('assets/images/advertisement/1.jpg');">
-            
-        </div><!-- /.item -->
-
-        <div class="item bg-color">
-            <div class="container-fluid">
-                <div class="caption vertical-top text-left">
-                    <div class="big-text">
-                        Save<span class="big">50%</span>
-                    </div>
-                        
-
-                    <div class="excerpt fadeInDown-2">
-                        on selected items
-                    </div>
-                </div><!-- /.caption -->
-            </div><!-- /.container-fluid -->
-        </div><!-- /.item -->
-
-    </div><!-- /.owl-carousel -->
-</div>
+	@include('shop.layouts.widgets.sidebar.sidebar-advertisement')
     
 <!-- ============================================== COLOR: END ============================================== -->
 
@@ -147,7 +103,7 @@
 	<div class="product">		
 		<div class="product-image">
 			<div class="image">
-				<a href="{{route('chitietsanpham',$sp->id)}}"><img  src="../shop/images/pic/{{$sp->hinhanh}}"  alt=""></a>
+				<a href="{{route('chitietsanpham',$sp->id)}}"><img  src="{{asset('shop/images/pic/'.$sp->hinhanh)}}"  alt=""></a>
 			</div><!-- /.image -->			
 
 			<div class="tag new"><span>new</span></div>                        		   
@@ -205,7 +161,7 @@
 		<div class="col col-sm-4 col-lg-4">
 			<div class="product-image">
 				<div class="image">
-					<img data-echo="../shop/images/products/c1.jpg" src="../shop/images/blank.gif" alt="">
+					<img  src="{{asset('shop/images/pic/'.$sp->hinhanh)}}" alt="">
 				</div>
 			</div><!-- /.product-image -->
 		</div><!-- /.col -->
@@ -231,17 +187,7 @@
 														
 							</li>
 		                   
-			                <li class="lnk wishlist">
-								<a class="add-to-cart" href="{{route('chitietsanpham',$list->id)}}" title="Wishlist">
-									 <i class="icon fa fa-heart"></i>
-								</a>
-							</li>
-
-							<li class="lnk">
-								<a class="add-to-cart" href="{{route('chitietsanpham',$list->id)}}" title="Compare">
-								    <i class="fa fa-retweet"></i>
-								</a>
-							</li>
+			                
 						</ul>
 					</div><!-- /.action -->
 				</div><!-- /.cart -->
@@ -275,7 +221,7 @@
 				</div><!-- /.search-result-container -->
 
 			</div><!-- /.col -->
-			@include('shop.layouts.brands-carousel')
+			
 		</div><!-- /.row -->
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
 		

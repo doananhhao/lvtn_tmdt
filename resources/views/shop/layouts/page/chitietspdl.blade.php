@@ -163,17 +163,17 @@
 							<h1 class="name">{{$sanpham->tensanpham}}</h1>
 							
 							<div class="rating-reviews m-t-20">
-								<div class="row">
-									<div class="col-sm-3">
-										<div class="rating rateit-small"></div>
-									</div>
-									<div class="col-sm-8">
-										<div class="reviews">
-											<a href="#" class="lnk">({{$sodanhgia}} Đánh giá)</a>
-										</div>
-									</div>
-								</div><!-- /.row -->		
-							</div><!-- /.rating-reviews -->
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                           
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="reviews">
+                                               
+                                            </div>
+                                        </div>
+                                    </div><!-- /.row -->		
+                                </div><!-- /.rating-reviews -->
 
 							<div class="stock-container info-container m-t-10">
 								<div class="row">
@@ -214,24 +214,14 @@
 								<div class="row">
 									
 									<div class="col-sm-2">
-										<span class="label">Số lượng :</span>
+										<span class="label">Liên hệ :</span>
 									</div>
 									
-									<div class="col-sm-2">
-										<div class="cart-quantity">
-											<div class="quant-input">
-								                <div class="arrows">
-								                  <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-								                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
-								                </div>
-								                <input type="text" value="1">
-							              </div>
-							            </div>
-									</div>
+									
 
 									<div class="col-sm-7">
 										
-										<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $sanpham->id }})">Add to cart</button>
+										<button class="btn btn-primary" type="button" onclick="">{{$sdttv->sdt}}</button>
 									</div>
 
 									
@@ -255,7 +245,7 @@
 						<div class="col-sm-3">
 							<ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
 								<li class="active"><a data-toggle="tab" href="#description">Thông tin</a></li>
-								<li><a data-toggle="tab" href="#review">Đánh Giá</a></li>
+								
 								<li><a data-toggle="tab" href="#tags">Bình luận</a></li>
 							</ul><!-- /.nav-tabs #product-tabs -->
 						</div>
@@ -269,191 +259,7 @@
 									</div>	
 								</div><!-- /.tab-pane -->
 
-								<div id="review" class="tab-pane">
-									<div class="product-tab">
-																				
-										<div class="product-reviews">
-											<h4 class="title">Đánh giá sản phẩm</h4>
-
-											<div class="container">
-												<div class="review-form">
-												<div class="form-container">
-													<?php
-													if (Auth::check()){ // có đăng nhập
-														?>
-													<form role="form" class="cnt-form">
-  <div class="row">
-
-    <div class="col-lg-3" >
-    	<br>
-
-      <div class="star-rating">
-        <span class="fa fa-star-o" data-rating="1"></span>
-        <span class="fa fa-star-o" data-rating="2"></span>
-        <span class="fa fa-star-o" data-rating="3"></span>
-        <span class="fa fa-star-o" data-rating="4"></span>
-        <span class="fa fa-star-o" data-rating="5"></span>
-        <input type="hidden" name="whatever1" class="rating-value" value="2.56">
-        <div style="font-size: 14px">Chất lượng sản phẩm</div>
-
-
-      </div>
-     
-    </div>
-    <div class="col-lg-3">
-    	<div class="form-group">
-																	
-			<textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
-		</div><!-- /.form-group -->
-    </div>
-  </div> 
-  <div style="width: 48.5%;text-align: right;">
-		<button class="btn btn-primary btn-upper">Đánh giá</button>
-</div><!-- /.action -->
-  </form><!-- /.cnt-form -->
-												
-												<?php
-									        }else{              // không đăng nhập
-									        	?>
-									        	<form role="form" class="cnt-form">
-												  <div class="row">
-												  	<br>
-												    <div><a href="{{ route('login') }}">Đăng nhập</a>  để đánh giá sản phẩm này.</div>
-												    <br>
-												    <br>
-												  </div> 
-												  
-												  </form><!-- /.cnt-form -->
-									        	<?php
-				            
-										        } 
-										        ?>
-											</div><!-- /.form-container -->
-											</div><!-- /.review-form -->
-
-										</div><!-- /.product-reviews -->
-  
-</div>
-
-
-
-											
-										
-
-										
-										<div class="product-add-review">
-											<h4 class="title">Nhận xét về sản phẩm</h4>
-											<div class="product-reviews">
-										
-
-										<div class="reviews">
-											 <div class="container">
-
-
-    			
-		<div class="row">
-			<div class="col-sm-3">
-				<div class="rating-block">
-					<h4>30 Đánh giá</h4>
-					<h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
-					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-				</div>
-			</div>
-			<div class="col-sm-3">
-				<h4>Xếp hạng đánh giá</h4>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">1</div>
-				</div>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">4 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">1</div>
-				</div>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">3 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">0</div>
-				</div>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">2 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">0</div>
-				</div>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">1 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">0</div>
-				</div>
-			</div>			
-		</div>			
-		
-		
-		
-    </div> <!-- /container -->
-
-											</div><!-- /.reviews -->
-										</div><!-- /.product-reviews -->
-
-										</div><!-- /.product-add-review -->										
-										
-							        </div><!-- /.product-tab -->
-								</div><!-- /.tab-pane -->
+								
 
 								<div id="tags" class="tab-pane">
 									<div class="product-tag">

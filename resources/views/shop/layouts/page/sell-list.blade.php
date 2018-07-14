@@ -67,8 +67,10 @@
                                                 @if($db['id'] == $sttdb['dangban_id'])
                                                     @if($sttdb['status']==1)
                                                         <div class="label label-table label-success">Đã đăng bán</div>
+                                                        @break
                                                     @else
-                                                        <div class="label label-table label-info">Đang chờ duyệt</div>
+                                                        <div class="label label-table label-warning">Cập nhật lại</div>
+                                                        @break
                                                     @endif
                                                 
                                                 @endif

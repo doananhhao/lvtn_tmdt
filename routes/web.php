@@ -55,6 +55,7 @@ Route::group(['prefix'=>'/home'], function () {
     Route::get('loai-san-pham/{type}',['as'=>'loaisanpham','uses'=>'PageController@getLoaiSp']);
     Route::get('chi-tiet-san-pham/{tensp}',['as'=>'chitietsanpham','uses'=>'PageController@getChitiet']);
     Route::get('san-pham-dai-ly',['as'=>'sanphamdaily','uses'=>'PageController@getSpDaiLy']);
+    Route::get('chi-tiet-san-pham-daily/{tenspdl}',['as'=>'chitietsanphamdaily','uses'=>'PageController@getChitietSPDL']);
     Route::post('/comment/{id}', 'PageController@comment')->name('comment'); 
 	
 });

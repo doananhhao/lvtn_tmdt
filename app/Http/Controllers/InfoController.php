@@ -107,7 +107,7 @@ class InfoController extends Controller
         $thanhvien = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->where('user_id',Auth::user()->id)->get();
         $capdo = CapDo::all();
         $daily = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->join('DaiLy','ThanhVien.user_id','DaiLy.thanhvien_id')->where('user_id',Auth::user()->id)->first();
-        //dd($thanhvien);
+        //dd(Hash::make($str));
         $diemhientai=null;
 
         $this->data['daily'] = $daily; 
@@ -120,10 +120,10 @@ class InfoController extends Controller
 
     public function create_daily($id){
 
-		
+		$str = Auth::user()->id.Auth::user()->name;
         DaiLy::create([
             'thanhvien_id' => $id,
-            'hash' => 0
+            'hash' => Hash::make($str)
         ]);
         
         return back()->with('success', 'Bạn đã trở thành Đại lý bán hàng, bạn có thể đăng bán sản phẩm của mình.')->withInput();
@@ -288,23 +288,45 @@ class InfoController extends Controller
             'loaisp' => 'required|exists:loaisp,id',
             'ncc' => 'required|exists:nhacungcap,id',
             'mota' => 'max:10000',
+            'thoigian' => 'required',
+            'img1' => 'required|image|dimensions:min_width=195,min_height=243',
         ]);
 
-        $spdb=SanPham::create([
+        //Kiểm tra ngày bd và kết thúc
+        $thoigian = $request->thoigian;
+        if (strpos($thoigian, ' - ') !== false)
+            $arr = explode(' - ', $thoigian);
+        else{
+            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
+        }
+        try{
+            $ngaybd = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $arr[0])));
+            $ngayketthuc = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $arr[1])));
+        }catch(Exception $e){
+            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
+        }
+        if ($ngaybd >= $ngayketthuc)
+            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
+        //Kiểm tra ngày bd và kết thúc
+
+        $spdb= SanPham::create([
             'tensanpham' => $request->tensanpham,
             'gia' => $request->gia,
             'soluong' => $request->soluong,
             'loaisp_id' => $request->loaisp,
             'nhacungcap_id' => $request->ncc,
             'mota' => $request->mota,
-            'hinhanh' => 'abc.jpg'
+            'hinhanh' => 'abc.png'
         ]);
+        $spdb->hinhanh = changeTitle($spdb->tensanpham)."_".$spdb->id.".png";
+        $request->file('img1')->move('public/shop/images/pic/dangban', $spdb->hinhanh);
         $spdb->save();
         $tvdb = ThanhVien::where('user_id',Auth::user()->id)->first();
         $iddangban=DangBan::create([
             'thanhvien_id' => $tvdb->user_id,
             'sanpham_id' => $spdb->id,
-            'ngayhethan' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s').'+ 30 days')),
+            'ngayhethan' => $ngayketthuc,
+            //'ngayhethan' => date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s').'+ 30 days')),
             'canduyet' => 1,
             'ngungban' => 0
         ]);
@@ -332,7 +354,25 @@ class InfoController extends Controller
             'loaisp' => 'required|exists:loaisp,id',
             'ncc' => 'required|exists:nhacungcap,id',
             'mota' => 'max:10000',
+            'thoigian' => 'required'
         ]);
+
+        //Kiểm tra ngày bd và kết thúc
+        $thoigian = $request->thoigian;
+        if (strpos($thoigian, ' - ') !== false)
+            $arr = explode(' - ', $thoigian);
+        else{
+            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
+        }
+        try{
+            $ngaybd = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $arr[0])));
+            $ngayketthuc = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $arr[1])));
+        }catch(Exception $e){
+            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
+        }
+        if ($ngaybd >= $ngayketthuc)
+            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
+        //Kiểm tra ngày bd và kết thúc
 
         $sanpham = SanPham::find($id);
         
@@ -348,6 +388,7 @@ class InfoController extends Controller
         
         $dangban = DangBan::where('sanpham_id',$id)->first();
         $dangban->canduyet = 1;
+        $dangban->ngayhethan = $ngayketthuc;
         $dangban->save();
         
         

@@ -15,6 +15,12 @@
                 <div class="progress">
                 
                 @foreach($capdo as $lv) 
+                @if ($value['diemtichluy'] == 0)
+                  <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    <span id="current-progress"></span>
+                  </div>
+                  @break
+                @endif
                 @if ($value['diemtichluy'] <= $lv['diem'])
                   <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo floor(($value['diemtichluy']-$diemhientai)/($lv['diem']-$diemhientai)*100);?>%">
                     <span id="current-progress"></span>
@@ -66,7 +72,7 @@
                                                 @endforeach   
                                             </td>
                                         </tr>
-                                        @if ($value['capdo'] < 4)
+                                        @if ($value['id'] < 3)
                                         <tr style="text-align: center">
                                             <td colspan="3">Đạt cấp 4 để trở thành đại lý bán hàng</td>
                                         </tr>
@@ -77,7 +83,7 @@
                         </div>
                     </div>
                     
-                        @if ($value['capdo'] >= 4)
+                        @if ($value['id'] >= 3)
                             @if($daily==null)
                         <form action="{{ route('create-daily', ['id' => $value['user_id']]) }}" method="POST" class="form-horizontal">
                                 @csrf

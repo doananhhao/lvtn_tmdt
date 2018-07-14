@@ -65,6 +65,18 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('thoigian') || session('date_error') ? ' has-danger' : '' }}">
+                            <label for="thoigian" class="col-md-12 text-muted">Chọn thời gian hiệu lực</label>
+                            <div class="col-md-12">   
+                                <input type="text" class="form-control{{ $errors->has('thoigian') ? ' form-control-danger' : '' }} input-daterange-timepicker" name="thoigian" value="{{ old('thoigian') ? old('thoigian') : date('d/m/Y g:i A').' - '.date('d/m/Y g:i A', strtotime($sanphamdangban->ngayketthuc))}}" />
+                                @if ($errors->has('thoigian'))
+                                <div class="form-control-feedback">{{ $errors->first('thoigian') }}</div>
+                                @endif
+                                @if (session('date_error'))
+                                <div class="form-control-feedback">{{ session('date_error') }}</div>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('mota') ? ' has-danger' : '' }}">
                             <label for="mota" class="col-md-12 text-muted">Mô tả chi tiết</label>
                             <div class="col-md-12">
@@ -94,6 +106,34 @@
     <script src="{{ asset('plugins/bower_components/summernote-master/dist/summernote-bs4.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/summernote-master/lang/summernote-vi-VN.js') }}"></script>
 
+    <!-- Plugin JavaScript -->
+    <script src="{{ asset('plugins/bower_components/moment/moment.js') }}"></script>
+
+    <!-- Date picker plugins css -->
+    <link href="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <!-- Daterange picker plugins css -->
+    <link href="{{ asset('plugins/bower_components/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/bower_components/timepicker/bootstrap-timepicker.min.js') }}"></script>
+    <link href="{{ asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+    <script src="{{ asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+    <script>
+    $('.input-daterange-timepicker').daterangepicker({
+        timePicker: true,
+        locale: {
+            format: 'DD/MM/YYYY h:mm A'
+        },
+        timePickerIncrement: 15,
+        timePicker12Hour: true,
+        timePickerSeconds: false,
+        drops: 'up',
+        buttonClasses: ['btn', 'btn-sm'],
+        applyClass: 'btn-danger',
+        cancelClass: 'btn-inverse'
+    });
+</script>
+
     <script>
         $('.summernote').summernote({
             tabsize: 2,
@@ -105,24 +145,5 @@
     @endif
     </script>
 
-    {{--  <script>
-            $('btn btn-success').click(function() {
-                
-                updateSP();
-              });
-            
-              function updateSP() {
-                swal({
-                    title: "Bạn đã chắc chắn chưa?",
-                    text: "Bạn sẽ không thay đổi được nữa sau khi nhấn xác nhận!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Xác nhận!",
-                    closeOnConfirm: false
-                  },
-                  );
-              }
-    </script>  --}}
-
+   
 @endsection
