@@ -9,7 +9,7 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li style="width: 20%"><a href="{{ route('home') }}">Trang chủ</a></li>
-				<li class='active'>{{$tenlsp->tenloai}}</li>
+				<li class='active'>{{ $tenlsp != null ? $tenlsp->tenloai : "Tất cả"}}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -40,7 +40,7 @@
 	<div id="category" class="category-carousel hidden-xs">
 		<div class="item">	
 			<div class="image">
-				<img src="assets/images/banners/cat-banner-1.jpg" alt="" class="img-responsive">
+				<img src="{{ asset('shop/images/banners/cat-banner-1.jpg') }}" alt="" class="img-responsive">
 			</div>
 			<div class="container-fluid">
 				<div class="caption vertical-top text-left">
@@ -106,7 +106,7 @@
 				<a href="{{route('chitietsanpham',$sp->id)}}"><img src="{{asset('shop/images/pic/'.$sp->hinhanh)}}"  alt=""></a>
 			</div><!-- /.image -->			
 
-			<div class="tag new"><span>new</span></div>                        		   
+			{{-- <div class="tag new"><span>new</span></div> --}}
 		</div><!-- /.product-image -->
 			
 		

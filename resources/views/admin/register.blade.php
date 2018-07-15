@@ -24,13 +24,13 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  // })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-19175540-9', 'auto');
-  ga('send', 'pageview');
+  // ga('create', 'UA-19175540-9', 'auto');
+  // ga('send', 'pageview');
 
 </script>
 </head>
@@ -98,6 +98,11 @@
         <div class="form-group m-b-0">
           <div class="col-sm-12 text-center">
             <p>Bạn đã có tài khoản? <a href="{{ route('login') }}" class="text-primary m-l-5"><b>Đăng Nhập</b></a></p>
+          </div>
+        </div>
+        <div class="form-group m-b-0">
+          <div class="col-sm-12 text-center">
+            <p>Quay về<a href="{{ route('home') }}" class="text-info m-l-5"><b>Trang chủ</b></a></p>
           </div>
         </div>
       </form>

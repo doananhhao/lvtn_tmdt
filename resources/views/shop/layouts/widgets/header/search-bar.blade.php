@@ -3,32 +3,33 @@
             <i class="icon fa fa-phone"></i> (400) 888 888 868
         </div>
         <div class="contact inline">
-            <i class="icon fa fa-envelope"></i> saler@unicase.com
+            <i class="icon fa fa-envelope"></i> admin@gmail.com
         </div>
     </div><!-- /.contact-row -->
     <!-- ============================================================= SEARCH AREA ============================================================= -->
     <div class="search-area">
-        <form method="get">
+        <form method="GET" action="{{ route('tim-kiem') }}" id="search-form">
             <div class="control-group">
     
                 <ul class="categories-filter animate-dropdown">
                     <li class="dropdown">
     
-                        <a class="dropdown-toggle"  data-toggle="dropdown" href="#">Categories <b class="caret"></b></a>
+                        <a class="dropdown-toggle"  data-toggle="dropdown" href="#">Danh mục <b class="caret"></b></a>
     
                         <ul class="dropdown-menu" role="menu" >
-                        <li class="menu-header">Computer</li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category">- Laptops</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category">- Tv & audio</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category">- Gadgets</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category">- Cameras</a></li>
-
+                        {{-- <li class="menu-header">Tất cả</li> --}}
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ route('home') }}">- Tất cả</a></li>
+                        @foreach ($sidemenu as $v)
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ route('loaisanpham', ['type' => $v->id]) }}">- {{ $v->tenloai }}</a></li>
+                        @endforeach
                     </ul>
                     </li>
                 </ul>
     
-                <input class="search-field" type="text" placeholder="Tìm kiếm..." />
-    
+                <input class="search-field" name="search_input" type="text" value="{{ request()->has('search_input') ? request()->get('search_input') : ''}}" placeholder="Tìm kiếm..." />
+                @if (isset($is_type))
+                <input type="hidden" name="loaisp" value="{{ $is_type }}">
+                @endif
                 <a class="search-button" href="#" ></a>    
     
             </div>

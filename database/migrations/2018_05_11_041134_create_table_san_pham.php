@@ -19,7 +19,7 @@ class CreateTableSanPham extends Migration
             $table->string('tensanpham');
             $table->unsignedInteger('gia');
             $table->integer('soluong');
-            $table->string('mota', 10000);
+            $table->string('mota', 15000);
             $table->string('hinhanh'); //tên hình đại điện của sản phẩm .*
             $table->unsignedInteger('loaisp_id');
             $table->unsignedInteger('nhacungcap_id');
