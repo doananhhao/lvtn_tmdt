@@ -179,8 +179,8 @@ class PageController extends Controller
             $loaisp = $request->get('loaisp');
         if (!$request->has('search_input'))
             return back();
-
         $search = $request->search_input;
+        $title = "Tìm kiếm - ".$search;
         if (LoaiSP::find($loaisp) != null){
             $dssp = SanPham::where([
                 ['tensanpham', 'LIKE', '%'.$search.'%'],
@@ -195,7 +195,8 @@ class PageController extends Controller
         return view('shop.layouts.page.loaisanpham', [
             'loaisp' => $dssp, 
             'tenlsp' => $tenlsp,
-            'sidemenu' => $sidemenu
+            'sidemenu' => $sidemenu,
+            'title' => $title
         ]);
     }
      

@@ -58,7 +58,7 @@ class HomeController extends Controller
         $this->data['giamgia'] = $this->getAllSaleProduct();
         $this->data['giamgiadb'] = $this->getSPKMdacbiet();
 
-        
+        $this->data['title'] = "Unicase - Mua hàng trực tiếp Uy tín và Chất lượng";
         
     }
 
