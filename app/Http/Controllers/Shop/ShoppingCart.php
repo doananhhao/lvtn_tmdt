@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shop;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\LoaiSP;
 use App\Models\SanPham;
 use App\Models\HoaDon;
 use App\Models\CongDoan;
@@ -175,6 +176,7 @@ class ShoppingCart extends Controller
     }
 
     function index(){
+        $this->data['sidemenu'] = LoaiSP::orderBy('id', 'desc')->get();
         return view('shop.shopping-cart', $this->data);
     }
 }

@@ -6,7 +6,7 @@ function displayProductMicro($productName,$is_new,$is_sale,$is_hot,$productMicro
 		<div class="col col-xs-5">
 			<div class="product-image">
 				<div class="image">
-					<a href="<?php echo $productMicroImage;?>" data-lightbox="image-1" data-title="Nunc ullamcors">
+					<a href="<?php echo $productMicroImage;?>" data-lightbox="image-1" data-title="<?php echo $productName; ?>">
                         <img data-echo="<?php echo $productMicroImage;?>" src="{{ asset('shop/images/blank.gif') }}" alt="">
 						<div class="zoom-overlay"></div>
 					</a>					
@@ -32,7 +32,7 @@ function displayProductMicro($productName,$is_new,$is_sale,$is_hot,$productMicro
 		</div><!-- /.col -->
 		<div class="col col-xs-7">
 			<div class="product-info">
-				<h3 class="name"><a href="{{ route('chitietsanpham', ['tensp'=>$id]) }}"><?php echo $productName; ?></a></h3>
+				<h3 class="name"><a href="{{ route('chitietsanpham', ['tensp'=>$id]) }}" title="<?php echo $productName; ?>"><?php echo $productName; ?></a></h3>
 				<div class="rateit" data-rateit-value="{{ $score }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 				<div class="product-price">	
 					<span class="price">
@@ -40,7 +40,7 @@ function displayProductMicro($productName,$is_new,$is_sale,$is_hot,$productMicro
 					</span>
 					
 				</div><!-- /.product-price -->
-				<div class="action"><a href="#" class="lnk btn btn-primary" onclick="add_to_cart(this, {{ $id }})">Add To Cart</a></div>
+				<div class="action"><a href="#" class="lnk btn btn-primary" onclick="add_to_cart(this, {{ $id }})">Thêm vào giỏ</a></div>
 			</div>
 		</div><!-- /.col -->
 	</div><!-- /.product-micro-row -->

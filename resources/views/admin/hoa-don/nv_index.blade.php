@@ -19,7 +19,7 @@
                 <table class="table color-table success-table">
                     <thead>
                         <tr>
-                            <th>Mã hóa đơn</th>
+                            <th>#</th>
                             <th>Ghi chú (Khách)</th>
                             @if (Auth::User()->NhanVien->PhongBan->ten == "Phòng vận chuyển")
                             <th>Địa chỉ</th>
@@ -41,7 +41,8 @@
                             @endif
                             <td>
                                 @foreach ($pc->HoaDon->ChiTietHoaDon as $cthd)
-                                {{ $cthd->SanPham->tensanpham}}<small class="p-l-10 text-primary"> x {{$cthd->soluong }}</small>
+                                <a href="{{ route('chitietsanpham', ['tensp' => $cthd->sanpham_id]) }}" class="text-muted">{{ $cthd->SanPham->tensanpham}}</a>
+                                <small class="p-l-10 text-primary"> x {{$cthd->soluong }}</small>
                                 <br>
                                 @endforeach
                             </td>

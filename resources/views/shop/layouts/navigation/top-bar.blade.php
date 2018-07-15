@@ -16,6 +16,7 @@
 					<li><a href="{{ route('cart') }}"><i class="icon fa fa-shopping-cart"></i>Giỏ hàng</a></li>
 					@if (!Auth::check())
 					<li><a href="{{ route('login') }}"><i class="icon fa fa-sign-in"></i>Đăng nhập</a></li>
+					<li><a href="{{ route('register') }}"><i class="icon fa fa-circle-o-notch"></i>Đăng ký</a></li>
 					@else
 					<li><a href="{{ route('logout') }}" onclick="event.preventDefault();
 						document.getElementById('logout-form').submit();"><i class="icon fa fa-sign-out"></i>Đăng xuất</a></li>

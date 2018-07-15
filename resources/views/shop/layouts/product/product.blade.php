@@ -15,8 +15,8 @@ function displayProduct($productName,$is_new,$is_sale,$is_hot,$productImageURL,$
 		</div><!-- /.product-image -->
 			
 		
-		<div class="product-info text-left">
-			<h3 class="name"><a href="{{ route('chitietsanpham', ['tensp'=>$id]) }}"><?php echo $productName;?></a></h3>
+		<div class="product-info text-left marginright">
+			<h3 class="name"><a href="{{ route('chitietsanpham', ['tensp'=>$id]) }}" title="<?php echo $productName; ?>"><?php echo $productName;?></a></h3>
 			{{-- <div class="rating rateit-small"></div> --}}
 			<div class="rateit" data-rateit-value="{{ $score }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 			{{-- <div class="description"></div> --}}
@@ -62,8 +62,8 @@ function displayProduct($productName,$is_new,$is_sale,$is_hot,$productImageURL,$
 			<div class="cart clearfix animate-effect">
 				<div class="action">
 								
-					<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $id }})">Add to cart</button>
-					<button class="left btn btn-primary" type="button"><i class="icon fa fa-heart"></i></button>
+					<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $id }})">Thêm vào giỏ hàng</button>
+					{{-- <button class="left btn btn-primary" type="button"><i class="icon fa fa-heart"></i></button> --}}
 					{{-- <button class="left btn btn-primary" type="button"><i class="fa fa-retweet"></i></button>						 --}}
 
 		                

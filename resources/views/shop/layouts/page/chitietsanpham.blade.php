@@ -10,8 +10,8 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li style="width: 20%"><a href="{{ route('home') }}">Trang chủ</a></li>
-				<li style="width: 12%"><a href="{{route('loaisanpham',$tenlsp->id)}}">{{$tenlsp->tenloai}}</a></li>
+				<li style="white-space: nowrap;"><a href="{{ route('home') }}">Trang chủ</a></li>
+				<li style="white-space: nowrap;"><a href="{{route('loaisanpham',$tenlsp->id)}}">{{$tenlsp->tenloai}}</a></li>
 				<li class='active'>{{$sanpham->tensanpham}}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -40,7 +40,7 @@
         <div id="owl-single-product">
             <div class="single-product-gallery-item" id="slide1">
                 <a data-lightbox="image-1" data-title="Gallery" href="{{ asset('shop/images/pic/'.$sanpham->hinhanh) }}">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="{{ asset('shop/images/pic/'.$sanpham->hinhanh) }}" />
+                    <img class="img-responsive" alt="" src="{{ asset('shop/images/blank.gif') }}" data-echo="{{ asset('shop/images/pic/'.$sanpham->hinhanh) }}" />
                 </a>
             </div><!-- /.single-product-gallery-item -->
 
@@ -166,7 +166,8 @@
 							<div class="rating-reviews m-t-20">
 								<div class="row">
 									<div class="col-sm-3">
-										<div class="rating rateit-small"></div>
+										{{-- <div class="rating rateit-small"></div> --}}
+										<div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 									</div>
 									<div class="col-sm-8">
 										<div class="reviews">
@@ -199,10 +200,14 @@
 								<div class="row">
 									
 
-									<div class="col-sm-6">
+									<div class="col-sm-12">
 										<div class="price-box">
+											@if ($giamgia != null)
+											<span class="price">{{number_format($sanpham->gia*(1-$giamgia->giamgia), 0, ',', '.')}} VNĐ</span>
+											<span class="price-strike">{{number_format($sanpham->gia, 0, ',', '.')}} VNĐ</span>
+											@else
 											<span class="price">{{number_format($sanpham->gia, 0, ',', '.')}} VNĐ</span>
-											<span class="price-strike">$900.00</span>
+											@endif
 										</div>
 									</div>
 
@@ -214,7 +219,8 @@
 							<div class="quantity-container info-container">
 								<div class="row">
 									
-									<div class="col-sm-2">
+									{{-- THÊM CHỨC NĂNG SL VÀO --}}
+									{{-- <div class="col-sm-2">
 										<span class="label">Số lượng :</span>
 									</div>
 									
@@ -228,11 +234,11 @@
 								                <input type="text" value="1">
 							              </div>
 							            </div>
-									</div>
+									</div> --}}
 
 									<div class="col-sm-7">
 										
-										<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $sanpham->id }})">Add to cart</button>
+										<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $sanpham->id }})">Thêm vào giỏ hàng</button>
 									</div>
 
 									
@@ -590,7 +596,7 @@
 	<div class="product">		
 		<div class="product-image">
 			<div class="image">
-				<a href="{{route('chitietsanpham',$spcl->id)}}"><img  src="assets/images/blank.gif" data-echo="{{ asset('shop/images/pic/'.$spcl->hinhanh) }}" alt=""></a>
+				<a href="{{route('chitietsanpham',$spcl->id)}}"><img  src="{{ asset('shop/images/blank.gif') }}" data-echo="{{ asset('shop/images/pic/'.$spcl->hinhanh) }}" alt=""></a>
 			</div><!-- /.image -->			
 
 			            <div class="tag sale"><span>sale</span></div>            		   

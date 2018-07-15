@@ -81,13 +81,18 @@ class DSHoaDonController extends Controller
     private function getDS_lastid_CDHD(){
         //chỉ lấy CD đã hoàn thành
         $dscdhd = CongDoanHoaDon::select(DB::raw('hoadon_id, MAX(id) as id'))
-                                ->where([['status', 1], ['congdoan_id', $this->pb->CongDoan()->first()->id]])
+                                ->where('congdoan_id', $this->pb->CongDoan()->first()->id)
                                 ->groupBy('hoadon_id')->get();
         $ds_id_cdhd = [];
         foreach($dscdhd as $cdhd)
             if (HoaDon::find($cdhd->hoadon_id)->dahuy == 0)
                 $ds_id_cdhd[] = $cdhd->id;
-        return $ds_id_cdhd;
+        $dscdhd_last_xong = CongDoanHoaDon::whereIn('id', $ds_id_cdhd)->where('status', 1)->get();
+        $ds_id_cdhd2 = [];
+        foreach($dscdhd_last_xong as $cdhd)
+            if (HoaDon::find($cdhd->hoadon_id)->dahuy == 0)
+                $ds_id_cdhd2[] = $cdhd->id;
+        return $ds_id_cdhd2;
     }
 
     private function getInfo(){
