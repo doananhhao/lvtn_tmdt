@@ -39,7 +39,7 @@
                                     <th>Địa chỉ</th>
                                     <th>Sđt</th>
                                     <th>Mô tả</th>
-                                    <th>Tổng tiền</th>
+                                    {{--  <th>Tổng tiền</th>  --}}
                                     
                                     <th>Tình trạng</th>
                             </tr>
@@ -54,7 +54,7 @@
                                 <td>{{ $order['sdt'] }}</td>
                                 <td>{{ $order['mota'] }}</td>
                                 
-                                <td>$45.00</td>
+                                {{--  <td>$45.00</td>  --}}
                                 <td>
                                        
                                         @if ($order['congdoan_id'] == 3 && $order['status'] == 1)

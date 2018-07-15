@@ -72,6 +72,11 @@
                                                 @endforeach   
                                             </td>
                                         </tr>
+                                        @if ($value['id'] < 2)
+                                        <tr style="text-align: center">
+                                            <td colspan="3">Đạt cấp 2 có thể bán hàng</td>
+                                        </tr>
+                                        @endif
                                         @if ($value['id'] < 3)
                                         <tr style="text-align: center">
                                             <td colspan="3">Đạt cấp 4 để trở thành đại lý bán hàng</td>

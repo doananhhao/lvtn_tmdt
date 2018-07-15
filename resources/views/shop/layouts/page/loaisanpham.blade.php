@@ -1,4 +1,5 @@
 @extends('shop.layouts.index')
+{{--  <head><title>{{$tenlsp->tenloai}}</title></head>  --}}
 @section('main_content')
 
 

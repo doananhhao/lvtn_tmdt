@@ -10,7 +10,7 @@
 	    <meta name="keywords" content="Bán hàng trực tuyến">
 		<meta name="robots" content="all">
 		<meta name="csrf-token" content="{{ csrf_token() }}">
-	    <title>Unicase</title>
+	    <title>{{$title}}</title>
 
         <link rel="stylesheet" href="{{ asset('') }}shop/css/font_settings.css">
 

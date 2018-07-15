@@ -26,6 +26,7 @@ class InfoController extends Controller
 
     function __construct(){
         $this->middleware('auth');
+        
     }
 
     public function index()
@@ -78,8 +79,9 @@ class InfoController extends Controller
    
     //Thông tin tài khoản
    public function getInfo(){
-       
-        return view('shop.layouts.page.acc-info');
+    $this->data['title'] = "Thông tin tài khoản";
+    $this->data['title2'] = 'Thông tin tài khoản';
+        return view('shop.layouts.page.acc-info',$this->data);
     }
     
     //Edit thông tin tài khoản
@@ -104,6 +106,7 @@ class InfoController extends Controller
     }
 
     public function getLevel(){
+        $this->data['title'] = "Thông tin thành viên";
         $thanhvien = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->where('user_id',Auth::user()->id)->get();
         $capdo = CapDo::all();
         $daily = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->join('DaiLy','ThanhVien.user_id','DaiLy.thanhvien_id')->where('user_id',Auth::user()->id)->first();
@@ -130,6 +133,7 @@ class InfoController extends Controller
     }
 
     public function list_order_cancel(){
+        $this->data['title'] = "Danh sách đơn hàng hủy";
         $order_list = HoaDon::where('user_id',Auth::user()->id)->get()->toArray();
         $this->data['orders'] = $order_list; 
         
@@ -137,7 +141,7 @@ class InfoController extends Controller
     }
 
     public function order_detail_cancel($id){
-        
+        $this->data['title'] = "Chi tiết đơn hàng hủy";
 
         
         $orders_detail = SanPham::join('ChiTietHoaDon','SanPham.id','sanpham_id')->where('hoadon_id', $id)->get()->toArray();;
@@ -150,6 +154,7 @@ class InfoController extends Controller
     }
 
     public function list_order(){
+        $this->data['title'] = "Danh sách đơn hàng";
         // $total_price=0;
         // $orders_totalprice = SanPham::join('ChiTietHoaDon','SanPham.id','sanpham_id')->join('HoaDon','HoaDon.id','hoadon_id')->where('HoaDon.user_id', Auth::user()->id)->get()->toArray();;
         // foreach ($orders_totalprice as $key=>$value){
@@ -165,6 +170,7 @@ class InfoController extends Controller
     }
 
     public function order_detail($id){
+        $this->data['title'] = "Chi tiết hóa đơn";
         $order = CongDoanHoaDon::where('hoadon_id',$id)->orderBy('id','desc')->first();
         $this->data['orders'] = $order; 
         
@@ -186,20 +192,25 @@ class InfoController extends Controller
         $this->data['status'] = $status;
         
 
-        if ($status == 'all')
+        if ($status == 'all'){
+            $this->data['title'] = "Danh sách đơn hàng";
             $order_list = HoaDon::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get()->toArray();
-        else if ($status == 'complete')
-            $order_list = HoaDon::where('user_id',Auth::user()->id)->where('isship', 1)->orderBy('id', 'desc')->get()->toArray();
-        else
-            $order_list = HoaDon::where('user_id',Auth::user()->id)->where('isship', 0)->orderBy('id', 'desc')->get()->toArray();
-            
+        }
+            else if ($status == 'complete'){
+                $this->data['title'] = "Danh sách đơn hàng";
+            $order_list = HoaDon::join('CongDoanHoaDon','HoaDon.id','CongDoanHoaDon.hoadon_id')->where('congdoan_id',3)->where('user_id',Auth::user()->id)->where('status', 1)->orderBy('HoaDon.id', 'desc')->get()->toArray();
+            }
+            else{
+                $this->data['title'] = "Danh sách đơn hàng";
+            $order_list = HoaDon::join('CongDoanHoaDon','HoaDon.id','CongDoanHoaDon.hoadon_id')->where('user_id',Auth::user()->id)->where('dahuy', 0)->orderBy('HoaDon.id', 'desc')->get()->toArray();
+            }
         $this->data['orders'] = $order_list; 
         
         return view('shop.layouts.page.order-list', $this->data);
     }
 
     public function list_sell(){
-        
+        $this->data['title'] = "Danh sách sản phẩm";
         $this->data['statusdb'] = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
         
         $this->data['dangban'] = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
@@ -221,15 +232,17 @@ class InfoController extends Controller
         
 
         if ($status == 'all'){
+            $this->data['title'] = "Danh sách sản phẩm";
             $sell_list = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
             $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
         }
         else if ($status == 'complete'){
+            $this->data['title'] = "Danh sách sản phẩm";
             $sell_list = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('DuyetDangBanHistory.status', 1)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
             $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
         }
         else{
-            
+            $this->data['title'] = "Danh sách sản phẩm";
             $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
             $sell_list=array();
             $all= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
@@ -263,6 +276,7 @@ class InfoController extends Controller
     }
 
     public function sell(){
+        $this->data['title'] = "Đăng bán sản phẩm";
         $this->data['loaisp'] = LoaiSP::all();
         $this->data['ncc'] = NhaCungCap::all();
 
@@ -270,6 +284,7 @@ class InfoController extends Controller
     }
 
     public function sellinfo($id){
+        $this->data['title'] = "Thông tin sản phẩm";
         if (SanPham::find($id) == null)
             return abort(404);
         $sanphamdb = SanPham::where('id',$id)->first();
@@ -277,7 +292,7 @@ class InfoController extends Controller
         
         $history = DangBan::find($dangban->id)->DuyetDangBanHistory->first();
         //dd($dangban);
-        return view('shop.layouts.page.sell-info',compact('sanphamdb','dangban','history'));
+        return view('shop.layouts.page.sell-info',compact('sanphamdb','dangban','history'),$this->data);
     }
     
     public function sell_product(Request $request){

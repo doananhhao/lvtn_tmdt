@@ -35,7 +35,7 @@
                             </tr>
                             <tr>
                                 <td>Mô tả</td>
-                                <td style="border-left: 1px solid #cdd0d4;">{{ $sanphamdb['mota'] }}</td>
+                                <td style="border-left: 1px solid #cdd0d4;">{!!$sanphamdb['mota']!!}</td>
                             </tr>
                             <tr>
                                 <td style="border-bottom: 1px solid #cdd0d4;">Đơn giá</td>

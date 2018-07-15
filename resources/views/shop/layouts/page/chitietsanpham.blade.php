@@ -1,4 +1,5 @@
 @extends('shop.layouts.index')
+<head><title>{{$sanpham->tensanpham}}</title></head>
 @section('main_content')
 
 

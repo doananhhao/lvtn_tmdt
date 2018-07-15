@@ -31,23 +31,25 @@ class PageController extends Controller
     }
   
     public function getLoaiSp($type){
+        
         $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         $sp_theoloai = LoaiSP::all();
         
         $tenlsp = LoaiSP::where('id',$type)->first();
         $loaisp = SanPham::where('loaisp_id',$type)->paginate(12);
         $db=DangBan::all();
-        
+        $title=$tenlsp->tenloai;
         $is_type = $type;
         //$loaisp = SanPham::where('loaisp_id',$type)->where('SanPham.id','!=','DangBan.sanpham_id')->paginate(12);
         //$loaispa = $loaisp->DangBan->where('sanpham_id','!=',$loaisp)->paginate(12);
         
-        return view('shop.layouts.page.loaisanpham',compact('sidemenu', 'sp_theoloai','loaisp','tenlsp', 'is_type'));
+        return view('shop.layouts.page.loaisanpham',compact('title','sidemenu', 'sp_theoloai','loaisp','tenlsp', 'is_type'));
     }
     public function getChitiet($id){
+        
         $sanpham = SanPham::where('id',$id)->first();
         $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
-        
+        $title="Chi tiết sản phẩm - ".$sanpham->tensanpham;
     	$list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
                 ->where([
                     ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
@@ -75,7 +77,7 @@ class PageController extends Controller
         
         $spcungloai = SanPham::where('loaisp_id',$sanpham->loaisp_id)->get();
         //dd($spcungloai);
-    	return view('shop.layouts.page.chitietsanpham',compact('sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
+    	return view('shop.layouts.page.chitietsanpham',compact('title','sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
     } 
 
     public function comment(Request $request,$id){
@@ -93,19 +95,26 @@ class PageController extends Controller
     }
 
     public function getSpDaiLy(){
+       // $this->data['title'] = "Sản phẩm của Thành viên";
         $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         //$sp_theoloai = LoaiSP::all();
-        
+        $title="Sản phẩm của Thành viên";
         $loaisp = SanPham::join('DangBan','DangBan.sanpham_id','SanPham.id')->where('canduyet',0)->where('ngungban',0)->paginate(12);
         //dd($loaisp);
-        return view('shop.layouts.page.sanphamdangban',compact('sidemenu','loaisp'));
+        return view('shop.layouts.page.sanphamdangban',compact('sidemenu','loaisp','title'));
     }
 
 
     public function getChitietSPDL($id){
+        /**
+         * $id tồn tại sp ko
+         * ...
+         * ...
+         * những phần trên nữa
+         */
         $sanpham = SanPham::where('id',$id)->first();
         $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
-        
+        $title="Chi tiết sản phẩm - ".$sanpham->tensanpham;
         $list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
                 ->where([
                     ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
@@ -135,7 +144,7 @@ class PageController extends Controller
         
         $spcungloai = SanPham::where('loaisp_id',$sanpham->loaisp_id)->get();
         //dd($spcungloai);
-    	return view('shop.layouts.page.chitietspdl',compact('sdttv','sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
+    	return view('shop.layouts.page.chitietspdl',compact('title','sdttv','sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
     } 
 
     public function getInfo(){
