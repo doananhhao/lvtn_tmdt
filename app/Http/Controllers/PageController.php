@@ -47,7 +47,7 @@ class PageController extends Controller
     public function getChitiet($id){
         $sanpham = SanPham::where('id',$id)->first();
         $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
-        
+        $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
     	$list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
                 ->where([
                     ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
@@ -67,6 +67,16 @@ class PageController extends Controller
             $sp->giamgia = $v->giamgia;
             $giamgiadb[] = $sp;
         }
+        //
+        $giamgia = $sanpham->ChiTietKhuyenMai()->where([
+                        ['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+                        ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                    ])
+                    ->orWhere([
+                        ['ngayketthuc', null],
+                        ['ngaybd', '<=', date('Y-m-d H:i:s')]
+                    ])->orderBy('giamgia', 'desc')->first();
+        //
         $sobinhluan = BinhLuan::where('sanpham_id',$id)->count();
         $binhluan = BinhLuan::join('users','user_id','=','users.id')->where('sanpham_id',$id)->where('status',1)->paginate(10);
 
@@ -75,7 +85,7 @@ class PageController extends Controller
         
         $spcungloai = SanPham::where('loaisp_id',$sanpham->loaisp_id)->get();
         //dd($spcungloai);
-    	return view('shop.layouts.page.chitietsanpham',compact('sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
+    	return view('shop.layouts.page.chitietsanpham',compact('sidemenu', 'giamgia', 'sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
     } 
 
     public function comment(Request $request,$id){
@@ -105,6 +115,7 @@ class PageController extends Controller
     public function getChitietSPDL($id){
         $sanpham = SanPham::where('id',$id)->first();
         $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
+        $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         
         $list = ChiTietKhuyenMai::select(DB::raw('max(giamgia) as giamgia, sanpham_id'))
                 ->where([
@@ -135,7 +146,7 @@ class PageController extends Controller
         
         $spcungloai = SanPham::where('loaisp_id',$sanpham->loaisp_id)->get();
         //dd($spcungloai);
-    	return view('shop.layouts.page.chitietspdl',compact('sdttv','sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
+    	return view('shop.layouts.page.chitietspdl',compact('sidemenu', 'sdttv','sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
     } 
 
     public function getInfo(){

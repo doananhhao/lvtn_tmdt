@@ -1,20 +1,23 @@
 <table class="table color-table success-table">
     <thead>
         <tr>
+            <th data-toggle="tooltip" data-original-title="Số hiệu hóa đơn">#</th>
             <th>Email người mua</th>
             <th>Sản phẩm</th>
             <th>Tổng giá</th>
             <th>Thực hiện</th>
-            <th>Ngày hoàn thành</th>
+            <th data-toggle="tooltip" data-original-title="Ngày hoàn thành công đoạn">CĐ hoàn thành</th>
         </tr>
     </thead>
     <tbody>
         @foreach($ds as $cdhd)
         <tr>
+            <td class="text-danger">#{{ $cdhd->HoaDon->id }}</td>
             <td>{{ $cdhd->HoaDon->User->email }}</td>
             <td>
                 @foreach ($cdhd->HoaDon->ChiTietHoaDon as $cthd)
-                {{ $cthd->SanPham->tensanpham}}<small class="p-l-10 text-primary"> x {{ $cthd->soluong }}</small>
+                <a href="{{ route('chitietsanpham', ['tensp' => $cthd->sanpham_id]) }}" class="text-muted">{{ $cthd->SanPham->tensanpham}}</a>
+                <small class="p-l-10 text-primary"> x {{ $cthd->soluong }}</small>
                 <br>
                 @endforeach
             </td>

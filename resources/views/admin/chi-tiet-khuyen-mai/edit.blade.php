@@ -9,7 +9,7 @@
             <p class="text-muted"></p>
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('loai-khuyen-mai.chi-tiet-khuyen-mai.update', ['loai-khuyen-mai' => $loaikm->id, 'chi-tiet-khuyen-mai' => $ctkm->id]) }}" method="POST" class="form-horizontal">
+                    <form enctype="multipart/form-data" action="{{ route('loai-khuyen-mai.chi-tiet-khuyen-mai.update', ['loai-khuyen-mai' => $loaikm->id, 'chi-tiet-khuyen-mai' => $ctkm->id]) }}" method="POST" class="form-horizontal">
                         @csrf
                         @method('PUT')
                         <div class="form-group{{ $errors->has('sanpham_id') ? ' has-danger' : '' }}">
@@ -17,10 +17,12 @@
                             <div class="col-md-12">
                                 <select type="text" name="sanpham_id" class="custom-select col-12" id="sanpham_id">
                                     @foreach ($dssp as $v)
+                                    @if ($v->DangBan()->first() == null)
                                     @if (old('sanpham_id'))
                                     <option value="{{ $v->id }}" {{ old('sanpham_id') == $v->id ? "selected" : ""  }}>{{ $v->tensanpham }}</option>
                                     @else
                                     <option value="{{ $v->id }}" {{ $ctkm->sanpham_id == $v->id ? "selected" : ""  }}>{{ $v->tensanpham }}</option>
+                                    @endif
                                     @endif
                                     @endforeach
                                 </select>
@@ -47,6 +49,15 @@
                                 @endif
                                 @if (session('date_error'))
                                 <div class="form-control-feedback">{{ session('date_error') }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('img') ? ' has-danger' : '' }}">
+                            <label for="img" class="col-md-12 text-muted">Hình ảnh KHUYẾN MÃI ĐẶC BIỆT (270x334)</label>
+                            <div class="col-md-12">
+                                <input type="file" name="img" id="img" class="dropify" data-default-file="">
+                                @if ($errors->has('img'))
+                                <div class="form-control-feedback">{{ $errors->first('img') }}</div>
                                 @endif
                             </div>
                         </div>
@@ -79,7 +90,13 @@
     <link href="{{ asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
     <script src="{{ asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
+    <!-- jQuery file upload -->
+    <link href="{{ asset('plugins/bower_components/dropify/dist/css/dropify.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ asset('plugins/bower_components/dropify/dist/js/dropify.min.js') }}"></script>
+
     <script>
+    $('.dropify').dropify();
+
     $('.input-daterange-timepicker').daterangepicker({
         timePicker: true,
         locale: {

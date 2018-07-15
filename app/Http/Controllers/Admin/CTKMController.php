@@ -9,7 +9,7 @@ use App\Models\LoaiKhuyenMai;
 use App\Models\ChiTietKhuyenMai;
 use App\Models\SanPham;
 use App\Models\DangBan;
-
+use Illuminate\Support\Facades\File;
 class CTKMController extends Controller
 {
     private $data = [];
@@ -100,7 +100,8 @@ class CTKMController extends Controller
                 }),
             ],
             'giamgia' => 'required|numeric|min:5|max:90',
-            'thoigian' => 'required'
+            'thoigian' => 'required',
+            'img' => 'required|image|dimensions:min_width=270,min_height=334',
         ]);
 
         //Kiểm tra ngày bd và kết thúc
@@ -119,6 +120,8 @@ class CTKMController extends Controller
         if ($ngaybd >= $ngayketthuc)
             return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
         //Kiểm tra ngày bd và kết thúc
+
+        $this->save_image($request);
 
         $loaikm->ChiTietKhuyenMai()->create([
             'sanpham_id' => $request->sanpham_id,
@@ -202,7 +205,8 @@ class CTKMController extends Controller
                 })->ignore($ctkm->id),
             ],
             'giamgia' => 'required|numeric|min:5|max:90',
-            'thoigian' => 'required'
+            'thoigian' => 'required',
+            'img' => 'required|image|dimensions:min_width=270,min_height=334',
         ]);
 
         //Kiểm tra ngày bd và kết thúc
@@ -221,6 +225,8 @@ class CTKMController extends Controller
         if ($ngaybd >= $ngayketthuc)
             return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
         //Kiểm tra ngày bd và kết thúc
+
+        $this->save_image($request);
 
         $ctkm->sanpham_id = $request->sanpham_id;
         $ctkm->giamgia = $request->giamgia/100;
@@ -251,5 +257,17 @@ class CTKMController extends Controller
         $ctkm->delete();
 
         return back()->with('success', 'Bạn đã xóa sản phẩm '.$ctkm->SanPham->tensanpham.' thành công');
+    }
+
+    private function save_image($request){
+        $sp = SanPham::find($request->sanpham_id);
+        if ($request->file('img')->isValid()){
+            $image_path = "/shop/images/pic/hd/hd_$sp->hinhanh";  // Value is not URL but directory file path
+            if(File::exists($image_path)) {
+                File::delete($image_path);
+            }
+            $filename = "hd_$sp->hinhanh";
+            $request->file('img')->move('public/shop/images/pic/hd', $filename);
+        }
     }
 }

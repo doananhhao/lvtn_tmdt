@@ -19,7 +19,7 @@ Route::get('/test', function (){
     // $tencapdo_daily = "Đại lý";
     // dd(App\Models\CapDo::where('capdo', 'LIKE', '%'.$tencapdo_daily.'%')->orderBy('id', 'asc')->first());
     // dd(App\Models\PhongBan::join('NhanVien','PhongBan.truongphong_id','NhanVien.nhanvien_id')->where('PhongBan.id','1')->get());
-
+    dd(App\Models\SanPham::find(10)->DangBan);
     // foreach ($users as $user)
     // var_dump($user);
     // foreach (App\Models\HoaDon::find(1)->ChiTietHoaDon as $cthd)

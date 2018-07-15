@@ -2475,6 +2475,13 @@ a {
 .product .product-info .name {
   font-size: 16px;
   font-family: 'Oswald-Regular';
+  max-height: 22px;
+  text-overflow: ellipsis;
+  /**
+   * Required properties to achieve text-overflow
+   */
+   white-space: nowrap;
+   overflow: hidden;
 }
 .product .product-info .name a {
   color: #555;
@@ -3023,6 +3030,13 @@ a {
 .hot-deals .product-info .name {
   font-size: 18px;
   font-family: 'Oswald-Regular';
+  max-height: 1.1;
+  text-overflow: ellipsis;
+  /**
+   * Required properties to achieve text-overflow
+   */
+   white-space: nowrap;
+   overflow: hidden;
 }
 .hot-deals .product-info .name a {
   color: #555;
@@ -5195,4 +5209,8 @@ a {
 }
 .body-content .sign-in-page .register-form .form-group {
   margin-bottom: 25px;
+}
+
+.marginright {
+  margin-right: 3px;
 }
