@@ -57,16 +57,12 @@
 
 		<style type="text/css">
 	    	.star-rating {
-  line-height:32px;
-  font-size:2.5em;
-}
+				line-height:32px;
+				font-size:2.5em;
+			}
 
-.star-rating .fa-star{color: yellow;}
-
+			.star-rating .fa-star{color: yellow;}
 	    </style>
-
-
-	    
 
 	</head>
     <body class="cnt-home">
@@ -118,6 +114,10 @@
 	@yield('javascript')
 
 	<script>
+		$('.search-button').on('click', function (e){
+			e.preventDefault()
+			$('#search-form').submit();
+		})
 		// add to cart
 		var atc = function(data){
 			var product = document.createElement("div");
@@ -235,14 +235,6 @@ $star_rating.on('click', function() {
 
 SetRatingStar();
 </script>
-
-
-
-
-
-
-
-
 
 </body>
 </html>

@@ -30,7 +30,7 @@
 			</li>
 
 			<li class="dropdown">
-				<a href="#">
+				<a href="{{ route('csbh') }}">
 					Chính sách bán hàng
 				</a>
 			</li>

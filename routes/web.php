@@ -14,10 +14,11 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-    dd(App\Models\ChiTietHoaDon::find(81)->LoaiKhuyenMai->ChiTietKhuyenMai()->where('sanpham_id', 19)->first());
-    $tencapdo_daily = "Đại lý";
-    dd(App\Models\CapDo::where('capdo', 'LIKE', '%'.$tencapdo_daily.'%')->orderBy('id', 'asc')->first());
-    dd(App\Models\PhongBan::join('NhanVien','PhongBan.truongphong_id','NhanVien.nhanvien_id')->where('PhongBan.id','1')->get());
+    
+    // dd(App\Models\ChiTietHoaDon::find(81)->LoaiKhuyenMai->ChiTietKhuyenMai()->where('sanpham_id', 19)->first());
+    // $tencapdo_daily = "Đại lý";
+    // dd(App\Models\CapDo::where('capdo', 'LIKE', '%'.$tencapdo_daily.'%')->orderBy('id', 'asc')->first());
+    // dd(App\Models\PhongBan::join('NhanVien','PhongBan.truongphong_id','NhanVien.nhanvien_id')->where('PhongBan.id','1')->get());
 
     // foreach ($users as $user)
     // var_dump($user);
@@ -56,8 +57,10 @@ Route::group(['prefix'=>'/home'], function () {
     Route::get('chi-tiet-san-pham/{tensp}',['as'=>'chitietsanpham','uses'=>'PageController@getChitiet']);
     Route::get('san-pham-dai-ly',['as'=>'sanphamdaily','uses'=>'PageController@getSpDaiLy']);
     Route::get('chi-tiet-san-pham-daily/{tenspdl}',['as'=>'chitietsanphamdaily','uses'=>'PageController@getChitietSPDL']);
-    Route::post('/comment/{id}', 'PageController@comment')->name('comment'); 
-	
+    Route::post('/comment/{id}', 'PageController@comment')->name('comment');
+
+    Route::get('/chinh-sach-ban-hang', 'PageController@csbh')->name('csbh');
+    Route::get('/tim-kiem', 'PageController@searchSP')->name('tim-kiem');
 });
 Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
         Route::get('information', 'InfoController@getInfo')->name('acc-info');

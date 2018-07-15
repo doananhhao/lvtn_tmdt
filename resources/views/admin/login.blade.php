@@ -24,13 +24,13 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  // })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-19175540-9', 'auto');
-  ga('send', 'pageview');
+  // ga('create', 'UA-19175540-9', 'auto');
+  // ga('send', 'pageview');
 
 </script>
 </head>
@@ -67,14 +67,17 @@
             @endif
           </div>
         </div>
-        {{-- <div class="form-group">
+        <div class="form-group">
           <div class="col-md-12">
             <div class="checkbox checkbox-primary pull-left p-t-0">
               <input id="checkbox-signup" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
               <label for="checkbox-signup"> Remember me </label>
             </div>
-            <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> </div>
-        </div> --}}
+            {{-- <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right">
+              <i class="fa fa-lock m-r-5"></i> Forgot pwd?
+            </a> --}}
+          </div>
+        </div>
         <div class="form-group text-center m-t-20">
           <div class="col-xs-12">
             <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Đăng Nhập</button>
@@ -88,6 +91,12 @@
         <div class="form-group m-b-0">
           <div class="col-sm-12 text-center">
             <p>Bạn chưa có tài khoản? <a href="{{ route('register') }}" class="text-primary m-l-5"><b>Đăng Ký</b></a></p>
+          </div>
+        </div>
+
+        <div class="form-group m-b-0">
+          <div class="col-sm-12 text-center">
+            <p>Quay về<a href="{{ route('home') }}" class="text-info m-l-5"><b>Trang chủ</b></a></p>
           </div>
         </div>
       </form>
@@ -129,5 +138,13 @@
 <script src="{{ asset('admin') }}/js/custom.min.js"></script>
 <!--Style Switcher -->
 <script src="{{ asset('') }}plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+
+<script>
+  @if(session('inactive'))
+  setTimeout(function (){
+    alert("{{ session('inactive') }}")
+  }, 500);
+  @endif
+</script>
 </body>
 </html>

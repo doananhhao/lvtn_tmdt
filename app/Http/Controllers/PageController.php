@@ -38,10 +38,11 @@ class PageController extends Controller
         $loaisp = SanPham::where('loaisp_id',$type)->paginate(12);
         $db=DangBan::all();
         
+        $is_type = $type;
         //$loaisp = SanPham::where('loaisp_id',$type)->where('SanPham.id','!=','DangBan.sanpham_id')->paginate(12);
         //$loaispa = $loaisp->DangBan->where('sanpham_id','!=',$loaisp)->paginate(12);
         
-        return view('shop.layouts.page.loaisanpham',compact('sidemenu', 'sp_theoloai','loaisp','tenlsp'));
+        return view('shop.layouts.page.loaisanpham',compact('sidemenu', 'sp_theoloai','loaisp','tenlsp', 'is_type'));
     }
     public function getChitiet($id){
         $sanpham = SanPham::where('id',$id)->first();
@@ -140,15 +141,39 @@ class PageController extends Controller
     public function getInfo(){
         return view('shop.layouts.page.info');
     }
-    public function searchSP(){
-        return view('shop.layouts.page.timkiem');
+    public function searchSP(Request $request){
+        $loaisp = null;
+        if ($request->has('loaisp'))
+            $loaisp = $request->get('loaisp');
+        if (!$request->has('search_input'))
+            return back();
+
+        $search = $request->search_input;
+        if (LoaiSP::find($loaisp) != null){
+            $dssp = SanPham::where([
+                ['tensanpham', 'LIKE', '%'.$search.'%'],
+                ['loaisp_id', $loaisp]
+            ])->paginate(12);
+            $tenlsp = LoaiSP::find($loaisp);
+        }else{
+            $dssp = SanPham::where('tensanpham', 'LIKE', '%'.$search.'%')->paginate(12);
+            $tenlsp = null;
+        }
+        $sidemenu = LoaiSP::all();
+        return view('shop.layouts.page.loaisanpham', [
+            'loaisp' => $dssp, 
+            'tenlsp' => $tenlsp,
+            'sidemenu' => $sidemenu
+        ]);
     }
      
     public function getAbout(){
     	return view('page.gioithieu');
     }
     
-    
+    public function csbh(){
+        return view('shop.chinhsachbanhang');
+    }
     
     
     
