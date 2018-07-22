@@ -44,7 +44,8 @@
                             <td>{{ date('d-m-Y H:i:s', strtotime($v->created_at)) }}</td>
                             <td>
                                 @if ($v->HoaDon->PhanCong->sortByDesc('id')->first() != null &&
-                                    $v->HoaDon->PhanCong->sortByDesc('id')->first()->NhanVien->PhongBan->CongDoan()->first()->id == $v->congdoan_id)
+                                    $v->HoaDon->PhanCong->sortByDesc('id')->first()->congdoan_id == $v->congdoan_id) 
+                                    {{-- $v->HoaDon->PhanCong->sortByDesc('id')->first()->NhanVien->PhongBan->CongDoan()->first()->id --}}
                                     {{-- Đã phân công --}}
                                     @if ($v->HoaDon->PhanCong->sortByDesc('id')->first()->status == 1)
                                     <span class="label label-success">

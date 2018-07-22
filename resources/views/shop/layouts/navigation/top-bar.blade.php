@@ -6,9 +6,13 @@
 				<ul class="list-unstyled">
 						@if (Auth::check())
 						{{-- có đăng nhập --}}
-							<li><a href="{{ route('acc-info') }}"><i class="icon fa fa-user"></i>Thông tin tài khoản</a></li>
+							<li><a href="{{ route('acc-info') }}"><i class="icon fa fa-user"></i>Thông tin tài khoản
 							@if (Auth::User()->LoaiUser->tenloai != "Người dùng")
+							</a></li>
 								<li><a href="{{ route('thongtintaikhoan') }}"><i class="icon fa fa-tachometer"></i>Trang quản lý website</a></li>
+							@else
+							(Hiện tại: {{ Auth::User()->ThanhVien->CapDo->capdo }})
+							</a></li>
 							@endif
 				        @endif
 					{{-- <li><a href="#"><i class="icon fa fa-heart"></i>Yêu thích</a></li> --}}

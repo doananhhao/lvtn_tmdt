@@ -62,7 +62,7 @@ class ShoppingCart extends Controller
             return redirect()->route('login');
 
         $cart = new Cart();
-        if (count($cart->getAll()) < 0){
+        if (count($cart->getAll()) <= 0){
             return redirect()->route('cart');
         }
 
@@ -176,7 +176,7 @@ class ShoppingCart extends Controller
     }
 
     function index(){
-        $this->data['title'] = "Giỏ hàng";
+        $this->data['title'] = "Unicase - Giỏ hàng của bạn";
         $this->data['sidemenu'] = LoaiSP::orderBy('id', 'desc')->get();
         return view('shop.shopping-cart', $this->data);
     }

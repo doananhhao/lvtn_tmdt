@@ -13,5 +13,3 @@
     <!-- Custom Theme JavaScript -->
     <script src="{{ asset('admin/js/custom.min.js') }}"></script>
     <script src="{{ asset('admin/js/jasny-bootstrap.js') }}"></script>
-    <!--Style Switcher -->
-    <script src="{{ asset('plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>

@@ -13,7 +13,7 @@
 	</div><!-- /.container -->
 </div><!-- /.breadcrumb -->
 
-<div class="body-content outer-top-bd">
+<div class="body-content outer-top-bd" style="font-size: 16px">
 	<div class="container">
 		<div class="terms-conditions-page inner-bottom-sm">
 
@@ -29,6 +29,54 @@
                         <li>Chịu trách nhiệm đăng kí các chương trình khuyến mãi với Bộ Công Thương</li>
                         <li>Bảo mật thông tin cá nhân của Khách hàng </li>
                     </ol>
+                </div>
+            </div>
+
+            <div class="row" id="capdo">
+                <div class="col-md-12 col-sm-12 terms-conditions">
+                    <h2>Cấp độ và quyền lợi</h2>
+                    <span>Để sử dụng cần phải đạt đến cấp độ đã yêu cầu</span>
+                    <div class="table-responsive inner-top-sm">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <th class="text-center" style="vertical-align: middle;">#</th>
+                                <th class="text-center" style="vertical-align: middle;">Cấp độ</th>
+                                <th class="text-center" style="vertical-align: middle;">Điểm tích lũy <span>Giá của tổng hóa đơn</span></th>
+                                {{-- <th class="text-center">Chiết khấu (Đại lý)</th> --}}
+                                <th class="text-center" style="vertical-align: middle;">Đăng bán <span>Đăng bán sản phẩm cá nhân</span></th>
+                                <th class="text-center" style="vertical-align: middle;">Đại lý <span>Quảng cáo sản phẩm chính của trang</span></th>
+                            </thead>
+                            <tbody class="text-center">
+                                @foreach ($capdo as $v)
+                                @php
+                                    if (!isset($i))
+                                        $i = 0;
+                                    $i++;
+                                @endphp
+                                <tr>
+                                <td>{{ $i }}</td>
+                                <td>{{ $v->capdo }}</td>
+                                <td>{{ number_format($v->diem, 0, ',', '.') }}</td>
+                                {{-- @if ($v->chietkhau == 0)
+                                <td style="color:red"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                @else
+                                <td>{{ $v->chietkhau*100 }}%</td>
+                                @endif --}}
+                                @if ($v->id > 2)
+                                <td><i style="color:green" class="fa fa-check" aria-hidden="true"></i></td>
+                                <td><i style="color:green" class="fa fa-check" aria-hidden="true"></i> (Chiết khấu: {{ $v->chietkhau*100 }}%)</td>
+                                @elseif ($v->id > 1)
+                                <td style="color:green"><i class="fa fa-check" aria-hidden="true"></i></td>
+                                <td style="color:red"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                @else
+                                <td style="color:red"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                <td style="color:red"><i class="fa fa-times" aria-hidden="true"></i></td>
+                                @endif
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 			{{-- <div class="row">

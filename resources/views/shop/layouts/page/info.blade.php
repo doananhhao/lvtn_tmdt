@@ -52,8 +52,9 @@
                     <ul class="nav nav-second-level">
                         <li> <a href="{{ route('acc-info') }}">Thông tin cá nhân </a> </li>
                         <li> <a href="{{ route('change-password') }}">Đổi mật khẩu</a> </li>
-                       
+                        @if(Auth::User()->LoaiUser->tenloai === 'Người dùng')
                         <li> <a href="{{ route('level') }}">Thành viên</a> </li>
+                        @endif
                     </ul>
                 </li>
                 

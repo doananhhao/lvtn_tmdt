@@ -25,7 +25,7 @@
 		?>
 			<div class="item item-carousel">
 				<div class="products">
-					<?php displayProduct($sp->tensanpham, false, false, false, asset('shop/images/pic/'.$sp->hinhanh), $sp->id, 'homepage-cart', $km != null ? (1-$km->giamgia)*$sp->gia : 0, $sp->gia, $score/2) ; ?>
+					<?php displayProduct($sp->tensanpham, false, false, false, asset('shop/images/pic/'.$sp->hinhanh), $sp->id, 'homepage-cart', $sp->gia, $km != null ? (1-$km->giamgia)*$sp->gia : 0, $score/2) ; ?>
 				</div><!-- /.products -->
 			</div><!-- /.item -->
 		@endforeach

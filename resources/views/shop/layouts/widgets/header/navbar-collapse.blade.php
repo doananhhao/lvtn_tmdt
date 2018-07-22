@@ -36,7 +36,7 @@
 			</li>
 
 			<li class="dropdown">
-				<a href="#">Thông tin</a>
+				<a href="{{ route('thongtin') }}">Thông tin</a>
 			</li>
 			
 		</ul><!-- /.navbar-nav -->
