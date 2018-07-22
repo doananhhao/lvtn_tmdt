@@ -5214,3 +5214,33 @@ a {
 .marginright {
   margin-right: 3px;
 }
+
+.info-stu {
+  margin-top: 20px;
+}
+
+.info-stu > h4{
+  border-top: #888 solid 1px;
+  border-bottom: #888 solid 1px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 20px;
+}
+
+.info-stu > ul > li{
+  display: block;
+  margin-left: 20px;
+  position: relative;
+  margin-top: 15px;
+}
+
+.info-stu > ul > li > span{
+  font-family: 'FjallaOneRegular';
+  left: 60px;
+  bottom: -3px;
+  color: green;
+  font-size: 18px;
+  color: #555;
+  position: absolute;
+}

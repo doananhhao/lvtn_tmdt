@@ -8,6 +8,7 @@ use App\Models\ChucVu;
 use App\Models\CongDoanHoaDon;
 use App\Models\HoaDon;
 use App\Models\PhanCong;
+use App\Models\CongDoan;
 use DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -99,5 +100,39 @@ class DSHoaDonController extends Controller
         $this->pb = Auth::User()->NhanVien->PhongBan;
         $this->chucvu = Auth::User()->NhanVien->ChucVu;
         $this->chucvunv = ChucVu::where('ten', 'LIKE', '%Nhân viên%')->first();
+    }
+
+    function admin_index(){
+        $this->data['title'] = "Danh sách hóa đơn";
+        $this->data['title2'] = 'Danh sách hóa đơn (sử dụng + đã hủy)';
+        $this->data['dshd'] = HoaDon::orderBy('id', 'desc')->paginate($this->paginate_set);
+        $this->data['congdoan'] = CongDoan::orderBy('id', 'asc')->get();
+        return view('admin.cdhd.admin_index', $this->data);
+    }
+
+    function admin_bt(){
+        $this->data['title'] = "Danh sách hóa đơn có hiệu lực";
+        $this->data['title2'] = 'Danh sách hóa đơn còn hiệu lực ';
+        $this->data['dshd'] = HoaDon::where('dahuy', 0)->orderBy('id', 'desc')->paginate($this->paginate_set);
+        $this->data['congdoan'] = CongDoan::orderBy('id', 'asc')->get();
+        return view('admin.cdhd.admin', $this->data);
+    }
+
+    function admin_dahuy(){
+        $this->data['title'] = "Danh sách hóa đơn đã hủy";
+        $this->data['title2'] = 'Danh sách hóa đơn đã được hủy';
+        $this->data['dshd'] = HoaDon::where('dahuy', 1)->orderBy('id', 'desc')->paginate($this->paginate_set);
+        return view('admin.cdhd.admin_dahuy', $this->data);
+    }
+    
+    function detail($id){
+        $hd = HoaDon::find($id);
+        if ($hd == null)
+            return abort(404);
+        $this->data['hd'] = $hd;
+        $this->data['title'] = "Chi tiết hóa đơn";
+        $this->data['title2'] = 'Hóa đơn #'.$hd->id;
+        $this->data['congdoan'] = CongDoan::orderBy('id', 'asc')->get();
+        return view('admin.cdhd.detail', $this->data);
     }
 }

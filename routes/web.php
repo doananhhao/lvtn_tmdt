@@ -60,6 +60,7 @@ Route::group(['prefix'=>'/home'], function () {
     Route::post('/comment/{id}', 'PageController@comment')->name('comment');
 
     Route::get('/chinh-sach-ban-hang', 'PageController@csbh')->name('csbh');
+    Route::get('/thong-tin', 'PageController@about')->name('thongtin');
     Route::get('/tim-kiem', 'PageController@searchSP')->name('tim-kiem');
 });
 Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
@@ -112,6 +113,18 @@ Route::group(['prefix' => '/admin', 'middleware' => ['m_admin']], function (){
             Route::get('/tinhtrang', 'Admin\QLDSTaiKhoanController@change_user_status')->name('change_user_status');
             Route::get('/doi-thong-tin-nhanvien', 'Admin\QLDSTaiKhoanController@change_nv')->name('change_nv');
             Route::get('/get-nhanvien', 'Admin\QLDSTaiKhoanController@get_nv')->name('get_nv');
+        });
+
+        Route::group(['prefix' => '/ds-hoa-don', 'as' => 'hoa-don-admin.'], function(){
+            Route::get('/', 'Admin\XLHoaDon\DSHoaDonController@admin_index')->name('index');
+            Route::get('/chi-tiet/{id}', 'Admin\XLHoaDon\DSHoaDonController@detail')->name('detail');
+            Route::get('/hoa-don-khong-huy', 'Admin\XLHoaDon\DSHoaDonController@admin_bt')->name('hdkhonghuy');
+            Route::get('/hoa-don-da-huy', 'Admin\XLHoaDon\DSHoaDonController@admin_dahuy')->name('hddahuy');
+        });
+
+        Route::group(['prefix' => '/dashboard', 'as' => 'dashboard.'], function(){
+            Route::get('/', 'Admin\DashBoardController@index')->name('index');
+            Route::get('/chart-san-pham', 'Admin\DashBoardController@ajax_chart_sanpham')->name('chart_sanpham');
         });
     });
 

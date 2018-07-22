@@ -164,7 +164,7 @@ class KTHoaDonController extends Controller
                 $capdaily1 = CapDo::where('capdo', 'LIKE', '%'.$this->tencapdo_daily.'%')->orderBy('id', 'asc')->first();
                 $capdo_cothelen = CapDo::where('diem', '<=', $diem)->orderBy('id', 'desc')->first();
 
-                if (($capdo_cothelen->id == ($thanhvien->capdo_id + 1)) && ($capdaily1->id != $capdo_cothelen->id)){
+                if ($capdaily1->id != $capdo_cothelen->id){
                     $thanhvien->capdo_id = $capdo_cothelen->id;
                     $thanhvien->save();
                 }

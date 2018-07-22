@@ -14,6 +14,7 @@ use App\Models\BinhLuan;
 use App\Models\DanhGia;
 use App\Models\ThanhVien;
 use App\Models\DangBan;
+use App\Models\CapDo;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -205,10 +206,15 @@ class PageController extends Controller
     }
     
     public function csbh(){
-        return view('shop.chinhsachbanhang');
+        $title = 'Unicase - Chính sách bán hàng';
+        $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
+        $capdo = CapDo::all();
+        return view('shop.chinhsachbanhang', ['title' => $title, 'sidemenu' => $sidemenu, 'capdo' => $capdo]);
     }
-    
-    
-    
-    
+
+    public function about(){
+        $title = 'Unicase - Chính sách bán hàng';
+        $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
+        return view('shop.about', ['title' => $title, 'sidemenu' => $sidemenu]);
+    }
 }

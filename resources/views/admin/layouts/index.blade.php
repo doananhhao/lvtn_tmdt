@@ -30,6 +30,8 @@
     <!-- /#wrapper -->
     @include('admin.layouts.footer')
     @yield('custom_plugin')
+    <!--Style Switcher -->
+    <script src="{{ asset('plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
 </body>
 
 </html>

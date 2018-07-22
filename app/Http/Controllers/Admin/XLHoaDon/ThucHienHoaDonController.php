@@ -67,7 +67,7 @@ class ThucHienHoaDonController extends Controller
             return;
         
         $pc_id = $request->phancong_id;
-        $comments = $request->comments;
+        $comments = $request->comments == null ? "" : $request->comments;
 
         $pc = PhanCong::find($pc_id);
 

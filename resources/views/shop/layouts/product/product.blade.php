@@ -22,10 +22,12 @@ function displayProduct($productName,$is_new,$is_sale,$is_hot,$productImageURL,$
 			{{-- <div class="description"></div> --}}
 
 			<div class="product-price">	
+					@if($price != 0)
 				<span class="price"><?php echo number_format($price, 0, ',', '.');?></span>
-					<?php if($oldPrice != 0):?>
 				<span class="price-before-discount"><?php echo number_format($oldPrice, 0, ',', '.');?></span>
-					<?php endif;?>
+					@elseif ($price == 0)
+				<span class="price"><?php echo number_format($oldPrice, 0, ',', '.');?></span>
+					@endif
 				
 			</div><!-- /.product-price -->
 			

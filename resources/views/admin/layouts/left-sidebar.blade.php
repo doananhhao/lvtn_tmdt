@@ -69,6 +69,12 @@
                 </li>
 
                 @if (Auth::User()->LoaiUser->tenloai == "Quản trị viên")
+                <li>
+                    <a href="{{ route('dashboard.index') }}" class="waves-effect">
+                        <i class="linea-icon linea-basic fa-fw" data-icon="v"></i>
+                        <span class="hide-menu">Thống kê</span>
+                    </a>
+                </li>
                 <li class="nav-small-cap m-t-10">--- Quản lý</li>
                 <li>
                     <a href="{{ route('nha-cung-cap.index') }}" class="waves-effect">
@@ -140,7 +146,7 @@
                 </li>
                 <li>
                     <a href="{{ route('ql-tai-khoan.index') }}" class="waves-effect">
-                        <i class="linea-icon linea-ecommerce fa-fw" data-icon="P"></i>
+                        <i class="fa fa-users" aria-hidden="true"></i>
                         <span class="hide-menu"> Tài khoản
                             <span class="fa arrow"></span>
                             <span class="label label-rouded label-custom pull-right"></span>
@@ -152,6 +158,26 @@
                         </li>
                         <li>
                             <a href="{{ route('ql-tai-khoan.create') }}">Thêm mới</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ route('hoa-don-admin.index') }}" class="waves-effect">
+                        <i class="linea-icon linea-ecommerce fa-fw" data-icon="3"></i>
+                        <span class="hide-menu"> Danh sách hóa đơn
+                            <span class="fa arrow"></span>
+                            <span class="label label-rouded label-custom pull-right"></span>
+                        </span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ route('hoa-don-admin.index') }}#">Tất cả</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('hoa-don-admin.hdkhonghuy') }}">Được sử dụng</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('hoa-don-admin.hddahuy') }}">Đã hủy</a>
                         </li>
                     </ul>
                 </li>

@@ -11,7 +11,9 @@
         <div class="white-box">
             @foreach($thanhvien as $value)       
                 <h3>Điểm tích lũy</h3>
-                <p>Giá trị hóa đơn đã hoàn thành sẽ được chuyển thành điểm tích lũy</p>
+                <p>Giá trị hóa đơn đã hoàn thành sẽ được chuyển thành điểm tích lũy.
+                    (<a href="{{ route('csbh') }}#capdo">Chi tiết</a>)
+                </p>
                 <div class="progress">
                 
                 @foreach($capdo as $lv) 
