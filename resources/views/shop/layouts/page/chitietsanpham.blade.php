@@ -1,5 +1,5 @@
 @extends('shop.layouts.index')
-<head><title>{{$sanpham->tensanpham}}</title></head>
+
 @section('main_content')
 
 
@@ -294,6 +294,9 @@
     <div class="col-lg-3" >
     	<br>
 
+
+		
+
       <div class="star-rating">
         <span class="fa fa-star-o" data-rating="1"></span>
         <span class="fa fa-star-o" data-rating="2"></span>
@@ -380,7 +383,7 @@
 					</button>
 				</div>
 			</div>
-			<div class="col-sm-3">
+			{{-- <div class="col-sm-3">
 				<h4>Xếp hạng đánh giá</h4>
 				<div class="pull-left">
 					<div class="pull-left" style="width:35px; line-height:1;">
@@ -447,7 +450,7 @@
 					</div>
 					<div class="pull-right" style="margin-left:10px;">0</div>
 				</div>
-			</div>			
+			</div>	 --}}		
 		</div>			
 		
 		

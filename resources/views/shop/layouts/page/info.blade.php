@@ -72,6 +72,7 @@
                     <ul class="nav nav-second-level">
                         <li><a href="{{ route('sell_list') }}">Danh sách đăng bán</a></li>
                         <li><a href="{{ route('sell') }}">Đăng bán</a></li>
+                        <li><a href="{{ route('getlink') }}">Tạo link sản phẩm</a></li>
                     </ul>
                 </li>
                 @endif
@@ -81,6 +82,7 @@
                     <ul class="nav nav-second-level">
                         <li><a href="{{ route('sell_list') }}">Danh sách đăng bán</a></li>
                         <li><a href="{{ route('sell') }}">Đăng bán</a></li>
+                        
                     </ul>
                 </li>
                 @endif

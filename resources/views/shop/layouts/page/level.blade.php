@@ -13,25 +13,60 @@
                 <h3>Điểm tích lũy</h3>
                 <p>Giá trị hóa đơn đã hoàn thành sẽ được chuyển thành điểm tích lũy</p>
                 <div class="progress">
-                
+            @if($value['id'] != 2)    
                 @foreach($capdo as $lv) 
                 @if ($value['diemtichluy'] == 0)
                   <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                     <span id="current-progress"></span>
                   </div>
                   @break
-                @endif
-                @if ($value['diemtichluy'] <= $lv['diem'])
+                @elseif ($value['diemtichluy'] == $lv['diem'])
+                  <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    <span id="current-progress"></span>
+                  </div>
+                  @break
+                @elseif ($value['diemtichluy'] < $lv['diem'])
                   <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo floor(($value['diemtichluy']-$diemhientai)/($lv['diem']-$diemhientai)*100);?>%">
                     <span id="current-progress"></span>
                   </div>
                   @break
-                @endif
-                @if ($value['diemtichluy'] > $lv['diem'])
+                @elseif ($value['diemtichluy'] > $lv['diem'])
                     
                     @continue($diemhientai=$lv['diem'])
-                @endif  
-              @endforeach   
+                @endif 
+                @endforeach 
+            @else
+                @foreach($capdo as $lv) 
+                        @if($value['diemtichluy'] == 5000000)
+                                <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                <span id="current-progress"></span>
+                                </div>
+                                @break
+                        
+
+                        @elseif (($value['diemtichluy'] > $lv['diem'])  && ($lv['diem'] < 15000000))
+                            @continue($diemhientai=$lv['diem'])
+                            
+
+                        @else
+                            
+                            @if(($value['diemtichluy'] < $lv['diem']))
+                                <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo floor(($value['diemtichluy']-$diemhientai)/($lv['diem']-$diemhientai)*100);?>%">
+                                <span id="current-progress"></span>
+                                </div>
+                                @break
+                            
+                            @else
+                                <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span id="current-progress"></span>
+                                </div>
+                                @break
+                            @endif 
+                        @endif 
+
+                @endforeach  
+            @endif
+             
                 </div>
                 <div style="width: 50%;margin: 10px;">
                         <div class="panel panel-default">
@@ -50,26 +85,55 @@
                                         <tr style="text-align: center">
                                             <td>{{ number_format($value['diemtichluy'], 0, ' ', ' ') }}</td>
                                             <td>
-                                                @foreach($capdo as $lv) 
-                                                    @if ($value['diemtichluy'] <= $lv['diem'])
-                                                        {{number_format($lv['diem'], 0, ' ', ' ')}}
-                                                        @break
-                                                    @endif
-                                                    @if ($value['diemtichluy'] > $lv['diem'])
-                                                        @continue
-                                                    @endif  
-                                                @endforeach   
+                                                @if($value['id'] != 2)  
+                                                    @foreach($capdo as $lv) 
+                                                        @if ($value['diemtichluy'] == $lv['diem'])
+                                                            @continue
+                                                        @elseif ($value['diemtichluy'] > $lv['diem'])
+                                                            @continue
+                                                        @else
+                                                            {{number_format($lv['diem'], 0, ' ', ' ')}}
+                                                            @break
+                                                        @endif  
+                                                    @endforeach
+                                                @elseif($value['id'] == 2)
+                                                    @foreach($capdo as $lv) 
+                                                        @if ($value['diemtichluy'] == $lv['diem'])
+                                                            @continue
+                                                        @elseif ($value['diemtichluy'] > $lv['diem'])
+                                                            @continue
+                                                        @else
+                                                            {{number_format($lv['diem'], 0, ' ', ' ')}}
+                                                            @break
+                                                        @endif  
+                                                    @endforeach
+                                                @endif 
                                             </td>
                                             <td>
-                                                @foreach($capdo as $lv) 
-                                                    @if ($value['diemtichluy'] <= $lv['diem'])
-                                                        {{ number_format($lv['diem']-$value['diemtichluy'], 0, ' ', ' ') }}
-                                                        @break
-                                                    @endif
-                                                    @if ($value['diemtichluy'] > $lv['diem'])
-                                                        @continue
-                                                    @endif  
-                                                @endforeach   
+                                                @if($value['id'] != 2)
+                                                    @foreach($capdo as $lv) 
+                                                        @if ($value['diemtichluy'] == $lv['diem'])
+                                                            @continue
+                                                        @elseif ($value['diemtichluy'] > $lv['diem'])
+                                                            @continue
+                                                        @else
+                                                            {{ number_format($lv['diem']-$value['diemtichluy'], 0, ' ', ' ') }}
+                                                            @break
+                                                        @endif  
+                                                    @endforeach
+                                                @elseif($value['id'] == 2)
+                                                    @foreach($capdo as $lv) 
+                                                        @if ($value['diemtichluy'] == $lv['diem'])
+                                                            @continue
+                                                        @elseif ($value['diemtichluy'] > $lv['diem'])
+                                                            @continue
+                                                        @else
+                                                            {{ number_format($lv['diem']-$value['diemtichluy'], 0, ' ', ' ') }}
+                                                            @break
+                                                        @endif  
+                                                    @endforeach
+                                                @endif
+                                                
                                             </td>
                                         </tr>
                                         @if ($value['id'] < 2)
@@ -79,7 +143,7 @@
                                         @endif
                                         @if ($value['id'] < 3)
                                         <tr style="text-align: center">
-                                            <td colspan="3">Đạt cấp 4 để trở thành đại lý bán hàng</td>
+                                            <td colspan="3">Thăng cấp từ cấp 2 để trở thành đại lý bán hàng</td>
                                         </tr>
                                         @endif
                                     </tbody>
@@ -88,7 +152,7 @@
                         </div>
                     </div>
                     
-                        @if ($value['id'] >= 3)
+                        @if (($value['id'] == 2) && ($value['diemtichluy'] >= 15000000))
                             @if($daily==null)
                         <form action="{{ route('create-daily', ['id' => $value['user_id']]) }}" method="POST" class="form-horizontal">
                                 @csrf

@@ -65,10 +65,22 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('thoigian') || session('date_error') ? ' has-danger' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('thoigian') || session('date_error') ? ' has-danger' : '' }}">
                             <label for="thoigian" class="col-md-12 text-muted">Thời gian đăng bán</label>
                             <div class="col-md-12">   
                                 <input type="text" class="form-control{{ $errors->has('thoigian') ? ' form-control-danger' : '' }} input-daterange-timepicker" name="thoigian" value="{{ old('thoigian') ? old('thoigian') : date('d/m/Y g:i A').' - '.date('d/m/Y g:i A')}}" />
+                                @if ($errors->has('thoigian'))
+                                <div class="form-control-feedback">{{ $errors->first('thoigian') }}</div>
+                                @endif
+                                @if (session('date_error'))
+                                <div class="form-control-feedback">{{ session('date_error') }}</div>
+                                @endif
+                            </div>
+                        </div> --}}
+                        <div class="form-group{{ $errors->has('thoigian') || session('date_error') ? ' has-danger' : '' }}">
+                                <label for="thoigian" class="col-md-12 text-muted">Thời gian dừng bán</label>
+                                <div class="col-md-12">
+                                <input type="text" class="form-control{{ $errors->has('thoigian') ? ' form-control-danger' : '' }}" id="datepicker-autoclose" name="thoigian"  value="{{ old('thoigian') ? old('thoigian') : date('d/m/Y')}}">
                                 @if ($errors->has('thoigian'))
                                 <div class="form-control-feedback">{{ $errors->first('thoigian') }}</div>
                                 @endif
@@ -143,6 +155,26 @@
     </script>
 
     <script>
+    // Date Picker
+    
+    jQuery('#datepicker-autoclose').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        startDate: '-3d'
+    });
+
+    jQuery('#date-range').datepicker({
+        toggleActive: true
+    });
+    jQuery('#datepicker-inline').datepicker({
+
+        todayHighlight: true
+    });
+
+
+
+
     $('.input-daterange-timepicker').daterangepicker({
         timePicker: true,
         locale: {

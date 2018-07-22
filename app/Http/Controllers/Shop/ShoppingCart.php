@@ -176,6 +176,7 @@ class ShoppingCart extends Controller
     }
 
     function index(){
+        $this->data['title'] = "Giỏ hàng";
         $this->data['sidemenu'] = LoaiSP::orderBy('id', 'desc')->get();
         return view('shop.shopping-cart', $this->data);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\SanPham;
 use App\Models\ChiTietHoaDon;
@@ -14,6 +15,7 @@ use App\Models\BinhLuan;
 use App\Models\DanhGia;
 use App\Models\ThanhVien;
 use App\Models\DangBan;
+use App\Models\DaiLy;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +25,9 @@ use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
+
+    //public $daily = [];
+
     public function getIndex(){
        
     	$sp_theoloai = LoaiSP::all();
@@ -45,8 +50,36 @@ class PageController extends Controller
         
         return view('shop.layouts.page.loaisanpham',compact('title','sidemenu', 'sp_theoloai','loaisp','tenlsp', 'is_type'));
     }
-    public function getChitiet($id){
+    public function getChitiet($id, Request $request){
+        //check sp
+        if ($id == null)
+            return abort(404);
+        //check sp ko có trong đăng bán
         
+        $sp = SanPham::find($id);
+        if ($sp == null)    return abort(404);
+        else if ($sp->DangBan()->first() != null)
+            return abort(404);
+        
+        // $spchinh=DangBan::where('sanpham_id',$id)->first();
+        // if ($spchinh != null)
+        //     return abort(404);
+
+        $daily = [];    
+        $hash = $request->hash;
+        
+        if (Session::has('daily'))
+            $daily = Session::get('daily');
+        // dd($daily);
+        //check hash nếu tồn tại
+        $dailygioithieu=DaiLy::where('hash',$hash)->first();
+        if ($dailygioithieu != null){
+            $daily[$id] = $hash;
+        }
+        //ghi vào sesion
+        Session::put('daily', $daily);       
+        
+
         $sanpham = SanPham::where('id',$id)->first();
         $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
 
@@ -205,7 +238,9 @@ class PageController extends Controller
     }
     
     public function csbh(){
-        return view('shop.chinhsachbanhang');
+        $sidemenu = LoaiSP::all();
+        $title="Chính sách bán hàng";
+        return view('shop.chinhsachbanhang',compact('title','sidemenu'));
     }
     
     

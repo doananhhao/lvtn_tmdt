@@ -1,5 +1,5 @@
 @extends('shop.layouts.index')
-{{--  <head><title>Chi tiết sản phẩm</title></head>  --}}
+
 @section('main_content')
 
 

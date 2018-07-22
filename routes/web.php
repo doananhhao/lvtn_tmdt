@@ -14,7 +14,7 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-    
+    dd(Session::get('daily'));
     // dd(App\Models\ChiTietHoaDon::find(81)->LoaiKhuyenMai->ChiTietKhuyenMai()->where('sanpham_id', 19)->first());
     // $tencapdo_daily = "Đại lý";
     // dd(App\Models\CapDo::where('capdo', 'LIKE', '%'.$tencapdo_daily.'%')->orderBy('id', 'asc')->first());
@@ -85,7 +85,10 @@ Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
         Route::get('/selledit/{id}', 'InfoController@sell_edit')->name('sell-edit');
         Route::post('/selledit/{id}', 'InfoController@save_edit_sell')->name('edit-sell');  
 
-        Route::post('/create-daily/{id}', 'InfoController@create_daily')->name('create-daily');  
+        Route::post('/create-daily/{id}', 'InfoController@create_daily')->name('create-daily'); 
+        
+        Route::get('/get-link', 'InfoController@getLink')->name('getlink'); 
+        Route::post('/get-link', 'InfoController@get_Link')->name('get_link'); 
         
         Route::get('/changePassword','HomeController@showChangePasswordForm')->name('change-password');
         Route::post('/changePassword','HomeController@changePassword')->name('changePassword');

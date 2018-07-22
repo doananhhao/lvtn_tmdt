@@ -46,6 +46,7 @@
                         </thead>
                         <tbody>
                             @foreach($orders as $order)
+                            
                             @if ($order['dahuy'] == 0)
                             <tr>
                                 <td><a href="{{ route('order-detail', ['id' => $order['id']]) }}">{{ $order['id'] }}</a></td>

@@ -110,7 +110,7 @@ class InfoController extends Controller
         $thanhvien = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->where('user_id',Auth::user()->id)->get();
         $capdo = CapDo::all();
         $daily = ThanhVien::join('CapDo','ThanhVien.capdo_id','CapDo.id')->join('DaiLy','ThanhVien.user_id','DaiLy.thanhvien_id')->where('user_id',Auth::user()->id)->first();
-        //dd(Hash::make($str));
+        //dd($thanhvien);
         $diemhientai=null;
 
         $this->data['daily'] = $daily; 
@@ -128,6 +128,26 @@ class InfoController extends Controller
             'thanhvien_id' => $id,
             'hash' => Hash::make($str)
         ]);
+
+        $lencap = ThanhVien::where('user_id',$id)->first();
+        $capdo = CapDo::all();
+        
+        foreach($capdo as $lv)
+        {
+            if($lencap->diemtichluy == $lv['diem']){
+                $lencap->capdo_id = $lv['id'];
+                break;
+            }
+            elseif($lencap->diemtichluy > $lv['diem']){
+                $caphientai=$lv['id'];
+                continue;
+            }
+            else{
+                $lencap->capdo_id = $caphientai;
+                break;
+            }
+        }
+        $lencap->save();
         
         return back()->with('success', 'Bạn đã trở thành Đại lý bán hàng, bạn có thể đăng bán sản phẩm của mình.')->withInput();
     }
@@ -162,8 +182,23 @@ class InfoController extends Controller
         // }
         // $this->data['total_price'] = $total_price;
 
-        //$order_list = HoaDon::where('user_id',Auth::user()->id)->get()->toArray();
-        $order_list = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->get()->toArray();
+        $order_lists = HoaDon::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get()->toArray();
+        //$order_list = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->orderBy('HoaDon.id', 'desc')->get()->toArray();
+        //
+        $congdoan=CongDoanHoaDon::orderBy('id', 'desc')->get();
+        $order_list=array();
+            foreach($order_lists as $a){
+                    foreach($congdoan as $s){
+                        if($a['id'] == $s['hoadon_id']){
+                            $x = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->where('CongDoanHoaDon.id',$s['id'])->first();
+                            array_push($order_list,$x);
+                            break;
+                        }
+                    }
+            }
+                        
+        //
+        //dd($order_list);
         $this->data['orders'] = $order_list; 
         
         return view('shop.layouts.page.order-list', $this->data);
@@ -194,16 +229,72 @@ class InfoController extends Controller
 
         if ($status == 'all'){
             $this->data['title'] = "Danh sách đơn hàng";
-            $order_list = HoaDon::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get()->toArray();
-        }
+            //$order_list = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->orderBy('HoaDon.id', 'desc')->get()->toArray();
+            $order_lists = HoaDon::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get()->toArray();
+            //
+            $congdoan=CongDoanHoaDon::orderBy('id', 'desc')->get();
+            $order_list=array();
+                foreach($order_lists as $a){
+                        foreach($congdoan as $s){
+                            if($a['id'] == $s['hoadon_id']){
+                                $x = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->where('CongDoanHoaDon.id',$s['id'])->first();
+                                array_push($order_list,$x);
+                                break;
+                            }
+                        }
+                }
+            }
             else if ($status == 'complete'){
                 $this->data['title'] = "Danh sách đơn hàng";
-            $order_list = HoaDon::join('CongDoanHoaDon','HoaDon.id','CongDoanHoaDon.hoadon_id')->where('congdoan_id',3)->where('user_id',Auth::user()->id)->where('status', 1)->orderBy('HoaDon.id', 'desc')->get()->toArray();
+            //$order_list = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('congdoan_id',3)->where('user_id',Auth::user()->id)->where('status', 1)->orderBy('HoaDon.id', 'desc')->get()->toArray();
+            $order_lists = HoaDon::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get()->toArray();
+            //
+            $congdoan=CongDoanHoaDon::orderBy('id', 'desc')->get();
+            $order_listx=array();
+                foreach($order_lists as $a){
+                        foreach($congdoan as $s){
+                            if($a['id'] == $s['hoadon_id']){
+                                $x = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->where('CongDoanHoaDon.id',$s['id'])->first();
+                                array_push($order_listx,$x);
+                                break;
+                            }
+                        }
+                }
+            //
+            $order_list=array();
+                foreach($order_listx as $a){
+                    if(($a['congdoan_id'] == 3) && ($a['status'] == 1)){
+                        array_push($order_list,$a);
+                    }    
+                }
+            
             }
             else{
                 $this->data['title'] = "Danh sách đơn hàng";
-            $order_list = HoaDon::join('CongDoanHoaDon','HoaDon.id','CongDoanHoaDon.hoadon_id')->where('user_id',Auth::user()->id)->where('dahuy', 0)->orderBy('HoaDon.id', 'desc')->get()->toArray();
-            }
+            //$order_list = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->where('dahuy', 0)->orderBy('HoaDon.id', 'desc')->get()->toArray();
+            $order_lists = HoaDon::where('user_id',Auth::user()->id)->orderBy('id', 'desc')->get()->toArray();
+            //
+            $congdoan=CongDoanHoaDon::orderBy('id', 'desc')->get();
+            $order_listx=array();
+                foreach($order_lists as $a){
+                        foreach($congdoan as $s){
+                            if($a['id'] == $s['hoadon_id']){
+                                $x = CongDoanHoaDon::join('HoaDon','CongDoanHoaDon.hoadon_id','HoaDon.id')->where('user_id',Auth::user()->id)->where('CongDoanHoaDon.id',$s['id'])->first();
+                                array_push($order_listx,$x);
+                                break;
+                            }
+                        }
+                }
+            //
+            $order_list=array();
+                foreach($order_listx as $a){
+                    if(($a['congdoan_id'] == 3 && $a['status'] == 0) || $a['congdoan_id'] != 3){
+                        array_push($order_list,$a);
+
+                    }    
+                }
+           
+            } //dd($order_list);
         $this->data['orders'] = $order_list; 
         
         return view('shop.layouts.page.order-list', $this->data);
@@ -309,17 +400,20 @@ class InfoController extends Controller
 
         //Kiểm tra ngày bd và kết thúc
         $thoigian = $request->thoigian;
-        if (strpos($thoigian, ' - ') !== false)
+        $thoigian = str_replace('/', '-',$thoigian);
+        
+        /* if (strpos($thoigian, ' - ') !== false)
             $arr = explode(' - ', $thoigian);
         else{
             return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
-        }
+        } */
         try{
-            $ngaybd = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $arr[0])));
-            $ngayketthuc = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $arr[1])));
+            $ngaybd = date('Y-m-d');
+            $ngayketthuc = date('Y-m-d', strtotime($thoigian));
         }catch(Exception $e){
             return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
         }
+
         if ($ngaybd >= $ngayketthuc)
             return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
         //Kiểm tra ngày bd và kết thúc
@@ -442,5 +536,20 @@ class InfoController extends Controller
         return back()->with('success', 'Bạn vui lòng đợi phản hồi từ người kiểm duyệt cho sản phẩm này'.$request->tensanpham)->withInput();
     }
 
-    
+    public function getLink()
+    {
+        $this->data['title'] = "Tạo link giới thiệu sản phẩm";
+        $this->data['dssp'] = SanPham::all();
+        return view('shop.layouts.page.getlink',$this->data);
+    }
+    public function get_Link(Request $request)
+    {
+        //check sp idid
+        $dl=DaiLy::where('thanhvien_id',Auth::user()->id)->first();
+        $a=$request->sanpham_id;
+        
+        $request->link = $a;
+        
+        return back()->withInput()->with('linkhash', route('chitietsanpham', ['tensp' => $a]).'?hash='.$dl->hash);
+    }
 }
