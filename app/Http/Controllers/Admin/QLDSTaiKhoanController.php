@@ -146,7 +146,7 @@ class QLDSTaiKhoanController extends Controller
                 $success = "Bạn đã thêm thành công [NHÂN VIÊN] mới";
             }
         
-        return back()->with('success', $success ? $success :'Bạn đã thêm thành công')->withInput();
+        return back()->with('success', isset($success) ? $success :'Bạn đã thêm thành công')->withInput();
     }
 
     private function user_nhanvien($user = null, $phongban_id = null){
