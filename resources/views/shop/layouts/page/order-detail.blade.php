@@ -64,7 +64,10 @@
         </div>
     </div>
 </div>
-    <!-- jQuery -->
+    
+@endsection
+@section('javascript')
+<!-- jQuery -->
     <script src="{{ asset('plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('bootstrap/dist/js/tether.min.js') }}"></script>

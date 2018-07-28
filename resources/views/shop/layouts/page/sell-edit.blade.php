@@ -65,7 +65,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('thoigian') || session('date_error') ? ' has-danger' : '' }}">
+                        {{--  <div class="form-group{{ $errors->has('thoigian') || session('date_error') ? ' has-danger' : '' }}">
                             <label for="thoigian" class="col-md-12 text-muted">Chọn thời gian hiệu lực</label>
                             <div class="col-md-12">   
                                 <input type="text" class="form-control{{ $errors->has('thoigian') ? ' form-control-danger' : '' }} input-daterange-timepicker" name="thoigian" value="{{ old('thoigian') ? old('thoigian') : date('d/m/Y g:i A').' - '.date('d/m/Y g:i A', strtotime($sanphamdangban->ngayketthuc))}}" />
@@ -76,7 +76,19 @@
                                 <div class="form-control-feedback">{{ session('date_error') }}</div>
                                 @endif
                             </div>
-                        </div>
+                        </div>  --}}
+                        {{--  <div class="form-group{{ $errors->has('thoigian') || session('date_error') ? ' has-danger' : '' }}">
+                                <label for="thoigian" class="col-md-12 text-muted">Thời gian dừng bán</label>
+                                <div class="col-md-12">
+                                <input type="text" class="form-control{{ $errors->has('thoigian') ? ' form-control-danger' : '' }}" id="datepicker-autoclose" name="thoigian"  value="{{ old('thoigian') ? old('thoigian') : date('d/m/Y')}}">
+                                @if ($errors->has('thoigian'))
+                                <div class="form-control-feedback">{{ $errors->first('thoigian') }}</div>
+                                @endif
+                                @if (session('date_error'))
+                                <div class="form-control-feedback">{{ session('date_error') }}</div>
+                                @endif
+                            </div>
+                        </div>  --}}
                         <div class="form-group{{ $errors->has('mota') ? ' has-danger' : '' }}">
                             <label for="mota" class="col-md-12 text-muted">Mô tả chi tiết</label>
                             <div class="col-md-12">
@@ -105,10 +117,8 @@
     <link href="{{ asset('plugins/bower_components/summernote-master/dist/summernote-bs4.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ asset('plugins/bower_components/summernote-master/dist/summernote-bs4.js') }}"></script>
     <script src="{{ asset('plugins/bower_components/summernote-master/lang/summernote-vi-VN.js') }}"></script>
-
     <!-- Plugin JavaScript -->
     <script src="{{ asset('plugins/bower_components/moment/moment.js') }}"></script>
-
     <!-- Date picker plugins css -->
     <link href="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
@@ -118,7 +128,40 @@
     <link href="{{ asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
     <script src="{{ asset('plugins/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
+    <!-- jQuery file upload -->
+    <link href="{{ asset('plugins/bower_components/dropify/dist/css/dropify.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ asset('plugins/bower_components/dropify/dist/js/dropify.min.js') }}"></script>
     <script>
+        $('.dropify').dropify();
+        $( "input[type=checkbox]" ).prop('checked', true)
+        $( "input[type=checkbox]" ).on( "click", function(e){
+            var idimg = $(this).val()
+            var checked = $(this).prop('checked')
+            $('#' + idimg).prop('disabled', !checked) 
+        });
+    </script>
+
+    <script>
+    // Date Picker
+    
+    jQuery('#datepicker-autoclose').datepicker({
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        startDate: '-3d'
+    });
+
+    jQuery('#date-range').datepicker({
+        toggleActive: true
+    });
+    jQuery('#datepicker-inline').datepicker({
+
+        todayHighlight: true
+    });
+
+
+
+
     $('.input-daterange-timepicker').daterangepicker({
         timePicker: true,
         locale: {
@@ -145,5 +188,4 @@
     @endif
     </script>
 
-   
 @endsection

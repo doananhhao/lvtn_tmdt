@@ -1,5 +1,5 @@
 @extends('shop.layouts.index')
-{{--  <head><title>Sản phẩm của Thành viên</title></head>  --}}
+
 @section('main_content')
 
 
@@ -103,21 +103,21 @@
 	<div class="product">		
 		<div class="product-image">
 			<div class="image">
-				<a href="{{route('chitietsanphamdaily',$sp->sanpham_id)}}"><img  src="{{asset('shop/images/pic/dangban/'.$sp->hinhanh)}}"  alt=""></a>
+				<a href="{{route('chitietsanphamdaily',$sp['sanpham_id'])}}"><img  src="{{asset('shop/images/pic/dangban/'.$sp['hinhanh'])}}"  alt=""></a>
 			</div><!-- /.image -->			
 
-			<div class="tag new"><span>new</span></div>                        		   
+			                  		   
 		</div><!-- /.product-image -->
 			
 		
 		<div class="product-info text-left">
-			<h3 class="name"><a href="{{route('chitietsanphamdaily',$sp->sanpham_id)}}">{{$sp->tensanpham}}</a></h3>
-			<div class="rating rateit-small"></div>
+			<h3 class="name"><a href="{{route('chitietsanphamdaily',$sp['sanpham_id'])}}">{{$sp['tensanpham']}}</a></h3>
+		
 			<div class="description"></div>
 
 			<div class="product-price">	
 				<span class="price">
-					{{number_format($sp->gia, 0, ',', ' ')}} VNĐ				</span>
+					{{number_format($sp['gia'], 0, ',', ' ')}} VNĐ				</span>
 										     <span class="price-before-discount"> </span>
 									
 			</div><!-- /.product-price -->
@@ -127,10 +127,10 @@
 				<div class="action">
 					<ul class="list-unstyled">
 						<li class="add-cart-button btn-group">
-							<button class="btn btn-primary icon" data-toggle="dropdown" type="button"  onclick="add_to_cart(this, {{ $sp->sanpham_id }})">
-								<i class="fa fa-shopping-cart"></i>													
-							</button>
-							<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $sp->sanpham_id }})">Add to cart</button>
+							<a href="{{route('chitietsanphamdaily',$sp['sanpham_id'])}}" class="btn btn-primary icon" data-toggle="dropdown" type="button"  >
+								<i  class="fa fa-shopping-cart"></i>													
+							</a>
+							<a class="btn btn-primary"  href="{{route('chitietsanphamdaily',$sp['sanpham_id'])}}">Xem chi tiết</a>
 													
 						</li>
 	                   
@@ -161,29 +161,29 @@
 		<div class="col col-sm-4 col-lg-4">
 			<div class="product-image">
 				<div class="image">
-					<a href="{{route('chitietsanphamdaily',$list->sanpham_id)}}"><img  src="{{asset('shop/images/pic/'.$sp->hinhanh)}}"  alt=""></a>
+					<a href="{{route('chitietsanphamdaily',$list['sanpham_id'])}}"><img  src="{{asset('shop/images/pic/dangban/'.$list['hinhanh'])}}"  alt=""></a>
 				</div>
 			</div><!-- /.product-image -->
 		</div><!-- /.col -->
 		<div class="col col-sm-8 col-lg-8">
 			<div class="product-info">
-				<h3 class="name"><a href="{{route('chitietsanphamdaily',$list->sanpham_id)}}">{{$list->tensanpham}}</a></h3>
-				<div class="rating rateit-small"></div>
+				<h3 class="name"><a href="{{route('chitietsanphamdaily',$list['sanpham_id'])}}">{{$list['tensanpham']}}</a></h3>
+				
 				<div class="product-price">	
 					<span class="price">
-						{{number_format($list->gia, 0, ',', ' ')}} VNĐ						</span>
+						{{number_format($list['gia'], 0, ',', ' ')}} VNĐ						</span>
 												     <span class="price-before-discount">$ 800</span>
 											
 				</div><!-- /.product-price -->
-				<div class="description m-t-10">{{$list->mota}}</div>
+				
                 				<div class="cart clearfix animate-effect">
 					<div class="action">
 						<ul class="list-unstyled">
 							<li class="add-cart-button btn-group">
-								<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-									<i class="fa fa-shopping-cart"></i>													
-								</button>
-								<button class="btn btn-primary" type="button">Add to cart</button>
+									<a href="{{route('chitietsanphamdaily',$list['sanpham_id'])}}" class="btn btn-primary icon" data-toggle="dropdown" type="button"  >
+											<i  class="fa fa-shopping-cart"></i>													
+										</a>
+										<a class="btn btn-primary"  href="{{route('chitietsanphamdaily',$list['sanpham_id'])}}">Xem chi tiết</a>
 														
 							</li>
 		                   
@@ -213,7 +213,7 @@
 						
 							<div class="text-right">
 						         
-									<div style="text-align: right;">{{$loaisp->links()}}</div>
+									<div style="text-align: right;">{{--  {{$loaisp->links()}}  --}}</div>
 </div><!-- /.pagination-container -->						    </div><!-- /.text-right -->
 						
 					</div><!-- /.filters-container -->
@@ -221,7 +221,7 @@
 				</div><!-- /.search-result-container -->
 
 			</div><!-- /.col -->
-			@include('shop.layouts.brands-carousel')
+
 		</div><!-- /.row -->
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
 		

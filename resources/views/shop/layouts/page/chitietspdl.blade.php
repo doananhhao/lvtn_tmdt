@@ -10,8 +10,8 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li style="width: 20%"><a href="{{ route('home') }}">Trang chủ</a></li>
-				<li style="width: 12%"><a href="{{route('loaisanpham',$tenlsp->id)}}">{{$tenlsp->tenloai}}</a></li>
+				<li style="white-space: nowrap;"><a href="{{ route('home') }}">Trang chủ</a></li>
+				<li style="white-space: nowrap;"><a href="{{route('loaisanpham',$tenlsp->id)}}">{{$tenlsp->tenloai}}</a></li>
 				<li class='active'>{{$sanpham->tensanpham}}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -38,124 +38,18 @@
     <div class="product-item-holder size-big single-product-gallery small-gallery">
 
         <div id="owl-single-product">
-            <div class="single-product-gallery-item" id="slide1">
-                <a data-lightbox="image-1" data-title="Gallery" href="{{ asset('shop/images/pic/hd/hd_'.$sanpham->hinhanh) }}">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="{{ asset('shop/images/pic/hd/hd_'.$sanpham->hinhanh) }}" />
+            <div class="single-product-gallery-item" id="slide1" style="padding-left: 5.5em">
+                <a data-lightbox="image-1" data-title="Gallery" href="{{ asset('shop/images/pic/dangban/'.$sanpham->hinhanh) }}">
+                    <img class="img-responsive" alt="" src="{{ asset('shop/images/blank.gif') }}" data-echo="{{ asset('shop/images/pic/dangban/'.$sanpham->hinhanh) }}" />
                 </a>
             </div><!-- /.single-product-gallery-item -->
 
-            {{--  <div class="single-product-gallery-item" id="slide2">
-                <a data-lightbox="image-1" data-title="Gallery" href="../shop/images/single-product/2.jpg">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/2.jpg" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide3">
-                <a data-lightbox="image-1" data-title="Gallery" href="../shop/images/single-product/3.jpg">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/3.jpg" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide4">
-                <a data-lightbox="image-1" data-title="Gallery" href="../shop/images/single-product/1.jpg">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/1.jpg" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide5">
-                <a data-lightbox="image-1" data-title="Gallery" href="../shop/images/single-product/2.jpg">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/2.jpg" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide6">
-                <a data-lightbox="image-1" data-title="Gallery" href="../shop/images/single-product/3.jpg">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/3.jpg" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide7">
-                <a data-lightbox="image-1" data-title="Gallery" href="../shop/images/single-product/1.jpg">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/1.jpg" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide8">
-                <a data-lightbox="image-1" data-title="Gallery" href="../shop/images/single-product/2.jpg">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/2.jpg" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide9">
-                <a data-lightbox="image-1" data-title="Gallery" href="../shop/images/single-product/3.jpg">
-                    <img class="img-responsive" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/3.jpg" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->  --}}
+            
 
         </div><!-- /.single-product-slider -->
 
 
-        {{--  <div class="single-product-gallery-thumbs gallery-thumbs">
-
-            <div id="owl-single-product-thumbnails">
-                <div class="item">
-                    <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="1" href="#slide1">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm1.jpg" />
-                    </a>
-                </div>
-
-                <div class="item">
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#slide2">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm2.jpg"/>
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="3" href="#slide3">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm3.jpg" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="4" href="#slide4">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm1.jpg" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="5" href="#slide5">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm2.jpg" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="6" href="#slide6">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm3.jpg" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="7" href="#slide7">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm1.jpg" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="8" href="#slide8">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm2.jpg" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="9" href="#slide9">
-                        <img class="img-responsive" width="85" alt="" src="../shop/images/blank.gif" data-echo="../shop/images/single-product/sm3.jpg" />
-                    </a>
-                </div>
-            </div><!-- /#owl-single-product-thumbnails -->
-
-            
-
-        </div><!-- /.gallery-thumbs -->  --}}
+        
 
     </div><!-- /.single-product-gallery -->
 </div><!-- /.gallery-holder -->        			
@@ -164,17 +58,16 @@
 							<h1 class="name">{{$sanpham->tensanpham}}</h1>
 							
 							<div class="rating-reviews m-t-20">
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                           
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <div class="reviews">
-                                               
-                                            </div>
-                                        </div>
-                                    </div><!-- /.row -->		
-                                </div><!-- /.rating-reviews -->
+								<div class="row">
+									<div class="col-sm-3">
+										</div>
+									<div class="col-sm-8">
+										<div class="reviews">
+											
+										</div>
+									</div>
+								</div><!-- /.row -->		
+							</div><!-- /.rating-reviews -->
 
 							<div class="stock-container info-container m-t-10">
 								<div class="row">
@@ -192,17 +85,19 @@
 							</div><!-- /.stock-container -->
 
 							<div class="description-container m-t-20">
-								{{$sanpham->mota}}
+								
 							</div><!-- /.description-container -->
 
 							<div class="price-container info-container m-t-20">
 								<div class="row">
 									
 
-									<div class="col-sm-6">
+									<div class="col-sm-12">
 										<div class="price-box">
+											
+											
 											<span class="price">{{number_format($sanpham->gia, 0, ',', '.')}} VNĐ</span>
-											<span class="price-strike">$900.00</span>
+											
 										</div>
 									</div>
 
@@ -214,16 +109,18 @@
 							<div class="quantity-container info-container">
 								<div class="row">
 									
-									<div class="col-sm-2">
-										<span class="label">Liên hệ :</span>
-									</div>
-									
 									
 
-									<div class="col-sm-7">
-										
-										<button class="btn btn-primary" type="button" onclick="">{{$sdttv->sdt}}</button>
-									</div>
+										<div class="col-sm-2">
+												<span class="label">Liên hệ :</span>
+											</div>
+											
+											
+		
+											<div class="col-sm-7">
+												
+												<a class="btn btn-primary" >{{$sdttv->sdt}}</a>
+											</div>
 
 									
 								</div><!-- /.row -->
@@ -256,11 +153,12 @@
 								
 								<div id="description" class="tab-pane in active">
 									<div class="product-tab">
-										<p class="text">{{$sanpham->mota}}</p>
+										<p class="text">{!!$sanpham->mota!!}</p>
 									</div>	
 								</div><!-- /.tab-pane -->
 
-								
+										
+										
 
 								<div id="tags" class="tab-pane">
 									<div class="product-tag">
@@ -338,7 +236,7 @@
 			<div class="blog-comments inner-bottom-xs">
 				<h4 style="display: inline-block;">{{$bl->name}}</h4>
 				<span class="review-action pull-right">
-					{{$bl->created_at->format('d/m/Y')}}   
+					{{$bl->updated_at->format('d/m/Y')}}   
 					
 					<!-- <a href="">&sol;  Reply</a> -->
 				</span>
@@ -385,58 +283,7 @@
 				</div><!-- /.product-tabs -->
 
 				<!-- ============================================== UPSELL PRODUCTS ============================================== -->
-<section class="section featured-product wow fadeInUp">
-	<h3 class="section-title">Sản phẩm cùng loại</h3>
-	<div class="owl-carousel home-owl-carousel upsell-product custom-carousel owl-theme outer-top-xs">
-		@foreach($spcungloai as $spcl)
-		@if (($spcl->DangBan()->first() == null) && ($spcl->id != $sanpham->id))	
-		<div class="item item-carousel">
-			<div class="products">
-				
-	<div class="product">		
-		<div class="product-image">
-			<div class="image">
-				<a href="{{route('chitietsanpham',$spcl->id)}}"><img  src="assets/images/blank.gif" data-echo="{{ asset('shop/images/pic/'.$spcl->hinhanh) }}" alt=""></a>
-			</div><!-- /.image -->			
 
-			            <div class="tag sale"><span>sale</span></div>            		   
-		</div><!-- /.product-image -->
-			
-		
-		<div class="product-info text-left">
-			<h3 class="name"><a href="{{route('chitietsanpham',$spcl->id)}}">{{$spcl->tensanpham}}</a></h3>
-			<div class="rating rateit-small"></div>
-			<div class="description"></div>
-
-			<div class="product-price">	
-				<span class="price">
-					{{number_format($spcl->gia, 0, ',', ' ')}} VNĐ</span>
-										     <span class="price-before-discount"> </span>
-									
-			</div><!-- /.product-price -->
-			
-		</div><!-- /.product-info -->
-					<div class="cart clearfix animate-effect">
-				<div class="action">
-					<ul class="list-unstyled">
-						<li class="add-cart-button btn-group">
-							<button class="btn btn-primary icon" data-toggle="dropdown" type="button"  onclick="add_to_cart(this, {{ $spcl->id }})">
-								<i class="fa fa-shopping-cart"></i>													
-							</button>
-							<button class="btn btn-primary" type="button" onclick="add_to_cart(this, {{ $spcl->id }})">Add to cart</button>
-													
-						</li>
-	                   
-		                
-					</ul>
-				</div><!-- /.action -->
-			</div><!-- /.cart -->
-			</div><!-- /.product -->
-      
-			</div><!-- /.products -->
-		</div><!-- /.item -->
-		@endif
-	@endforeach
 		
 <!-- ============================================== UPSELL PRODUCTS : END ============================================== -->
 			
@@ -445,9 +292,31 @@
 		</div><!-- /.row -->
 		<!-- ============================================== BRANDS CAROUSEL ============================================== -->
 		
-	
-</div><!-- /.logo-slider -->
-<!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
-</div><!-- /.body-content -->
+
+
+@endsection
+
+@section('javascript')
+<script src="{{ asset('') }}shop/js/rateit/rater.min.js"></script>
+<script>
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$("#rate1").rate();
+
+	//or for example
+	var options = {
+		max_value: 5,
+		step_size: 0.5,
+	}
+	$("#rate1").rate(options);
+
+	$("#rate1").on("change", function(ev, data){
+		{{-- console.log(data.from, data.to); --}}
+		$('#score_rate').val(data.to)
+	});
+</script>
 
 @endsection

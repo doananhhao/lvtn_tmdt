@@ -38,7 +38,7 @@
     <div class="product-item-holder size-big single-product-gallery small-gallery">
 
         <div id="owl-single-product">
-            <div class="single-product-gallery-item" id="slide1">
+            <div class="single-product-gallery-item" id="slide1" style="padding-left: 5.5em">
                 <a data-lightbox="image-1" data-title="Gallery" href="{{ asset('shop/images/pic/'.$sanpham->hinhanh) }}">
                     <img class="img-responsive" alt="" src="{{ asset('shop/images/blank.gif') }}" data-echo="{{ asset('shop/images/pic/'.$sanpham->hinhanh) }}" />
                 </a>
@@ -167,7 +167,7 @@
 								<div class="row">
 									<div class="col-sm-3">
 										{{-- <div class="rating rateit-small"></div> --}}
-										<div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+										<div class="rateit" data-rateit-value="{{$score1/2}}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 									</div>
 									<div class="col-sm-8">
 										<div class="reviews">
@@ -285,63 +285,100 @@
 											<div class="container">
 												<div class="review-form">
 												<div class="form-container">
-													<?php
-													if (Auth::check()){ // có đăng nhập
-														?>
-													<form role="form" class="cnt-form">
-  <div class="row">
 
-    <div class="col-lg-3" >
-    	<br>
+@if (Auth::check()) {{-- // có đăng nhập --}}
+	@if($damua == false)
+	<form role="form" class="cnt-form">
+			<div class="row">
+			<br>
+				<div>Bạn phải mua sản phẩm để được đánh giá sản phẩm này.</div>
+				<br>
+				<br>
+				</div> 
+														  
+				</form><!-- /.cnt-form -->
+	@else
+				@if($dadg == null)
+					<form action="{{ route('review',['id' => $sanpham['id']]) }}" method="POST" role="form" class="cnt-form">
+							@csrf
+						<div class="row col-md-12">
+
+						<div class="col-lg-3" >
+							<br>
+
+							<div id="rate1"  style="font-size: 45px;"></div>
+							<div style="font-size: 14px; margin-left: 1px">Chất lượng sản phẩm</div>
+							
+
+						{{-- <div class="star-rating">
+							<span class="fa fa-star-o" data-rating="1"></span>
+							<span class="fa fa-star-o" data-rating="2"></span>
+							<span class="fa fa-star-o" data-rating="3"></span>
+							<span class="fa fa-star-o" data-rating="4"></span>
+							<span class="fa fa-star-o" data-rating="5"></span>
+							<input type="hidden" name="whatever1" class="rating-value" value="2.56">
+							<div style="font-size: 14px">Chất lượng sản phẩm</div>
 
 
-		
+						</div> --}}
+						
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">									
+								<textarea class="form-control txt txt-review" id="dg" name="dg" rows="4" placeholder=""></textarea>
+							</div><!-- /.form-group -->
+						</div>
+					</div> 
+					<div style="width: 48.5%;text-align: right;">
+						<input type="hidden" value="0" name="score" id="score_rate"> 
+							<button type="submit" class="btn btn-primary btn-upper">Đánh giá</button>
+					</div><!-- /.action -->
+					</form><!-- /.cnt-form -->
+				@else
+				
+				<form action="{{ route('update-review',['idsp' => $sanpham['id'],'idtv' => Auth::user()->id ]) }}" method="POST" role="form" class="cnt-form">
+						@csrf
+					<div class="row col-md-12">
+	
+							<div class="col-lg-3" >
+								<br>
+	
+								<div  id="rate1" data-rate-value="{{$dadg->votes/2}}"  style="font-size: 45px;"></div>
+								<div style="font-size: 14px; margin-left: 1px">Chất lượng sản phẩm</div>
 
-      <div class="star-rating">
-        <span class="fa fa-star-o" data-rating="1"></span>
-        <span class="fa fa-star-o" data-rating="2"></span>
-        <span class="fa fa-star-o" data-rating="3"></span>
-        <span class="fa fa-star-o" data-rating="4"></span>
-        <span class="fa fa-star-o" data-rating="5"></span>
-        <input type="hidden" name="whatever1" class="rating-value" value="2.56">
-        <div style="font-size: 14px">Chất lượng sản phẩm</div>
+							
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group">									
+									<textarea class="form-control txt txt-review" id="dg" name="dg" rows="4" placeholder="">{{$dadg->noidung}}</textarea>
+								</div><!-- /.form-group -->
+							</div>
+						</div> 
+						<div style="width: 48.5%;text-align: right;">
+							<input type="hidden" value="0" name="score" id="score_rate"> 
+								<button  type="submit" class="btn btn-primary btn-upper">Cập nhật</button>
+						</div><!-- /.action -->
+						</form><!-- /.cnt-form -->
+				@endif							
+@endif
+@else        {{--    // không đăng nhập  --}}
 
-
-      </div>
-     
-    </div>
-    <div class="col-lg-3">
-    	<div class="form-group">
-																	
-			<textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
-		</div><!-- /.form-group -->
-    </div>
-  </div> 
-  <div style="width: 48.5%;text-align: right;">
-		<button class="btn btn-primary btn-upper">Đánh giá</button>
-</div><!-- /.action -->
-  </form><!-- /.cnt-form -->
-												
-												<?php
-									        }else{              // không đăng nhập
-									        	?>
-									        	<form role="form" class="cnt-form">
-												  <div class="row">
-												  	<br>
-												    <div><a href="{{ route('login') }}">Đăng nhập</a>  để đánh giá sản phẩm này.</div>
-												    <br>
-												    <br>
-												  </div> 
+<form role="form" class="cnt-form">
+	<div class="row">
+	<br>
+		<div><a href="{{ route('login') }}">Đăng nhập</a>  để đánh giá sản phẩm này.</div>
+		<br>
+		<br>
+		</div> 
 												  
-												  </form><!-- /.cnt-form -->
-									        	<?php
-				            
-										        } 
-										        ?>
-											</div><!-- /.form-container -->
-											</div><!-- /.review-form -->
+		</form><!-- /.cnt-form -->
 
-										</div><!-- /.product-reviews -->
+
+@endif
+		</div><!-- /.form-container -->
+		</div><!-- /.review-form -->
+
+		</div><!-- /.product-reviews -->
   
 </div>
 
@@ -353,6 +390,7 @@
 										
 										<div class="product-add-review">
 											<h4 class="title">Nhận xét về sản phẩm</h4>
+											
 											<div class="product-reviews">
 										
 
@@ -364,15 +402,17 @@
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="rating-block">
-					<h4>30 Đánh giá</h4>
-					<h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
-					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+					
+					<h2 class="bold padding-bottom-7">{{$score1/2}} <small>/ 5</small></h2>
+
+					@if($score2 == 0)
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
 					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 					</button>
-					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-					</button>
-					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
 					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 					</button>
 					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
@@ -381,81 +421,128 @@
 					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
 					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 					</button>
+				@elseif($score2 == 1) 
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+				@elseif($score2 == 2) 
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+				@elseif($score2 == 3)
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+				@elseif($score2 == 4) 
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+				@elseif($score2 == 5)
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+					  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					</button>
+					@endif
 				</div>
 			</div>
-			{{-- <div class="col-sm-3">
-				<h4>Xếp hạng đánh giá</h4>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">1</div>
-				</div>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">4 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">1</div>
-				</div>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">3 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">0</div>
-				</div>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">2 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">0</div>
-				</div>
-				<div class="pull-left">
-					<div class="pull-left" style="width:35px; line-height:1;">
-						<div style="height:9px; margin:5px 0;">1 <span class="glyphicon glyphicon-star"></span></div>
-					</div>
-					<div class="pull-left" style="width:180px;">
-						<div class="progress" style="height:9px; margin:8px 0;">
-						  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
-							<span class="sr-only">80% Complete (danger)</span>
-						  </div>
-						</div>
-					</div>
-					<div class="pull-right" style="margin-left:10px;">0</div>
-				</div>
-			</div>	 --}}		
-		</div>			
+				
+		</div>
+		<br>
+		<h4>{{$sodanhgia}} Đánh giá</h4>			
+		<br>
+
+	
+				
+		
+				
+				
 		
 		
+	</div> <!-- /container -->
+	@foreach($danhgiasp as $dg)	
+				<div class="col-md-2 col-sm-2">
+					<img src="{{ asset('useravatar/noavatar.png') }}" alt="Responsive image" class="img-rounded img-responsive">
+				</div>
+				<div class="col-md-10 col-sm-10 blog-comments outer-bottom-xs">
+					<div class="blog-comments inner-bottom-xs">
+						<h4 style="display: inline-block;">{{$dg->name}}</h4>
+						<span class="review-action pull-right">
+								{{$dg->updated_at->format('d/m/Y')}}   
+								
+								
+							</span>
+						<br>
+						<div class="rateit" data-rateit-value="{{$dg->votes/2}}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+						<p>{{$dg->noidung}}</p>
+					</div>
 		
-    </div> <!-- /container -->
+		
+					
+		
+		
+				</div>
+				@endforeach
+				<div class="clearfix"></div>
+				<div style="text-align: center;">{{$danhgiasp->links()}}</div>
 
 											</div><!-- /.reviews -->
 										</div><!-- /.product-reviews -->
@@ -541,7 +628,7 @@
 			<div class="blog-comments inner-bottom-xs">
 				<h4 style="display: inline-block;">{{$bl->name}}</h4>
 				<span class="review-action pull-right">
-					{{$bl->created_at->format('d/m/Y')}}   
+					{{$bl->updated_at->format('d/m/Y')}}   
 					
 					<!-- <a href="">&sol;  Reply</a> -->
 				</span>
@@ -595,20 +682,39 @@
 		@if (($spcl->DangBan()->first() == null) && ($spcl->id != $sanpham->id))	
 		<div class="item item-carousel">
 			<div class="products">
-				
+				@php
+				$sp = $spcl;
+				$km = $sp->ChiTietKhuyenMai()->where([
+					['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+					['ngaybd', '<=', date('Y-m-d H:i:s')]
+				])->first();
+				$dg = $sp->DanhGia;
+				if ($dg->isEmpty())
+					$score123 = 5;
+				else {
+					// 1 vote tối đa 10 sao
+					$star = 0;
+					$vote_count = 0;
+					foreach ($dg as $v){
+						$vote_count++;
+						$star += $v->votes;
+					}
+					$score123 = round($star / $vote_count);
+				}
+				@endphp
 	<div class="product">		
 		<div class="product-image">
 			<div class="image">
 				<a href="{{route('chitietsanpham',$spcl->id)}}"><img  src="{{ asset('shop/images/blank.gif') }}" data-echo="{{ asset('shop/images/pic/'.$spcl->hinhanh) }}" alt=""></a>
 			</div><!-- /.image -->			
 
-			            <div class="tag sale"><span>sale</span></div>            		   
+			                      		   
 		</div><!-- /.product-image -->
 			
 		
 		<div class="product-info text-left">
 			<h3 class="name"><a href="{{route('chitietsanpham',$spcl->id)}}">{{$spcl->tensanpham}}</a></h3>
-			<div class="rating rateit-small"></div>
+			<div class="rateit" data-rateit-value="{{ $score123/2 }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 			<div class="description"></div>
 
 			<div class="product-price">	
@@ -652,5 +758,30 @@
 </div><!-- /.logo-slider -->
 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->	</div><!-- /.container -->
 </div><!-- /.body-content -->
+
+@endsection
+
+@section('javascript')
+<script src="{{ asset('') }}shop/js/rateit/rater.min.js"></script>
+<script>
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$("#rate1").rate();
+
+	//or for example
+	var options = {
+		max_value: 5,
+		step_size: 0.5,
+	}
+	$("#rate1").rate(options);
+
+	$("#rate1").on("change", function(ev, data){
+		{{-- console.log(data.from, data.to); --}}
+		$('#score_rate').val(data.to)
+	});
+</script>
 
 @endsection

@@ -5244,3 +5244,7 @@ a {
   color: #555;
   position: absolute;
 }
+
+.rate-select-layer > span{
+  color: yellow;
+}

@@ -5,18 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\SanPham;
 use App\Models\ChiTietHoaDon;
 use App\Models\HoaDon;
 use App\Models\LoaiSP;
 use App\Models\ChiTietKhuyenMai;
+use App\Models\CongDoanHoaDon;
 use App\Models\BinhLuan;
 use App\Models\DanhGia;
 use App\Models\ThanhVien;
 use App\Models\DangBan;
 use App\Models\DaiLy;
 use App\Models\CapDo;
+use App\Models\DuyetDangBanHistory;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +30,7 @@ use Illuminate\Support\Facades\Auth;
 class PageController extends Controller
 {
 
+    
     //public $daily = [];
 
     public function getIndex(){
@@ -37,15 +41,21 @@ class PageController extends Controller
     }
   
     public function getLoaiSp($type){
-        
+        if ($type == null)
+            return abort(404);
+
         $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         $sp_theoloai = LoaiSP::all();
         
         $tenlsp = LoaiSP::where('id',$type)->first();
         $loaisp = SanPham::where('loaisp_id',$type)->paginate(12);
+        //dd($loaisp);
         $db=DangBan::all();
         $title=$tenlsp->tenloai;
         $is_type = $type;
+        ///
+        
+        ///
         //$loaisp = SanPham::where('loaisp_id',$type)->where('SanPham.id','!=','DangBan.sanpham_id')->paginate(12);
         //$loaispa = $loaisp->DangBan->where('sanpham_id','!=',$loaisp)->paginate(12);
         
@@ -101,10 +111,24 @@ class PageController extends Controller
                 ->orderBy('giamgia', 'desc')
                 ->limit(3)
                 ->get();
-        $giamgiadb = [];
+        $giamgiadb  = [];
         foreach ($list as $v){
             $sp = SanPham::find($v->sanpham_id);
             $sp->giamgia = $v->giamgia;
+            $dg = $sp->DanhGia;
+            if ($dg->isEmpty())
+                $score = 5;
+            else {
+                // 1 vote tối đa 10 sao
+                $star = 0;
+                $vote_count = 0;
+                foreach ($dg as $v){
+                    $vote_count++;
+                    $star += $v->votes;
+                }
+                $score = round($star / $vote_count);
+            }
+            $sp->score = $score/2;
             $giamgiadb[] = $sp;
         }
         //
@@ -118,21 +142,117 @@ class PageController extends Controller
                     ])->orderBy('giamgia', 'desc')->first();
         //
         $sobinhluan = BinhLuan::where('sanpham_id',$id)->count();
-        $binhluan = BinhLuan::join('users','user_id','=','users.id')->where('sanpham_id',$id)->where('status',1)->paginate(10);
+        //$binhluan = BinhLuan::join('users','user_id','=','users.id')->where('sanpham_id',$id)->where('status',1)->paginate(10);
+        $binhluan = User::join('BinhLuan','users.id','BinhLuan.user_id')->where('BinhLuan.sanpham_id',$id)->where('BinhLuan.status',1)->paginate(10);
 
-        $sodanhgia = DanhGia::where('sanpham_id',$id)->count();
-        //$danhgia = DanhGia::join('thanhvien','thanhvien_id','=','users.id')->join('users','user_id','=','users.id')->where('sanpham_id',$id)->paginate(10);
+        /// test
+        // kiểm tra đã mua sp hay chưa
+
+        //
+        if (Auth::check()){
+            $cthd = ChiTietHoaDon::where('sanpham_id', $id)->get();
+            $damua = false; //boolean: đã mua hay chưa
+            if ($cthd != null){
+                foreach ($cthd as $v){
+                    if ($v->HoaDon->user_id == Auth::User()->id)
+                        $damua = true;
+                }
+            }
+            $dadg = null; //null: chưa có đánh giá hoặc chưa mua
+            if ($damua)
+                $dadg = DanhGia::find(Auth::User()->id, $id);
+        }
         
+        $sodanhgia = DanhGia::where('sanpham_id',$id)->where('tinhtrang',1)->count();
+        $danhgiasp = User::join('DanhGia','users.id','DanhGia.thanhvien_id')->where('DanhGia.sanpham_id',$id)->where('DanhGia.tinhtrang',1)->paginate(10);
         $spcungloai = SanPham::where('loaisp_id',$sanpham->loaisp_id)->get();
-        //dd($spcungloai);
 
-    	return view('shop.layouts.page.chitietsanpham',compact('title', 'sidemenu', 'giamgia', 'sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','danhgia','tenlsp','spcungloai'));
+        $danhgiatrungbinh = DanhGia::where('sanpham_id',$id)->where('tinhtrang',1)->get();
+
+        $star = 0;
+        $vote_count = 0;
+        $score1 = 0;
+        $score2 = 0;
+
+        foreach($danhgiatrungbinh as $tb){
+            $vote_count++;
+            $star += $tb->votes;
+        }
+        if($vote_count == 0 && $star == 0){
+            $score1 = 2.5*2;
+            $score2 = 3;
+        }else{
+            $score1 = $star/$vote_count;
+            $score2 = round($score1/2);
+        }
+        
+        //dd($spcungloai);
+        //
+
+        // if (Auth::check()){
+        //     $hoadon = HoaDon::where('user_id',Auth::user()->id)->get();
+        //     $chitiethoadon = ChiTietHoaDon::orderBy('id', 'desc')->get();
+        //     $listsp=array();
+        //     if ($hoadon != null)
+        //         foreach($hoadon as $hd){
+        //                 foreach($chitiethoadon as $cthd){
+        //                     if($cthd['hoadon_id'] == $hd['id']){
+        //                         array_push($listsp,$cthd);
+        //                     }
+        //                 }
+        //         }
+            
+        //     $spdamua=array();
+            
+        //     foreach($listsp as $list){
+        //         if($list['sanpham_id'] == $id){
+        //             array_push($spdamua,$list);
+        //         }
+        //     }
+            
+        //     $damua=0;
+        //     $congdoanhoadon = CongDoanHoaDon::orderBy('id', 'desc')->get();
+        //     foreach($spdamua as $spdm){
+        //         foreach($congdoanhoadon as $cdhd){
+        //             if($spdm['hoadon_id'] == $cdhd['hoadon_id']){
+        //                 if($cdhd['congdoan_id'] == 3 && $cdhd['status'] == 1){
+        //                     $damua=1;
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     //
+        //     //dd($damua);
+        //     // kt đã đánh giá chưa
+        //     $dadg=0;
+        //     $danhgia = DanhGia::where('sanpham_id',$id)->get();
+        //     foreach($danhgia as $dg){
+        //         if($dg['thanhvien_id'] == Auth::user()->id){
+        //             $dadg=1;
+        //             break;
+        //         }
+        //     }
+        //     ///
+        //     $dadanhgia = DanhGia::where('sanpham_id',$id)->where('thanhvien_id',Auth::user()->id)->first();
+
+        //     //dd($dadanhgia);
+        //     //
+        //     //$danhgiasp = DanhGia::join('users','thanhvien_id','=','users.id')->where('sanpham_id',$id)->where('DanhGia.thanhvien_id','!=',Auth::user()->id)->where('DanhGia.tinhtrang',1)->paginate(10);
+        //     $danhgiasp = User::join('DanhGia','users.id','DanhGia.thanhvien_id')->where('DanhGia.sanpham_id',$id)->where('DanhGia.thanhvien_id','!=',Auth::user()->id)->where('DanhGia.tinhtrang',1)->paginate(10);
+        // }
+        
+        
+
+    	return view('shop.layouts.page.chitietsanpham',compact('score1','score2','danhgiasp','dadg','damua','title', 'sidemenu', 'giamgia', 'sanpham','giamgiadb','binhluan','sobinhluan','sodanhgia','dadanhgia','tenlsp','spcungloai'));
 
     } 
 
     public function comment(Request $request,$id){
 
-        //$tvdb = ThanhVien::where('user_id',Auth::user()->id)->first();
+        if ($id == null)
+            return abort(404);
+
         $comment=BinhLuan::create([
             'user_id' => Auth::user()->id,
             'sanpham_id' => $id,
@@ -141,7 +261,7 @@ class PageController extends Controller
         
         
         
-        return back()->with('success', 'Cám ơn bạn đã bình luận cho sản phẩm này'.$request->tensanpham)->withInput();
+        return back()->with('success', 'Cám ơn bạn đã bình luận cho sản phẩm này')->withInput();
     }
 
     public function getSpDaiLy(){
@@ -149,19 +269,33 @@ class PageController extends Controller
         $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         //$sp_theoloai = LoaiSP::all();
         $title="Sản phẩm của Thành viên";
-        $loaisp = SanPham::join('DangBan','DangBan.sanpham_id','SanPham.id')->where('canduyet',0)->where('ngungban',0)->paginate(12);
+        //$loaisp = SanPham::join('DangBan','DangBan.sanpham_id','SanPham.id')->where('canduyet',0)->where('ngungban',0)->paginate(12);
+        $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+        $loaisp=array();
+        $all= SanPham::join('DangBan','DangBan.sanpham_id','SanPham.id')->orderBy('DangBan.id', 'desc')->get()->toArray();
+            foreach($all as $a){
+                    foreach($sell_stt as $s){
+                        if($a['id'] == $s['dangban_id']){
+                            if($s['status'] == 1){
+                                array_push($loaisp,$a);
+                                
+                            }break;
+                        }
+                    
+                    }
+                
+            }
+        //$loaisp->paginate(12); 
         //dd($loaisp);
         return view('shop.layouts.page.sanphamdangban',compact('sidemenu','loaisp','title'));
     }
 
 
     public function getChitietSPDL($id){
-        /**
-         * $id tồn tại sp ko
-         * ...
-         * ...
-         * những phần trên nữa
-         */
+
+        if ($id == null)
+            return abort(404);
+
         $sanpham = SanPham::where('id',$id)->first();
         $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
 
@@ -183,10 +317,24 @@ class PageController extends Controller
                 ->orderBy('giamgia', 'desc')
                 ->limit(3)
                 ->get();
-        $giamgiadb = [];
+        $giamgiadb  = [];
         foreach ($list as $v){
             $sp = SanPham::find($v->sanpham_id);
             $sp->giamgia = $v->giamgia;
+            $dg = $sp->DanhGia;
+            if ($dg->isEmpty())
+                $score = 5;
+            else {
+                // 1 vote tối đa 10 sao
+                $star = 0;
+                $vote_count = 0;
+                foreach ($dg as $v){
+                    $vote_count++;
+                    $star += $v->votes;
+                }
+                $score = round($star / $vote_count);
+            }
+            $sp->score = $score/2;
             $giamgiadb[] = $sp;
         }
 
@@ -249,5 +397,46 @@ class PageController extends Controller
         $title = 'Unicase - Chính sách bán hàng';
         $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         return view('shop.about', ['title' => $title, 'sidemenu' => $sidemenu]);
+    }
+
+    //ajax
+    public function review(Request $request,$id){
+
+        if ($id == null)
+            return abort(404);
+
+        $comment=DanhGia::create([
+            'thanhvien_id' => Auth::user()->id,
+            'sanpham_id' => $id,
+            'tieude' => 'null',
+            'noidung' => $request->dg,
+            'tinhtrang' => 0,
+            'votes' => $request->score * 2
+        ]);
+        
+        
+        
+        return back()->with('success', 'Cám ơn bạn đã đánh giá cho sản phẩm này')->withInput();
+    }
+    public function update_review(Request $request,$idsp,$idtv){
+
+        if ($idsp == null)
+            return abort(404);
+        if ($idtv == null)
+            return abort(404);
+            
+		$this->validate($request, [
+				
+            'dg'  => 'required'
+            
+        ]);
+
+        $danhgia = DanhGia::where('sanpham_id',$idsp)->where('thanhvien_id',$idtv)->first();
+        $danhgia->noidung = $request->dg;
+        $danhgia->votes = $request->score * 2;
+       
+        $danhgia->save();
+
+        return back()->with('success', 'Bạn đã cập nhật thành công ')->withInput();
     }
 }

@@ -10,6 +10,10 @@ class DanhGia extends Model
     protected $primaryKey = ['thanhvien_id', 'sanpham_id'];
     public $incrementing = false;
 
+    protected $fillable = [
+        'thanhvien_id', 'sanpham_id','tieude', 'noidung','tinhtrang','votes'
+    ];
+
     function ThanhVien(){
         return $this->belongsTo('App\Models\ThanhVien', 'thanhvien_id');
     }

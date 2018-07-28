@@ -40,7 +40,7 @@
                                     <th>Sản phẩm</th>
                                     <th>Số lượng</th>
                                     
-                                    <th>Mô tả</th>
+                                    {{--  <th>Mô tả</th>  --}}
                                     <th>Đơn giá</th>
                                     
                                     <th>Tình trạng</th>
@@ -54,7 +54,7 @@
                                 <td>{{ $db['tenloai'] }}</td>
                                 <td><a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" >{{ $db['tensanpham'] }}</a></td>
                                 <td>{{ $db['soluong'] }}</td>
-                                <td>{{ $db['mota'] }}</td>
+                                {{--  <td>{{ $db['mota'] }}</td>  --}}
                                 <td>{{ $db['gia'] }}</td>
                                 
                                 <td>

@@ -11,7 +11,7 @@
 <div class="col-sm-12">
         <div class="white-box">
             <h3 class="box-title">Đơn hàng bao gồm</h3>
-            <p class="text-muted">   <code></code></p>
+           
             <div class="table-responsive">
                 <table class="table color-table info-table">
                     <thead>
@@ -38,7 +38,8 @@
             </div>
         </div>
     </div>
-
+    @endsection
+    @section('javascript')
     <!-- jQuery -->
     <script src="{{ asset('plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap Core JavaScript -->

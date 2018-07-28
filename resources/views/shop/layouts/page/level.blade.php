@@ -32,6 +32,11 @@
                     <span id="current-progress"></span>
                   </div>
                   @break
+                  @elseif ($value['diemtichluy'] >= 40000000)
+                  <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span id="current-progress"></span>
+                  </div>
+                  @break
                 @elseif ($value['diemtichluy'] > $lv['diem'])
                     
                     @continue($diemhientai=$lv['diem'])
@@ -50,6 +55,7 @@
                             @continue($diemhientai=$lv['diem'])
                             
 
+                        
                         @else
                             
                             @if(($value['diemtichluy'] < $lv['diem']))
@@ -58,6 +64,7 @@
                                 </div>
                                 @break
                             
+
                             @else
                                 <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                 <span id="current-progress"></span>
@@ -74,6 +81,23 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Cấp độ hiện tại ({{$value['capdo']}}) </div>
                             <div class="panel-wrapper collapse in">
+                                @if($value['id'] == 4) 
+                                <table class="table table-hover" >
+                                        <thead>
+                                            <tr >
+                                                
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr style="text-align: center">
+                                                <td colspan="3">Bạn đã đặt cấp độ tối đa.</td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                @else
                                 <table class="table table-hover" >
                                     <thead>
                                         <tr >
@@ -93,6 +117,7 @@
                                                             @continue
                                                         @elseif ($value['diemtichluy'] > $lv['diem'])
                                                             @continue
+                                                       
                                                         @else
                                                             {{number_format($lv['diem'], 0, ' ', ' ')}}
                                                             @break
@@ -104,6 +129,7 @@
                                                             @continue
                                                         @elseif ($value['diemtichluy'] > $lv['diem'])
                                                             @continue
+                                                        
                                                         @else
                                                             {{number_format($lv['diem'], 0, ' ', ' ')}}
                                                             @break
@@ -118,6 +144,7 @@
                                                             @continue
                                                         @elseif ($value['diemtichluy'] > $lv['diem'])
                                                             @continue
+                                                        
                                                         @else
                                                             {{ number_format($lv['diem']-$value['diemtichluy'], 0, ' ', ' ') }}
                                                             @break
@@ -150,6 +177,7 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                @endif
                             </div>
                         </div>
                     </div>

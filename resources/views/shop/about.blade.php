@@ -38,9 +38,9 @@
                         <h4>Huỳnh Phạm Minh Quân</h4>
                         <ul>
                             <li>Lớp: <span>D14-TH03</span></li>
-                            <li>MSSV: <span></span></li>
-                            <li>ĐT: <span></span></li>
-                            <li>Khác: <span></span></li>
+                            <li>MSSV: <span>DH51401034</span></li>
+                            <li>ĐT: <span>01644 020 967</span></li>
+                            <li>Email: <span><a href="mailto:hpminhquan96@gmail.com">hpminhquan96@gmail.com</a></span></li>
                         </ul>
                     </div>       
                 </div>

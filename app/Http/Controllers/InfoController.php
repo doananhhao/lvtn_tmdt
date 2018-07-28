@@ -123,6 +123,9 @@ class InfoController extends Controller
 
     public function create_daily($id){
 
+        if ($id == null)
+            return abort(404);
+
 		$str = Auth::user()->id.Auth::user()->name;
         DaiLy::create([
             'thanhvien_id' => $id,
@@ -161,6 +164,10 @@ class InfoController extends Controller
     }
 
     public function order_detail_cancel($id){
+
+        if (HoaDon::find($id) == null)
+            return abort(404);
+
         $this->data['title'] = "Chi tiết đơn hàng hủy";
 
         
@@ -205,6 +212,9 @@ class InfoController extends Controller
     }
 
     public function order_detail($id){
+        if (HoaDon::find($id) == null)
+            return abort(404);
+
         $this->data['title'] = "Chi tiết hóa đơn";
         $order = CongDoanHoaDon::where('hoadon_id',$id)->orderBy('id','desc')->first();
         $this->data['orders'] = $order; 
@@ -329,14 +339,29 @@ class InfoController extends Controller
         }
         else if ($status == 'complete'){
             $this->data['title'] = "Danh sách sản phẩm";
-            $sell_list = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('DuyetDangBanHistory.status', 1)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+            // $sell_list = SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('DangBan.thanhvien_id',Auth::user()->id)->where('DuyetDangBanHistory.status', 1)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
             $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+            $sell_list=array();
+            $all= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+            foreach($all as $a){
+                    foreach($sell_stt as $s){
+                        if($a['id'] == $s['dangban_id']){
+                            if($s['status'] == 1){
+                                array_push($sell_list,$a);
+                                
+                            }break;
+                        }
+                    
+                    }
+                
+            }
         }
         else{
             $this->data['title'] = "Danh sách sản phẩm";
             $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
             $sell_list=array();
             $all= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+            
             foreach($all as $a){
                 if($a['canduyet']==1){
                     array_push($sell_list,$a);
@@ -345,14 +370,9 @@ class InfoController extends Controller
                     foreach($sell_stt as $s){
                         if($a['id'] == $s['dangban_id']){
                             if($s['status'] == 0){
-
-                                $x= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
-                                foreach($x as $x1){
-                                    if($x1['id'] == $s['id']){
-                                        array_push($sell_list,$x1);
-                                    }
-                                }
-                            }
+                                array_push($sell_list,$a);
+                                
+                            }break;
                         }
                     
                     }
@@ -447,6 +467,9 @@ class InfoController extends Controller
     
 
     public function sell_edit($id){
+
+        if (SanPham::find($id) == null)
+            return abort(404);
         $this->data['loaisp'] = LoaiSP::all();
         $this->data['ncc'] = NhaCungCap::all();
         $this->data['sanphamdangban'] = SanPham::where('id',$id)->first();
@@ -462,25 +485,24 @@ class InfoController extends Controller
             'soluong' => 'required|numeric|min:0',
             'loaisp' => 'required|exists:loaisp,id',
             'ncc' => 'required|exists:nhacungcap,id',
-            'mota' => 'max:10000',
-            'thoigian' => 'required'
+            'mota' => 'max:10000',/* 
+            'thoigian' => 'required' */
         ]);
 
         //Kiểm tra ngày bd và kết thúc
-        $thoigian = $request->thoigian;
-        if (strpos($thoigian, ' - ') !== false)
-            $arr = explode(' - ', $thoigian);
-        else{
-            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
-        }
+        /* $thoigian = $request->thoigian;
+        $thoigian = str_replace('/', '-',$thoigian);
+        
+       
         try{
-            $ngaybd = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $arr[0])));
-            $ngayketthuc = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $arr[1])));
+            $ngaybd = date('Y-m-d');
+            $ngayketthuc = date('Y-m-d', strtotime($thoigian));
         }catch(Exception $e){
             return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
         }
+
         if ($ngaybd >= $ngayketthuc)
-            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày');
+            return back()->withInput()->with('date_error', 'Vui lòng chọn lại ngày'); */
         //Kiểm tra ngày bd và kết thúc
 
         $sanpham = SanPham::find($id);
@@ -497,7 +519,7 @@ class InfoController extends Controller
         
         $dangban = DangBan::where('sanpham_id',$id)->first();
         $dangban->canduyet = 1;
-        $dangban->ngayhethan = $ngayketthuc;
+        //$dangban->ngayhethan = $ngayketthuc;
         $dangban->save();
         
         

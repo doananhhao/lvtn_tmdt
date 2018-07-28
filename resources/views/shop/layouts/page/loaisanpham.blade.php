@@ -96,7 +96,27 @@
 							<div class="category-product  inner-top-vs">
 								<div class="row">									
 			@foreach($loaisp as $sp)
-			@if ($sp->DangBan()->first() == null)							
+			@if ($sp->DangBan()->first() == null)
+			@php
+				$sp1 = $sp;
+				$km = $sp1->ChiTietKhuyenMai()->where([
+					['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+					['ngaybd', '<=', date('Y-m-d H:i:s')]
+				])->first();
+				$dg = $sp1->DanhGia;
+				if ($dg->isEmpty())
+					$score123 = 5;
+				else {
+					// 1 vote tối đa 10 sao
+					$star = 0;
+					$vote_count = 0;
+					foreach ($dg as $v){
+						$vote_count++;
+						$star += $v->votes;
+					}
+					$score123 = round($star / $vote_count);
+				}
+				@endphp							
 		<div class="col-sm-6 col-md-4 wow fadeInUp">
 			<div class="products">
 				
@@ -113,7 +133,7 @@
 		
 		<div class="product-info text-left">
 			<h3 class="name"><a href="{{route('chitietsanpham',$sp->id)}}">{{$sp->tensanpham}}</a></h3>
-			<div class="rating rateit-small"></div>
+			<div class="rateit" data-rateit-value="{{ $score123/2 }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 			<div class="description"></div>
 
 			<div class="product-price">	
@@ -155,9 +175,31 @@
 							<div class="category-product  inner-top-vs">
 							
 			@foreach($loaisp as $list)
-			@if ($list->DangBan()->first() == null)								
+			@if ($list->DangBan()->first() == null)		
+			@php
+				$sp = $list;
+				$km = $sp->ChiTietKhuyenMai()->where([
+					['ngayketthuc', '>=', date('Y-m-d H:i:s')],
+					['ngaybd', '<=', date('Y-m-d H:i:s')]
+				])->first();
+				$dg = $sp->DanhGia;
+				if ($dg->isEmpty())
+					$score123 = 5;
+				else {
+					// 1 vote tối đa 10 sao
+					$star = 0;
+					$vote_count = 0;
+					foreach ($dg as $v){
+						$vote_count++;
+						$star += $v->votes;
+					}
+					$score123 = round($star / $vote_count);
+				}
+				@endphp
 		<div class="category-product-inner wow fadeInUp">
-			<div class="products">				
+			
+			<div class="products">
+								
 	            <div class="product-list product">
 	<div class="row product-list-row">
 		<div class="col col-sm-4 col-lg-4">
@@ -170,8 +212,7 @@
 		<div class="col col-sm-8 col-lg-8">
 			<div class="product-info">
 				<h3 class="name"><a href="{{route('chitietsanpham',$list->id)}}">{{$list->tensanpham}}</a></h3>
-				<div class="rating rateit-small"></div>
-				<div class="product-price">	
+				<div class="rateit" data-rateit-value="{{ $score123/2 }}" data-rateit-ispreset="true" data-rateit-readonly="true"></div>				<div class="product-price">	
 					<span class="price">
 						{{number_format($list->gia, 0, ',', ' ')}} VNĐ						</span>
 												     <span class="price-before-discount">$ 800</span>

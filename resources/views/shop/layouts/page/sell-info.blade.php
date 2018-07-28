@@ -119,141 +119,145 @@
             
 
 
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{ asset('bootstrap/dist/js/tether.min.js') }}"></script>
-    <script src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('plugins/bower_components/bootstrap-extension/js/bootstrap-extension.min.js') }}"></script>
-    <!-- Menu Plugin JavaScript -->
-    <script src="{{ asset('plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
-    <!--slimscroll JavaScript -->
-    <script src="{{ asset('js/jquery.slimscroll.js') }}"></script>
-    <!--Wave Effects -->
-    <script src="{{ asset('js/waves.js') }}"></script>
-    <!-- Form Wizard JavaScript -->
-    <script src="{{ asset('plugins/bower_components/jquery-wizard-master/dist/jquery-wizard.min.js') }}"></script>
-    <!-- FormValidation -->
-    <link rel="stylesheet" href="{{ asset('plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.css') }}">
-    <!-- FormValidation plugin and the class supports validating Bootstrap form -->
-    <script src="{{ asset('plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.js') }}"></script>
-    <script src="{{ asset('plugins/bower_components/jquery-wizard-master/libs/formvalidation/bootstrap.min.js') }}"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="{{ asset('js/custom.min.js') }}"></script>
-    <!-- Sweet-Alert  -->
-    <script src="{{ asset('plugins/bower_components/sweetalert/sweetalert.min.js') }}"></script>
-    <script type="text/javascript">
-    (function() {
-        $('#exampleBasic').wizard({
-            onFinish: function() {
-                swal("Message Finish!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
-            }
-        });
-        $('#exampleBasic2').wizard({
-            onFinish: function() {
-                swal("Message Finish!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
-            }
-        });
-        $('#exampleValidator').wizard({
-            onInit: function() {
-                $('#validation').formValidation({
-                    framework: 'bootstrap',
-                    fields: {
-                        username: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'The username is required'
-                                },
-                                stringLength: {
-                                    min: 6,
-                                    max: 30,
-                                    message: 'The username must be more than 6 and less than 30 characters long'
-                                },
-                                regexp: {
-                                    regexp: /^[a-zA-Z0-9_\.]+$/,
-                                    message: 'The username can only consist of alphabetical, number, dot and underscore'
-                                }
+  
+@endsection
+
+@section('javascript')
+<!-- jQuery -->
+<script src="{{ asset('plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="{{ asset('bootstrap/dist/js/tether.min.js') }}"></script>
+<script src="{{ asset('bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('plugins/bower_components/bootstrap-extension/js/bootstrap-extension.min.js') }}"></script>
+<!-- Menu Plugin JavaScript -->
+<script src="{{ asset('plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+<!--slimscroll JavaScript -->
+<script src="{{ asset('js/jquery.slimscroll.js') }}"></script>
+<!--Wave Effects -->
+<script src="{{ asset('js/waves.js') }}"></script>
+<!-- Form Wizard JavaScript -->
+<script src="{{ asset('plugins/bower_components/jquery-wizard-master/dist/jquery-wizard.min.js') }}"></script>
+<!-- FormValidation -->
+<link rel="stylesheet" href="{{ asset('plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.css') }}">
+<!-- FormValidation plugin and the class supports validating Bootstrap form -->
+<script src="{{ asset('plugins/bower_components/jquery-wizard-master/libs/formvalidation/formValidation.min.js') }}"></script>
+<script src="{{ asset('plugins/bower_components/jquery-wizard-master/libs/formvalidation/bootstrap.min.js') }}"></script>
+<!-- Custom Theme JavaScript -->
+<script src="{{ asset('js/custom.min.js') }}"></script>
+<!-- Sweet-Alert  -->
+<script src="{{ asset('plugins/bower_components/sweetalert/sweetalert.min.js') }}"></script>
+<script type="text/javascript">
+(function() {
+    $('#exampleBasic').wizard({
+        onFinish: function() {
+            swal("Message Finish!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+        }
+    });
+    $('#exampleBasic2').wizard({
+        onFinish: function() {
+            swal("Message Finish!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+        }
+    });
+    $('#exampleValidator').wizard({
+        onInit: function() {
+            $('#validation').formValidation({
+                framework: 'bootstrap',
+                fields: {
+                    username: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The username is required'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 30,
+                                message: 'The username must be more than 6 and less than 30 characters long'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_\.]+$/,
+                                message: 'The username can only consist of alphabetical, number, dot and underscore'
                             }
-                        },
-                        email: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'The email address is required'
-                                },
-                                emailAddress: {
-                                    message: 'The input is not a valid email address'
-                                }
+                        }
+                    },
+                    email: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The email address is required'
+                            },
+                            emailAddress: {
+                                message: 'The input is not a valid email address'
                             }
-                        },
-                        password: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'The password is required'
-                                },
-                                different: {
-                                    field: 'username',
-                                    message: 'The password cannot be the same as username'
-                                }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The password is required'
+                            },
+                            different: {
+                                field: 'username',
+                                message: 'The password cannot be the same as username'
                             }
                         }
                     }
-                });
-            },
-            validator: function() {
-                var fv = $('#validation').data('formValidation');
-
-                var $this = $(this);
-
-                // Validate the container
-                fv.validateContainer($this);
-
-                var isValidStep = fv.isValidContainer($this);
-                if (isValidStep === false || isValidStep === null) {
-                    return false;
                 }
+            });
+        },
+        validator: function() {
+            var fv = $('#validation').data('formValidation');
 
-                return true;
-            },
-            onFinish: function() {
-                $('#validation').submit();
-                swal("Message Finish!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+            var $this = $(this);
+
+            // Validate the container
+            fv.validateContainer($this);
+
+            var isValidStep = fv.isValidContainer($this);
+            if (isValidStep === false || isValidStep === null) {
+                return false;
             }
-        });
 
-        $('#accordion').wizard({
-            step: '[data-toggle="collapse"]',
+            return true;
+        },
+        onFinish: function() {
+            $('#validation').submit();
+            swal("Message Finish!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+        }
+    });
 
-            buttonsAppendTo: '.panel-collapse',
+    $('#accordion').wizard({
+        step: '[data-toggle="collapse"]',
 
-            templates: {
-                buttons: function() {
-                    var options = this.options;
-                    return '<div class="panel-footer"><ul class="pager">' +
-                        '<li class="previous">' +
-                        '<a href="#' + this.id + '" data-wizard="back" role="button">' + options.buttonLabels.back + '</a>' +
-                        '</li>' +
-                        '<li class="next">' +
-                        '<a href="#' + this.id + '" data-wizard="next" role="button">' + options.buttonLabels.next + '</a>' +
-                        '<a href="#' + this.id + '" data-wizard="finish" role="button">' + options.buttonLabels.finish + '</a>' +
-                        '</li>' +
-                        '</ul></div>';
-                }
-            },
+        buttonsAppendTo: '.panel-collapse',
 
-            onBeforeShow: function(step) {
-                step.$pane.collapse('show');
-            },
-
-            onBeforeHide: function(step) {
-                step.$pane.collapse('hide');
-            },
-
-            onFinish: function() {
-                swal("Message Finish!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+        templates: {
+            buttons: function() {
+                var options = this.options;
+                return '<div class="panel-footer"><ul class="pager">' +
+                    '<li class="previous">' +
+                    '<a href="#' + this.id + '" data-wizard="back" role="button">' + options.buttonLabels.back + '</a>' +
+                    '</li>' +
+                    '<li class="next">' +
+                    '<a href="#' + this.id + '" data-wizard="next" role="button">' + options.buttonLabels.next + '</a>' +
+                    '<a href="#' + this.id + '" data-wizard="finish" role="button">' + options.buttonLabels.finish + '</a>' +
+                    '</li>' +
+                    '</ul></div>';
             }
-        });
-    })();
-    </script>
-    <!--Style Switcher -->
-    <script src="{{ asset('plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
+        },
+
+        onBeforeShow: function(step) {
+            step.$pane.collapse('show');
+        },
+
+        onBeforeHide: function(step) {
+            step.$pane.collapse('hide');
+        },
+
+        onFinish: function() {
+            swal("Message Finish!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+        }
+    });
+})();
+</script>
+<!--Style Switcher -->
+<script src="{{ asset('plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
 @endsection

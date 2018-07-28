@@ -14,7 +14,7 @@
 Route::get('/test', function (){
     // $loai = App\Models\LoaiUser::where('tenloai', 'like', '%Người dùng%')->first();
     // $users = $loai->User()->get();
-    dd(Session::get('daily'));
+    dd(App\Models\DanhGia::find(2,23));
     // dd(App\Models\ChiTietHoaDon::find(81)->LoaiKhuyenMai->ChiTietKhuyenMai()->where('sanpham_id', 19)->first());
     // $tencapdo_daily = "Đại lý";
     // dd(App\Models\CapDo::where('capdo', 'LIKE', '%'.$tencapdo_daily.'%')->orderBy('id', 'asc')->first());
@@ -58,6 +58,8 @@ Route::group(['prefix'=>'/home'], function () {
     Route::get('san-pham-dai-ly',['as'=>'sanphamdaily','uses'=>'PageController@getSpDaiLy']);
     Route::get('chi-tiet-san-pham-daily/{tenspdl}',['as'=>'chitietsanphamdaily','uses'=>'PageController@getChitietSPDL']);
     Route::post('/comment/{id}', 'PageController@comment')->name('comment');
+    Route::post('/review/{id}', 'PageController@review')->name('review');
+    Route::post('/update-review/{idsp}/{idtv}', 'PageController@update_review')->name('update-review');
 
     Route::get('/chinh-sach-ban-hang', 'PageController@csbh')->name('csbh');
     Route::get('/thong-tin', 'PageController@about')->name('thongtin');
