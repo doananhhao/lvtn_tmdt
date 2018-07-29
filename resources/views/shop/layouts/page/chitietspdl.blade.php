@@ -11,7 +11,7 @@
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li style="white-space: nowrap;"><a href="{{ route('home') }}">Trang chủ</a></li>
-				<li style="white-space: nowrap;"><a href="{{route('loaisanpham',$tenlsp->id)}}">{{$tenlsp->tenloai}}</a></li>
+				<li style="white-space: nowrap;"><a href="{{route('sanphamdaily')}}?loaisanpham={{ $tenlsp->id }}">{{$tenlsp->tenloai}}</a></li>
 				<li class='active'>{{$sanpham->tensanpham}}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -119,7 +119,7 @@
 		
 											<div class="col-sm-7">
 												
-												<a class="btn btn-primary" >{{$sdttv->sdt}}</a>
+												<a class="btn btn-primary" >{{$sdttv->sdt == null ? "Xem dưới mô tả" : $sdttv->sdt}}</a>
 											</div>
 
 									

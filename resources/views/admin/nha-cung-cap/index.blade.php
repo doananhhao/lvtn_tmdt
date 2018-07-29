@@ -24,7 +24,7 @@
                         @foreach ($ncc as $v)
                         <tr>
                             <td><a href="{{ route('nha-cung-cap.show', ['id' => $v->id]) }}" data-toggle="tooltip" data-original-title="Các sản phẩm thuộc {{ $v->ten }}">{{ $v->ten }}</a></td>
-                            <td>{{ count($v->SanPham) }}</td>
+                            <td>{{ $v->SanPham->count() }}</td>
                             <td>{{ $v->diachi }}</td>
                             <td>{{ $v->sdt }}</td>
                             <td>{{ date('d-m-Y', strtotime($v->created_at)) }}</td>

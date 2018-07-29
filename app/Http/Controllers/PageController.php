@@ -23,10 +23,6 @@ use App\Models\DuyetDangBanHistory;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-
-
-
-
 class PageController extends Controller
 {
 
@@ -264,30 +260,48 @@ class PageController extends Controller
         return back()->with('success', 'Cám ơn bạn đã bình luận cho sản phẩm này')->withInput();
     }
 
-    public function getSpDaiLy(){
+    private function get_array_id($list){
+        $array = [];
+        foreach ($list as $v)
+            $array[] = $v->id;
+        return $array;
+    }
+
+    public function getSpDaiLy(Request $request){
        // $this->data['title'] = "Sản phẩm của Thành viên";
         $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         //$sp_theoloai = LoaiSP::all();
-        $title="Sản phẩm của Thành viên";
-        //$loaisp = SanPham::join('DangBan','DangBan.sanpham_id','SanPham.id')->where('canduyet',0)->where('ngungban',0)->paginate(12);
-        $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
-        $loaisp=array();
-        $all= SanPham::join('DangBan','DangBan.sanpham_id','SanPham.id')->orderBy('DangBan.id', 'desc')->get()->toArray();
-            foreach($all as $a){
-                    foreach($sell_stt as $s){
-                        if($a['id'] == $s['dangban_id']){
-                            if($s['status'] == 1){
-                                array_push($loaisp,$a);
-                                
-                            }break;
-                        }
-                    
-                    }
-                
-            }
-        //$loaisp->paginate(12); 
-        //dd($loaisp);
-        return view('shop.layouts.page.sanphamdangban',compact('sidemenu','loaisp','title'));
+        
+        $loai = LoaiSP::find($request->loaisanpham);
+
+        $ds_id = DuyetDangBanHistory::select(DB::raw('dangban_id, MAX(id) as id'))->groupBy('dangban_id')->get();
+        $ds_id = $this->get_array_id($ds_id);
+        $ds_id = DuyetDangBanHistory::whereIn('id', $ds_id)->where('status', 1)->get();
+        $ds_id2 = []; //id dang bán
+        foreach ($ds_id as $v)
+            $ds_id2[] = $v->dangban_id;
+
+        if ($loai == null){
+
+            $title= "Sản phẩm của Thành viên";
+            $title2= "Sản phẩm đăng bán";
+            $dangban = DangBan::whereIn('id', $ds_id2)->orderBy('updated_at', 'desc')->paginate(9);
+
+        }else{
+
+            $title= $loai->tenloai." - Thành viên bán";
+            $title2 = $loai->tenloai;
+            $listdb = DangBan::whereIn('id', $ds_id2)->orderBy('updated_at', 'desc')->get();
+            $ds_id = [];
+            foreach ($listdb as $db)
+                if ($db->SanPham->LoaiSP->id == $loai->id)
+                    $ds_id[] = $db->id;
+            $dangban = DangBan::whereIn('id', $ds_id)->orderBy('updated_at', 'desc')->paginate(9);
+
+        }
+
+        $dangban->appends(request()->query());
+        return view('shop.layouts.page.sanphamdangban',compact('sidemenu','dangban','title', 'title2'));
     }
 
 
@@ -394,7 +408,7 @@ class PageController extends Controller
     }
 
     public function about(){
-        $title = 'Unicase - Chính sách bán hàng';
+        $title = 'Unicase - Thông tin';
         $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
         return view('shop.about', ['title' => $title, 'sidemenu' => $sidemenu]);
     }

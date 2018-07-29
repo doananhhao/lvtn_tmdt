@@ -27,7 +27,7 @@
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="panel panel-info">
-            <div class="panel-heading">Sản phẩm</div>
+            <div class="panel-heading">Loại sản phẩm</div>
             <div class="panel-wrapper collapse in">
                 <div class="panel-body">
                     <select class="selectpicker" data-style="form-control" id="getListSP">

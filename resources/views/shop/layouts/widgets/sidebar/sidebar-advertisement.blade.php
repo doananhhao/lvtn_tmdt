@@ -1,5 +1,5 @@
 <!-- ============================================== COLOR============================================== -->
-<div class="sidebar-widget  wow fadeInUp outer-top-vs ">
+<div class="sidebar-widget  wow fadeInUp outer-top-vs outer-bottom-vs">
 	<div id="advertisement" class="advertisement">
         <div class="item bg-color">
             <div class="container-fluid">

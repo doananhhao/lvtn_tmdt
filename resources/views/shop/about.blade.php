@@ -44,6 +44,14 @@
                         </ul>
                     </div>       
                 </div>
+                
+                <div class="col-md-9 info-stu">
+                    <h4>File báo cáo và thông tin 
+                        <a href="{{ asset('docs/LVTN-main.docx') }}">
+                            <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                        </a>
+                    </h4>
+                </div>
             </div>
         </div>
     </div>
