@@ -195,7 +195,7 @@
 			</div><!-- /.product-info -->	
 		</div><!-- /.col -->
 	</div><!-- /.product-list-row -->
-	<div class="tag new"><span>new</span></div>        </div><!-- /.product-list -->
+	{{--  <div class="tag new"><span>new</span></div>    --}}      </div><!-- /.product-list -->
 			</div><!-- /.products -->
 		</div><!-- /.category-product-inner -->
 		

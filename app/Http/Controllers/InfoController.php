@@ -126,6 +126,16 @@ class InfoController extends Controller
         if ($id == null)
             return abort(404);
 
+        if (Auth::User()->ThanhVien == null)
+            return abort(404);
+
+        if (Auth::User()->ThanhVien->diemtichluy < CapDo::find(3)->diem)
+            return abort(404);
+        
+        if (Auth::User()->ThanhVien->daily != null)
+            return abort(404);
+        
+
 		$str = Auth::user()->id.Auth::user()->name;
         DaiLy::create([
             'thanhvien_id' => $id,
@@ -137,17 +147,8 @@ class InfoController extends Controller
         
         foreach($capdo as $lv)
         {
-            if($lencap->diemtichluy == $lv['diem']){
-                $lencap->capdo_id = $lv['id'];
-                break;
-            }
-            elseif($lencap->diemtichluy > $lv['diem']){
-                $caphientai=$lv['id'];
-                continue;
-            }
-            else{
-                $lencap->capdo_id = $caphientai;
-                break;
+            if($lencap->diemtichluy >= $lv->diem){
+                $lencap->capdo_id = $lv->id;
             }
         }
         $lencap->save();
@@ -401,7 +402,7 @@ class InfoController extends Controller
         $sanphamdb = SanPham::where('id',$id)->first();
         $dangban = DangBan::where('sanpham_id',$id)->first();
         
-        $history = DangBan::find($dangban->id)->DuyetDangBanHistory->first();
+        $history = DangBan::find($dangban->id)->DuyetDangBanHistory()->orderBy('id', 'desc')->first();
         //dd($dangban);
         return view('shop.layouts.page.sell-info',compact('sanphamdb','dangban','history'),$this->data);
     }
@@ -468,8 +469,37 @@ class InfoController extends Controller
 
     public function sell_edit($id){
 
-        if (SanPham::find($id) == null)
-            return abort(404);
+        $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->where('thanhvien_id',Auth::user()->id)->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+            $sell_list=array();
+            $all= SanPham::join('LoaiSP','SanPham.loaisp_id','LoaiSP.id')->join('DangBan','DangBan.sanpham_id','SanPham.id')->where('DangBan.thanhvien_id',Auth::user()->id)->orderBy('DangBan.id', 'desc')->get()->toArray();
+            
+            foreach($all as $a){
+                if($a['ngungban']==0){
+                    if($a['canduyet']==1){
+                        array_push($sell_list,$a);
+                    }
+                    else{
+                        foreach($sell_stt as $s){
+                            if($a['id'] == $s['dangban_id']){
+                                if($s['status'] == 0){
+                                    array_push($sell_list,$a);
+                                    
+                                }break;
+                            }
+                        
+                        }
+                    }
+                }
+            }
+            $err=false;
+            foreach($sell_list as $kt){
+                if ($kt['sanpham_id'] == $id)
+                    $err=true;
+            }
+    
+            if ($err == false)
+                return abort(404);
+        
         $this->data['loaisp'] = LoaiSP::all();
         $this->data['ncc'] = NhaCungCap::all();
         $this->data['sanphamdangban'] = SanPham::where('id',$id)->first();

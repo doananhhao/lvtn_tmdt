@@ -762,6 +762,11 @@
 @endsection
 
 @section('javascript')
+<!-- Sweet-Alert  -->
+    <link href="{{ asset('plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ asset('plugins/bower_components/sweetalert/sweetalert.min.js') }}"></script>
+	<script src="{{ asset('plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
+	
 <script src="{{ asset('') }}shop/js/rateit/rater.min.js"></script>
 <script>
 	$.ajaxSetup({
@@ -782,6 +787,11 @@
 		{{-- console.log(data.from, data.to); --}}
 		$('#score_rate').val(data.to)
 	});
-</script>
 
+	@if (session('success'))
+		swal("Cám ơn", "{{ session('success') }}", "success")
+	@elseif (session('fail'))
+		swal("ERROR", "{{ session('fail') }}")
+	@endif
+</script>
 @endsection
