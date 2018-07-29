@@ -223,14 +223,13 @@
 						</div>
 					</div>
 					@endif
-														
 				</div><!-- /.category-product -->
 			</div><!-- /.tab-pane #list-container -->
 		</div><!-- /.tab-content -->
 		<div class="clearfix filters-container">
 			<div class="text-right">
 				<div style="text-align: right;">
-					{{$dangban->links()}} 
+					{{ $dangban->links() }} 
 				</div>
 			</div><!-- /.pagination-container -->						    
 		</div><!-- /.text-right -->

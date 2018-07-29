@@ -37,7 +37,7 @@ class PageController extends Controller
     }
   
     public function getLoaiSp($type){
-        if ($type == null)
+        if (LoaiSP::find($type) == null)
             return abort(404);
 
         $sidemenu = LoaiSP::orderBy('id', 'desc')->get();
@@ -139,7 +139,7 @@ class PageController extends Controller
         //
         $sobinhluan = BinhLuan::where('sanpham_id',$id)->count();
         //$binhluan = BinhLuan::join('users','user_id','=','users.id')->where('sanpham_id',$id)->where('status',1)->paginate(10);
-        $binhluan = User::join('BinhLuan','users.id','BinhLuan.user_id')->where('BinhLuan.sanpham_id',$id)->where('BinhLuan.status',1)->paginate(10);
+        $binhluan = User::join('BinhLuan','users.id','BinhLuan.user_id')->where('BinhLuan.sanpham_id',$id)->where('BinhLuan.status',1)->orderBy('BinhLuan.id', 'desc')->paginate(10);
 
         /// test
         // kiểm tra đã mua sp hay chưa
@@ -160,7 +160,7 @@ class PageController extends Controller
         }
         
         $sodanhgia = DanhGia::where('sanpham_id',$id)->where('tinhtrang',1)->count();
-        $danhgiasp = User::join('DanhGia','users.id','DanhGia.thanhvien_id')->where('DanhGia.sanpham_id',$id)->where('DanhGia.tinhtrang',1)->paginate(10);
+        $danhgiasp = User::join('DanhGia','users.id','DanhGia.thanhvien_id')->where('DanhGia.sanpham_id',$id)->where('DanhGia.tinhtrang',1)->orderBy('DanhGia.updated_at', 'desc')->paginate(10);
         $spcungloai = SanPham::where('loaisp_id',$sanpham->loaisp_id)->get();
 
         $danhgiatrungbinh = DanhGia::where('sanpham_id',$id)->where('tinhtrang',1)->get();
@@ -182,61 +182,7 @@ class PageController extends Controller
             $score2 = round($score1/2);
         }
         
-        //dd($spcungloai);
-        //
-
-        // if (Auth::check()){
-        //     $hoadon = HoaDon::where('user_id',Auth::user()->id)->get();
-        //     $chitiethoadon = ChiTietHoaDon::orderBy('id', 'desc')->get();
-        //     $listsp=array();
-        //     if ($hoadon != null)
-        //         foreach($hoadon as $hd){
-        //                 foreach($chitiethoadon as $cthd){
-        //                     if($cthd['hoadon_id'] == $hd['id']){
-        //                         array_push($listsp,$cthd);
-        //                     }
-        //                 }
-        //         }
-            
-        //     $spdamua=array();
-            
-        //     foreach($listsp as $list){
-        //         if($list['sanpham_id'] == $id){
-        //             array_push($spdamua,$list);
-        //         }
-        //     }
-            
-        //     $damua=0;
-        //     $congdoanhoadon = CongDoanHoaDon::orderBy('id', 'desc')->get();
-        //     foreach($spdamua as $spdm){
-        //         foreach($congdoanhoadon as $cdhd){
-        //             if($spdm['hoadon_id'] == $cdhd['hoadon_id']){
-        //                 if($cdhd['congdoan_id'] == 3 && $cdhd['status'] == 1){
-        //                     $damua=1;
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     //
-        //     //dd($damua);
-        //     // kt đã đánh giá chưa
-        //     $dadg=0;
-        //     $danhgia = DanhGia::where('sanpham_id',$id)->get();
-        //     foreach($danhgia as $dg){
-        //         if($dg['thanhvien_id'] == Auth::user()->id){
-        //             $dadg=1;
-        //             break;
-        //         }
-        //     }
-        //     ///
-        //     $dadanhgia = DanhGia::where('sanpham_id',$id)->where('thanhvien_id',Auth::user()->id)->first();
-
-        //     //dd($dadanhgia);
-        //     //
-        //     //$danhgiasp = DanhGia::join('users','thanhvien_id','=','users.id')->where('sanpham_id',$id)->where('DanhGia.thanhvien_id','!=',Auth::user()->id)->where('DanhGia.tinhtrang',1)->paginate(10);
-        //     $danhgiasp = User::join('DanhGia','users.id','DanhGia.thanhvien_id')->where('DanhGia.sanpham_id',$id)->where('DanhGia.thanhvien_id','!=',Auth::user()->id)->where('DanhGia.tinhtrang',1)->paginate(10);
-        // }
+        
         
         
 
@@ -306,10 +252,29 @@ class PageController extends Controller
 
 
     public function getChitietSPDL($id){
+        $sell_stt = DangBan::join('DuyetDangBanHistory','DuyetDangBanHistory.dangban_id','DangBan.id')->orderBy('DuyetDangBanHistory.id', 'desc')->get()->toArray();
+        $loaisp=array();
+        $all= SanPham::join('DangBan','DangBan.sanpham_id','SanPham.id')->orderBy('DangBan.id', 'desc')->get()->toArray();
+            foreach($all as $a){
+                    foreach($sell_stt as $s){
+                        if($a['id'] == $s['dangban_id']){
+                            if($s['status'] == 1){
+                                array_push($loaisp,$a);
+                                
+                            }break;
+                        }
+                    
+                    }
+                
+            }
+        $err=false;
+        foreach($loaisp as $kt){
+            if ($kt['sanpham_id'] == $id)
+                $err=true;
+        }
 
-        if ($id == null)
+        if ($err == false)
             return abort(404);
-
         $sanpham = SanPham::where('id',$id)->first();
         $tenlsp = LoaiSP::where('id',$sanpham->loaisp_id)->first();
 
@@ -413,24 +378,38 @@ class PageController extends Controller
         return view('shop.about', ['title' => $title, 'sidemenu' => $sidemenu]);
     }
 
-    //ajax
+    //
     public function review(Request $request,$id){
 
+        $damua = false; //boolean: đã mua hay chưa
+        if (Auth::check()){
+            $cthd = ChiTietHoaDon::where('sanpham_id', $id)->get();
+            if ($cthd != null){
+                foreach ($cthd as $v){
+                    if ($v->HoaDon->user_id == Auth::User()->id)
+                        $damua = true;
+                }
+            }
+        }
+        if ($damua == false)
+            return abort(404);
         if ($id == null)
             return abort(404);
-
-        $comment=DanhGia::create([
-            'thanhvien_id' => Auth::user()->id,
-            'sanpham_id' => $id,
-            'tieude' => 'null',
-            'noidung' => $request->dg,
-            'tinhtrang' => 0,
-            'votes' => $request->score * 2
-        ]);
+        if(($request->score >0) && ($request->score <=5)){
+            $comment=DanhGia::create([
+                'thanhvien_id' => Auth::user()->id,
+                'sanpham_id' => $id,
+                'tieude' => 'null',
+                'noidung' => $request->dg,
+                'tinhtrang' => 0,
+                'votes' => $request->score * 2
+            ]);
+    
+            return back()->with('success', 'Bạn đã đánh giá cho sản phẩm này')->withInput();
         
+        }
+        return back()->with('fail', 'Có sự cố. Xin chọn lại lần nữa')->withInput();      
         
-        
-        return back()->with('success', 'Cám ơn bạn đã đánh giá cho sản phẩm này')->withInput();
     }
     public function update_review(Request $request,$idsp,$idtv){
 
@@ -444,6 +423,9 @@ class PageController extends Controller
             'dg'  => 'required'
             
         ]);
+
+        if(!(($request->score >0) && ($request->score <=5)))
+            return back()->with('fail', 'Có sự cố. Xin chọn lại lần nữa');  
 
         $danhgia = DanhGia::where('sanpham_id',$idsp)->where('thanhvien_id',$idtv)->first();
         $danhgia->noidung = $request->dg;

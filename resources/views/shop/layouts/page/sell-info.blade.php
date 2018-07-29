@@ -73,7 +73,7 @@
                             </div>
                             <div class="panel-wrapper collapse in" aria-expanded="true">
                                 <div class="panel-body">
-                                    <p>{{ $history['comment'] }}. (Bấm vào <a href="{{ route('sell-edit',['id' => $sanphamdb['id']]) }}">đây</a> để điều chỉnh lại thông tin sản phẩm)</p>
+                                    <p>{{ $history['comment'] }}.<br><br> (Bấm vào <a href="{{ route('sell-edit',['id' => $sanphamdb['id']]) }}">đây</a> để điều chỉnh lại thông tin sản phẩm)</p>
                                 </div>
                             </div>
                         </div>

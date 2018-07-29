@@ -21,7 +21,7 @@
         <div class="sidebar-nav navbar-collapse slimscrollsidebar">
             <div class="user-profile">
                 <div class="dropdown user-pro-body">
-                    <div><img src="{{asset('plugins/images/users/varun.jpg')}}" alt="user-img" class="img-circle"></div>
+                    <div><img src="{{ asset('useravatar/noavatar.png') }}" alt="user-img" class="img-circle"></div>
                     <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu animated flipInY">
                         
@@ -68,14 +68,15 @@
                 </li>
                 @if(Auth::user()->ThanhVien != null)
                     @if(Auth::user()->ThanhVien->DaiLy != null)
-                <li class="nav-small-cap">--- Đại lý bán hàng</li>
+                <li class="nav-small-cap">--- Đại lý & bán hàng</li>
                 <li><a href="#" class="waves-effect"><i data-icon=")" class="linea-icon ti-pin2 fa-fw"></i> <span class="hide-menu">Quản lý Đăng bán<span class="fa arrow"></span></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="{{ route('sell_list') }}">Danh sách đăng bán</a></li>
                         <li><a href="{{ route('sell') }}">Đăng bán</a></li>
-                        <li><a href="{{ route('getlink') }}">Tạo link sản phẩm</a></li>
+                       {{--   <li><a href="{{ route('getlink') }}">Tạo link sản phẩm</a></li>  --}}
                     </ul>
                 </li>
+                <li> <a href="{{ route('getlink') }}" class="waves-effect"><i data-icon="&#xe008;" class="linea-icon ti-link fa-fw"></i> <span class="hide-menu">Tạo link sản phẩm</span></a></li>
                 @endif
                 @if((Auth::user()->ThanhVien->CapDo->capdo != "Cấp 1") && (Auth::user()->ThanhVien->DaiLy == null))
                 <li class="nav-small-cap">--- Bán hàng</li>

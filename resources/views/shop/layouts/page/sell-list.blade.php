@@ -52,24 +52,20 @@
                             <tr>
                                 <td>{{ $db['id'] }}</td>
                                 <td>{{ $db['tenloai'] }}</td>
-                                <td><a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" >{{ $db['tensanpham'] }}</a></td>
-                                <td>{{ $db['soluong'] }}</td>
-                                {{--  <td>{{ $db['mota'] }}</td>  --}}
-                                <td>{{ $db['gia'] }}</td>
-                                
+                                {{--  <td><a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" >{{ $db['tensanpham'] }}</a></td>  --}}
                                 <td>
                                     @if($db['ngungban']==0)
                                         @if ($db['canduyet'] == 1)
-                                            <div class="label label-table label-info">Đang chờ duyệt</div>
+                                        <a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" >{{ $db['tensanpham'] }}</a>
                                             
                                         @elseif ($db['canduyet'] == 0)
                                             @foreach($statusdb as $sttdb)
                                                 @if($db['id'] == $sttdb['dangban_id'])
                                                     @if($sttdb['status']==1)
-                                                        <div class="label label-table label-success">Đã đăng bán</div>
+                                                    <a href="{{route('chitietsanphamdaily',$db['sanpham_id'])}}" data-toggle="tooltip" >{{ $db['tensanpham'] }}</a>
                                                         @break
                                                     @else
-                                                        <div class="label label-table label-warning">Cập nhật lại</div>
+                                                    <a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" >{{ $db['tensanpham'] }}</a>
                                                         @break
                                                     @endif
                                                 
@@ -77,7 +73,34 @@
                                             @endforeach
                                         @endif
                                     @else
-                                        <div class="label label-table label-danger">Đã ngưng bán</div>
+                                    <a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" >{{ $db['tensanpham'] }}</a>
+                                    @endif
+                                </td>
+                                <td>{{ $db['soluong'] }}</td>
+                                {{--  <td>{{ $db['mota'] }}</td>  --}}
+                                <td>{{ $db['gia'] }}</td>
+                                
+                                <td>
+                                    @if($db['ngungban']==0)
+                                        @if ($db['canduyet'] == 1)
+                                            <div class="label label-table label-info"><a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" style="color: white">Đang chờ duyệt</a></div>
+                                            
+                                        @elseif ($db['canduyet'] == 0)
+                                            @foreach($statusdb as $sttdb)
+                                                @if($db['id'] == $sttdb['dangban_id'])
+                                                    @if($sttdb['status']==1)
+                                                        <div class="label label-table label-success"><a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" style="color: white">Đã đăng bán</a></div>
+                                                        @break
+                                                    @else
+                                                        <div class="label label-table label-warning"><a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" style="color: white">Cập nhật lại</a></div>
+                                                        @break
+                                                    @endif
+                                                
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    @else
+                                        <div class="label label-table label-danger"><a href="{{ route('sell-show', ['id' => $db['sanpham_id']]) }}" data-toggle="tooltip" style="color: white">Đã ngưng bán</a></div>
                                     @endif
                                 </td>
                                 
