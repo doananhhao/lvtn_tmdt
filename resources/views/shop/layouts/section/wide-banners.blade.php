@@ -9,8 +9,8 @@
 				</div>	
 				<div class="strip">
 					<div class="strip-inner">
-						<h3 class="hidden-xs">samsung</h3>
-						<h2>galaxy</h2>
+						{{-- <h3 class="hidden-xs">samsung</h3>
+						<h2>galaxy</h2> --}}
 					</div>	
 				</div>
 			</div><!-- /.wide-banner -->
@@ -23,8 +23,8 @@
 				</div>	
 				<div class="strip">
 					<div class="strip-inner">
-						<h3 class="hidden-xs">new trend</h3>
-						<h2>watch phone</h2>
+						{{-- <h3 class="hidden-xs">new trend</h3>
+						<h2>watch phone</h2> --}}
 					</div>	
 				</div>
 			</div><!-- /.wide-banner -->

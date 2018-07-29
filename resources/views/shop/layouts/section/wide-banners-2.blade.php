@@ -7,7 +7,7 @@
 				<div class="image">
 					<img class="img-responsive" data-echo="{{ asset('shop/images/pic/banners/3.jpg') }}" src="{{ asset('shop/images/blank.gif') }}" alt="">
 				</div>	
-				<div class="strip strip-text">
+				{{-- <div class="strip strip-text">
 					<div class="strip-inner">
 						<h2 class="text-right">one stop place for<br>
 						<span class="shopping-needs">all your shopping needs</span></h2>
@@ -15,7 +15,7 @@
 				</div>
 				<div class="new-label">
 				    <div class="text">NEW</div>
-				</div><!-- /.new-label -->
+				</div><!-- /.new-label --> --}}
 			</div><!-- /.wide-banner -->
 		</div><!-- /.col -->
 
