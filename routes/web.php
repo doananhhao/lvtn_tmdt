@@ -41,7 +41,7 @@ Route::get('t2', 'Shop\HomeController@test');
 
 Auth::routes();
 
-Route::group(['prefix'=>'/home'], function () {
+Route::group(['prefix'=>'/home', 'middleware' => ['check_active']], function () {
     Route::get('/', 'Shop\HomeController@index')->name('home');
 
     Route::group(['prefix' => '/gio-hang'], function (){
@@ -65,7 +65,7 @@ Route::group(['prefix'=>'/home'], function () {
     Route::get('/thong-tin', 'PageController@about')->name('thongtin');
     Route::get('/tim-kiem', 'PageController@searchSP')->name('tim-kiem');
 });
-Route::group(['prefix' => 'thong-tin-tai-khoan'], function() {
+Route::group(['prefix' => 'thong-tin-tai-khoan', 'middleware' => ['check_active']], function() {
         Route::get('information', 'InfoController@getInfo')->name('acc-info');
         Route::post('/save-edit-user', 'InfoController@save_edit_user')->name('edit-info');  
         Route::get('level', 'InfoController@getLevel')->name('level');

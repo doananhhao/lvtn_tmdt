@@ -32,7 +32,7 @@ class m_admin
                 else{
                     $name = Auth::User()->name;
                     Auth::logout();
-                    return redirect()->route('login')->with('inactive', 'Tài khoản '.$name.' đang bị khóa nên không thể sửa dụng chức năng của quản lý website');
+                    return redirect()->route('login')->with('inactive', 'Tài khoản '.$name.' đang bị khóa nên không thể sử dụng chức năng của quản lý website');
                 }
         
         return redirect('/home');
